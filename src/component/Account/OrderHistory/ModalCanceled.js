@@ -34,7 +34,7 @@ export const ModalCanceled = ({ items }) => {
                             </p>
                             {isNotSmallerScreen &&
                                 <p class="text-muted m-0 ml-auto">Delivering to<br />
-                                    <span class="text-dark font-weight-bold">{items.address_details.address_type}</span>
+                                    <span class="text-dark font-weight-bold">{items.address_details?.address_type}</span>
                                 </p>
                             }
                             <p class="text-muted m-0 ml-auto">Total Payment<br />
@@ -88,9 +88,9 @@ export const ModalCanceled = ({ items }) => {
                                     <div className="destination mt-3">
                                         <h6 style={{ fontWeight: "700", fontSize: 18 }}>Shiping to :</h6>
                                         <div className="mx-3">
-                                            <h6 style={{ fontWeight: "700", fontSize: 14 }}>{items.address_details.name}</h6>
-                                            <p className='mb-1'>{items.address_details.user_house_no}, {items.address_details.base_address}, {items.address_details.address}, {items.address_details.city}, {items.address_details.zipcode}</p>
-                                            <p style={{ fontWeight: "700", fontSize: 14 }}>Phone: {items.address_details.phone}</p>
+                                            <h6 style={{ fontWeight: "700", fontSize: 14 }}>{items.address_details?.name}</h6>
+                                            <p className='mb-1'>{items.address_details?.user_house_no}, {items.address_details?.base_address}, {items.address_details?.address}, {items.address_details?.city}, {items.address_details?.zipcode}</p>
+                                            <p style={{ fontWeight: "700", fontSize: 14 }}>Phone: {items.address_details?.phone}</p>
                                         </div>
                                     </div>
                                 </div>

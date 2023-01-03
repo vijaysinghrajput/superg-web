@@ -11,7 +11,7 @@ import Geocode from "react-geocode";
 
 import Base64 from "../../helper/EncodeDecode";
 import Cookies from 'universal-cookie';
-import { Select } from '@chakra-ui/react'
+import { Box, Select } from '@chakra-ui/react'
 
 
 import URL from '../../URL'
@@ -217,28 +217,29 @@ class Address extends Component {
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form class="">
-                                    <div class="form-row">
-                                        <div class="col-md-12 form-group">
-                                            <label class="form-label"> <label class="text-danger">*</label> Select Delivery Area</label>
-                                            <Select size="sm" onChange={this.handleChange} id="base_address" value={this.state.base_address}>
-                                                {this.state.serviceArea.map((areas, i) => {
-                                                    return (
-                                                        <option style={{}} value={areas.area_name}>{areas.area_name}</option>
-                                                    )
-                                                })}
-                                            </Select>
-                                        </div>
-                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Full Name</label>
-                                            <input onChange={this.onChange} placeholder="First & Last Name" id="user_name" value={this.state.user_name} type="text" class="form-control" />
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <label class="form-label"> <label class="text-danger">*</label> Mobile Number (10 Digit)</label>
-                                            <input onChange={this.onChange} placeholder="10 Digit Mobile Number" id="user_mobile" value={this.state.user_mobile} type="tel" class="form-control" />
-                                        </div>
+                                <Box height={{ base: "45vh", md: "unset" }}>
+                                    <form class="">
+                                        <div class="form-row">
+                                            <div class="col-md-12 form-group">
+                                                <label class="form-label"> <label class="text-danger">*</label> Select Delivery Area</label>
+                                                <Select size="sm" onChange={this.handleChange} id="base_address" value={this.state.base_address}>
+                                                    {this.state.serviceArea.map((areas, i) => {
+                                                        return (
+                                                            <option style={{}} value={areas.area_name}>{areas.area_name}</option>
+                                                        )
+                                                    })}
+                                                </Select>
+                                            </div>
+                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Full Name</label>
+                                                <input onChange={this.onChange} placeholder="First & Last Name" id="user_name" value={this.state.user_name} type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label class="form-label"> <label class="text-danger">*</label> Mobile Number (10 Digit)</label>
+                                                <input onChange={this.onChange} placeholder="10 Digit Mobile Number" id="user_mobile" value={this.state.user_mobile} type="tel" class="form-control" />
+                                            </div>
 
-                                        {/* <label class="form-label">Locate your delivery address on map   <label class="text-danger"> - Move red location marker to your delivery address</label></label> */}
-                                        {/* <div class="container-fluid">
+                                            {/* <label class="form-label">Locate your delivery address on map   <label class="text-danger"> - Move red location marker to your delivery address</label></label> */}
+                                            {/* <div class="container-fluid">
                                             <div class="map-responsive">
                                                 <Map
                                                     google={window.google}
@@ -271,14 +272,15 @@ class Address extends Component {
                                                 </Map>
                                             </div>
                                         </div> */}
-                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Flat / House / Office No.</label>
-                                            <input onChange={this.onChange} type="text" value={this.state.user_house_no} id="user_house_no" class="form-control" />
+                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Flat / House / Office No.</label>
+                                                <input onChange={this.onChange} type="text" value={this.state.user_house_no} id="user_house_no" class="form-control" />
+                                            </div>
+                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Street / Society / Office Name</label>
+                                                <input type="text" onChange={this.onChange} value={this.state.user_street} id="user_street" class="form-control" />
+                                            </div>
                                         </div>
-                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Street / Society / Office Name</label>
-                                            <input type="text" onChange={this.onChange} value={this.state.user_street} id="user_street" class="form-control" />
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </Box>
                             </div>
                             <div class="modal-footer p-0 border-0">
                                 <div class="col-6 m-0 p-0">
@@ -305,40 +307,42 @@ class Address extends Component {
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form class="">
-                                                    <div class="form-row">
-                                                        <div class="col-md-12 form-group">
-                                                            <label class="form-label"> <label class="text-danger">*</label> Select Delivery Area</label>
-                                                            <Select size="sm" onChange={this.handleChange} id="base_address" value={this.state.base_address}>
-                                                                {this.state.serviceArea.map((areas, i) => {
-                                                                    return (
-                                                                        <option style={{}} value={areas.area_name}>{areas.area_name}</option>
-                                                                    )
-                                                                })}
-                                                            </Select>
-                                                        </div>
-                                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Full Name</label>
-                                                            <input onChange={this.onChange} placeholder="First & Last Name" id="user_name" value={this.state.user_name} type="text" class="form-control" />
-                                                        </div>
+                                                <Box height={{ base: "45vh", md: "unset" }}>
+                                                    <form class="">
+                                                        <div class="form-row">
+                                                            <div class="col-md-12 form-group">
+                                                                <label class="form-label"> <label class="text-danger">*</label> Select Delivery Area</label>
+                                                                <Select size="sm" onChange={this.handleChange} id="base_address" value={this.state.base_address}>
+                                                                    {this.state.serviceArea.map((areas, i) => {
+                                                                        return (
+                                                                            <option style={{}} value={areas.area_name}>{areas.area_name}</option>
+                                                                        )
+                                                                    })}
+                                                                </Select>
+                                                            </div>
+                                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Full Name</label>
+                                                                <input onChange={this.onChange} placeholder="First & Last Name" id="user_name" value={this.state.user_name} type="text" class="form-control" />
+                                                            </div>
 
-                                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Mobile Number (10 Digit)</label>
-                                                            <input onChange={this.onChange} placeholder="10 Digit Mobile Number" id="user_mobile" value={this.state.user_mobile} type="tel" class="form-control" />
+                                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Mobile Number (10 Digit)</label>
+                                                                <input onChange={this.onChange} placeholder="10 Digit Mobile Number" id="user_mobile" value={this.state.user_mobile} type="tel" class="form-control" />
+                                                            </div>
+
+                                                            <div class="col-md-12 form-group">
+                                                            </div>
+
+
+                                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Flat / House / Office No.</label>
+                                                                <input onChange={this.onChange} type="text" value={this.state.user_house_no} id="user_house_no" class="form-control" />
+                                                            </div>
+
+                                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Street / Society / Office Name</label>
+                                                                <input type="text" onChange={this.onChange} value={this.state.user_street} id="user_street" class="form-control" />
+                                                            </div>
+
                                                         </div>
-
-                                                        <div class="col-md-12 form-group">
-                                                        </div>
-
-
-                                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Flat / House / Office No.</label>
-                                                            <input onChange={this.onChange} type="text" value={this.state.user_house_no} id="user_house_no" class="form-control" />
-                                                        </div>
-
-                                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Street / Society / Office Name</label>
-                                                            <input type="text" onChange={this.onChange} value={this.state.user_street} id="user_street" class="form-control" />
-                                                        </div>
-
-                                                    </div>
-                                                </form>
+                                                    </form>
+                                                </Box>
                                             </div>
                                             <div class="modal-footer p-0 border-0">
                                                 <div class="col-6 m-0 p-0">

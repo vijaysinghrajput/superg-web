@@ -15,15 +15,13 @@ export const MyOrder = (props) => {
     const [ordersHistory, setOrdersHistory] = useState([]);
 
 
-    useEffect(() => { 
+    useEffect(() => {
         fetchData();
     }, [])
 
     const fetchData = () => {
         const userID = cookies.get("userID");
-        const UserID = Base64.atob(userID) 
-
-        console.log("user",userID )
+        const UserID = Base64.atob(userID)
         fetch(URL + "/APP-API/App/FetchOrders", {
             method: 'POST',
             header: {

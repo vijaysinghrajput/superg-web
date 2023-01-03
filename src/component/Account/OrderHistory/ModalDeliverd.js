@@ -93,9 +93,9 @@ export const ModalDeliverd = ({ items }) => {
                                     <div className="destination mt-3">
                                         <h6 style={{ fontWeight: "700", fontSize: 18 }}>Ship to :</h6>
                                         <div className="mx-3">
-                                            <h6 style={{ fontWeight: "700", fontSize: 14 }}>{items.address_details.name}</h6>
-                                            <p className='mb-1'>{items.address_details.user_house_no}, {items.address_details.base_address}, {items.address_details.address}, {items.address_details.city}, {items.address_details.zipcode}</p>
-                                            <p style={{ fontWeight: "700", fontSize: 14 }}>Phone: {items.address_details.phone}</p>
+                                            <h6 style={{ fontWeight: "700", fontSize: 14 }}>{items.address_details?.name}</h6>
+                                            <p className='mb-1'>{items.address_details?.user_house_no}, {items.address_details?.base_address}, {items.address_details?.address}, {items.address_details?.city}, {items.address_details?.zipcode}</p>
+                                            <p style={{ fontWeight: "700", fontSize: 14 }}>Phone: {items.address_details?.phone}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -19,6 +19,7 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 import URL from '../../URL'
 import { position } from '@chakra-ui/styled-system';
+import { Box } from '@chakra-ui/react';
 
 const searchOptions = {
     // input: 'Gorakhpur Uttar Pardesh',
@@ -205,10 +206,6 @@ class AddressComp extends Component {
 
                             </>
 
-
-
-
-
                         )}
 
                     </div>
@@ -228,184 +225,186 @@ class AddressComp extends Component {
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form class="">
-                                    <div class="form-row">
+                                <Box height={{ base: "45vh", md: "unset" }}>
+                                    <form class="">
+                                        <div class="form-row">
 
-                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Full Name</label>
-                                            <input onChange={this.onChange} placeholder="First & Last Name" id="user_name" value={this.state.user_name} type="text" class="form-control" />
-                                        </div>
+                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Full Name</label>
+                                                <input onChange={this.onChange} placeholder="First & Last Name" id="user_name" value={this.state.user_name} type="text" class="form-control" />
+                                            </div>
 
-                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Mobile Number (10 Digit)</label>
-                                            <input onChange={this.onChange} placeholder="10 Digit Mobile Number" id="user_mobile" value={this.state.user_mobile} type="tel" class="form-control" />
-                                        </div>
-
-
+                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Mobile Number (10 Digit)</label>
+                                                <input onChange={this.onChange} placeholder="10 Digit Mobile Number" id="user_mobile" value={this.state.user_mobile} type="tel" class="form-control" />
+                                            </div>
 
 
-                                        <React.Fragment>
+
+
+                                            <React.Fragment>
+
+
+                                                <div class="col-md-12 form-group">
+                                                    <label class="form-label"> <label class="text-danger">*</label> Area / Locality</label>
+                                                    <PlacesAutocomplete
+                                                        value={this.state.address}
+                                                        onChange={this.handleChange}
+                                                        onSelect={this.handleSelect}
+                                                        searchOptions={searchOptions}
+
+
+                                                    >
+
+                                                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                                            <div>
+                                                                <input
+
+                                                                    {...getInputProps({
+                                                                        placeholder: 'E.g. Taramandal , Golghar , Mohaddipur',
+                                                                        className: 'form-control',
+                                                                    })}
+                                                                />
+                                                                <div className="autocomplete-dropdown-container">
+                                                                    {loading && <div>Loading...</div>}
+                                                                    {suggestions.map(suggestion => {
+                                                                        const className = suggestion.active
+                                                                            ? 'list-group-item active'
+                                                                            : 'list-group-item';
+                                                                        // inline style for demonstration purpose
+                                                                        const style = suggestion.active
+                                                                            ? { cursor: 'pointer' }
+                                                                            : { cursor: 'pointer' };
+                                                                        return (
+                                                                            <div class="list-group"
+                                                                                {...getSuggestionItemProps(suggestion, {
+                                                                                    className,
+                                                                                    style,
+                                                                                })}
+                                                                            >
+                                                                                <span>{suggestion.description}</span>
+                                                                            </div>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                    </PlacesAutocomplete>
+
+
+
+
+
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+                                            </React.Fragment>
+
+
+
+
+
+
+                                            <label class="form-label">Locate your delivery address on map   <label class="text-danger"> - Move red location marker to your delivery address</label></label>
+                                            <div class="container-fluid">
+                                                <div class="map-responsive">
+
+                                                    <Map
+                                                        google={window.google}
+                                                        center={this.state.position}
+                                                        zoom={this.state.zoom}
+                                                        defaultZoom="Zoom"
+                                                        initialCenter={{
+                                                            lat: this.state.position.lat,
+                                                            lng: this.state.position.lng
+                                                        }}
+                                                        onIdle={this.handleMapIdle}
+
+
+
+
+                                                    >
+
+
+
+
+
+
+                                                        {this.state.mapLoaded && (
+                                                            <Marker
+                                                                // map={window.google}
+                                                                draggable={true}
+                                                                position={{ lat: this.state.position.lat, lng: this.state.position.lng }}
+                                                                onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
+                                                                name="Delivery Location" />
+                                                            // animation={window.google.maps.Animation.DROP} />
+                                                        )}
+
+
+
+                                                        <InfoWindow
+                                                            position={{ lat: (this.state.position.lat + 0.0018), lng: this.state.position.lng }}
+
+                                                        >
+                                                            <div>
+                                                                <p style={{ padding: 0, margin: 0 }}>hello</p>
+                                                            </div>
+                                                        </InfoWindow>
+
+
+
+
+
+
+
+
+
+                                                    </Map>
+
+
+
+
+
+
+
+
+
+
+                                                </div>
+                                            </div>
+
+
+
+
+
 
 
                                             <div class="col-md-12 form-group">
-                                                <label class="form-label"> <label class="text-danger">*</label> Area / Locality</label>
-                                                <PlacesAutocomplete
-                                                    value={this.state.address}
-                                                    onChange={this.handleChange}
-                                                    onSelect={this.handleSelect}
-                                                    searchOptions={searchOptions}
+                                            </div>
 
 
-                                                >
+                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Flat / House / Office No.</label>
+                                                <input onChange={this.onChange} type="text" value={this.state.user_house_no} id="user_house_no" class="form-control" />
+                                            </div>
 
-                                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                                        <div>
-                                                            <input
-
-                                                                {...getInputProps({
-                                                                    placeholder: 'E.g. Taramandal , Golghar , Mohaddipur',
-                                                                    className: 'form-control',
-                                                                })}
-                                                            />
-                                                            <div className="autocomplete-dropdown-container">
-                                                                {loading && <div>Loading...</div>}
-                                                                {suggestions.map(suggestion => {
-                                                                    const className = suggestion.active
-                                                                        ? 'list-group-item active'
-                                                                        : 'list-group-item';
-                                                                    // inline style for demonstration purpose
-                                                                    const style = suggestion.active
-                                                                        ? { cursor: 'pointer' }
-                                                                        : { cursor: 'pointer' };
-                                                                    return (
-                                                                        <div class="list-group"
-                                                                            {...getSuggestionItemProps(suggestion, {
-                                                                                className,
-                                                                                style,
-                                                                            })}
-                                                                        >
-                                                                            <span>{suggestion.description}</span>
-                                                                        </div>
-                                                                    );
-                                                                })}
-                                                            </div>
-                                                        </div>
-                                                    )}
-
-                                                </PlacesAutocomplete>
-
-
-
-
-
-
-
-
-
+                                            <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Street / Society / Office Name</label>
+                                                <input type="text" onChange={this.onChange} value={this.state.user_street} id="user_street" class="form-control" />
                                             </div>
 
 
 
 
 
-
-                                        </React.Fragment>
-
-
-
-
-
-
-                                        <label class="form-label">Locate your delivery address on map   <label class="text-danger"> - Move red location marker to your delivery address</label></label>
-                                        <div class="container-fluid">
-                                            <div class="map-responsive">
-
-                                                <Map
-                                                    google={window.google}
-                                                    center={this.state.position}
-                                                    zoom={this.state.zoom}
-                                                    defaultZoom="Zoom"
-                                                    initialCenter={{
-                                                        lat: this.state.position.lat,
-                                                        lng: this.state.position.lng
-                                                    }}
-                                                    onIdle={this.handleMapIdle}
-
-
-
-
-                                                >
-
-
-
-
-
-
-                                                    {this.state.mapLoaded && (
-                                                        <Marker
-                                                            // map={window.google}
-                                                            draggable={true}
-                                                            position={{ lat: this.state.position.lat, lng: this.state.position.lng }}
-                                                            onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
-                                                            name="Delivery Location" />
-                                                        // animation={window.google.maps.Animation.DROP} />
-                                                    )}
-
-
-
-                                                    <InfoWindow
-                                                        position={{ lat: (this.state.position.lat + 0.0018), lng: this.state.position.lng }}
-
-                                                    >
-                                                        <div>
-                                                            <p style={{ padding: 0, margin: 0 }}>hello</p>
-                                                        </div>
-                                                    </InfoWindow>
-
-
-
-
-
-
-
-
-
-                                                </Map>
-
-
-
-
-
-
-
-
-
-
-                                            </div>
                                         </div>
-
-
-
-
-
-
-
-                                        <div class="col-md-12 form-group">
-                                        </div>
-
-
-                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Flat / House / Office No.</label>
-                                            <input onChange={this.onChange} type="text" value={this.state.user_house_no} id="user_house_no" class="form-control" />
-                                        </div>
-
-                                        <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Street / Society / Office Name</label>
-                                            <input type="text" onChange={this.onChange} value={this.state.user_street} id="user_street" class="form-control" />
-                                        </div>
-
-
-
-
-
-                                    </div>
-                                </form>
+                                    </form>
+                                </Box>
                             </div>
                             <div class="modal-footer p-0 border-0">
                                 <div class="col-6 m-0 p-0">
