@@ -12,9 +12,9 @@ const AccountNavigatinMenu = (props) => {
     const navigate = useNavigate();
     const [isNotSmallerScreen] = useMediaQuery("(min-width:1024px)");
 
-    useEffect(() => {
-        !auth.isUserLogin && navigate("/login");
-    }, [auth])
+    // useEffect(() => {
+    //     !auth.isUserLogin && navigate("/login");
+    // }, [auth])
 
 
     return (
