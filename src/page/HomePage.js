@@ -13,11 +13,11 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-        <meta charSet="utf-8" /> 
+        <meta charSet="utf-8" />
         <title>{SeoData.title}</title>
 
-        <meta name="description"  content={SeoData.decerption} />
-        <meta name="keywords" content={SeoData.keyword}/>
+        <meta name="description" content={SeoData.decerption} />
+        <meta name="keywords" content={SeoData.keyword} />
         <meta name="author" content={SeoData.author} />
 
 

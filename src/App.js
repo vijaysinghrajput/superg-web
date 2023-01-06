@@ -22,6 +22,8 @@ import { getAnalytics } from "firebase/analytics";
 import URL from './URL'
 import SearchPage from './page/SearchPage';
 import { OrderSuccessFull } from './component/Cart/OrderSuccessfull';
+import { ChakraProvider } from '@chakra-ui/react';
+import GetMyLocationPage from './page/GetMyLoactionPage';
 
 
 class App extends Component {
@@ -80,10 +82,11 @@ class App extends Component {
     }).then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-           subcategories: responseJson.subcategories,
-           products: responseJson.products,
-           seo_area: responseJson.seo_area,
-           keywords: responseJson.keywords, })
+          subcategories: responseJson.subcategories,
+          products: responseJson.products,
+          seo_area: responseJson.seo_area,
+          keywords: responseJson.keywords,
+        })
         // fetchAllData(responseJson);
       })
       .catch((error) => {
@@ -97,145 +100,146 @@ class App extends Component {
     if (this.state.subcategories.length) {
 
 
-      
+
       return (
         <ContextProvider>
-          {/* <ChakraProvider> */}
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/verification" element={<Verification />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/category" element={<CategoryPage />} />
-              <Route path="/search" element={<SearchPage />} />
-              {this.state.subcategories.map((item, i) => {
-                return (
-                  <Route path={"/" + (item.name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/:subcatID/:subcatName"} element={<ProductsBySubcategoryPage />} />
-                )
-              })}
-              {this.state.products.map((item, i) => {
-                return (
-                  <Route path={"/" + (item.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/:prodID"} element={<ProductDetailsPage />} />
-                )
-              })}
-              {/* USER ACCOUNT START */}
-              <Route path="/orderSuccess" element={<OrderSuccessFull />} />
-              <Route path="/accountApp" element={<AccountPageApp />} />
-              <Route path="/account" element={<AccountPage />} />
-              <Route path="/notification" element={<AccountPage />} />
-              <Route path="/offers" element={<AccountPage />} />
-              <Route path="/orders" element={<AccountPage />} />
-              <Route path="/address" element={<AccountPage />} />
-              <Route path="/condition" element={<AccountPage />} />
-              <Route path="/contact" element={<AccountPage />} />
-              <Route path="/about" element={<ConditionPage />} />
-              <Route path="/term-and-condition" element={<ConditionPage />} />
-              <Route path="/privacy-and-policy" element={<ConditionPage />} />
-              <Route path="/shipping-policy" element={<ConditionPage />} />
-              <Route path="/return-and-refund-policy" element={<ConditionPage />} />
-              <Route path="/faq" element={<ConditionPage />} />
-              <Route path='*' exact={true} element={<NotFoundPage />} />
+          <ChakraProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/verification" element={<Verification />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/location" element={<GetMyLocationPage />} />
+                <Route path="/category" element={<CategoryPage />} />
+                <Route path="/search" element={<SearchPage />} />
+                {this.state.subcategories.map((item, i) => {
+                  return (
+                    <Route path={"/" + (item.name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/:subcatID/:subcatName"} element={<ProductsBySubcategoryPage />} />
+                  )
+                })}
+                {this.state.products.map((item, i) => {
+                  return (
+                    <Route path={"/" + (item.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/:prodID"} element={<ProductDetailsPage />} />
+                  )
+                })}
+                {/* USER ACCOUNT START */}
+                <Route path="/orderSuccess" element={<OrderSuccessFull />} />
+                <Route path="/accountApp" element={<AccountPageApp />} />
+                <Route path="/account" element={<AccountPage />} />
+                <Route path="/notification" element={<AccountPage />} />
+                <Route path="/offers" element={<AccountPage />} />
+                <Route path="/orders" element={<AccountPage />} />
+                <Route path="/address" element={<AccountPage />} />
+                <Route path="/condition" element={<AccountPage />} />
+                <Route path="/contact" element={<AccountPage />} />
+                <Route path="/about" element={<ConditionPage />} />
+                <Route path="/term-and-condition" element={<ConditionPage />} />
+                <Route path="/privacy-and-policy" element={<ConditionPage />} />
+                <Route path="/shipping-policy" element={<ConditionPage />} />
+                <Route path="/return-and-refund-policy" element={<ConditionPage />} />
+                <Route path="/faq" element={<ConditionPage />} />
+                <Route path='*' exact={true} element={<NotFoundPage />} />
 
-              {/* USER ACCOUNT END */}
-              {/* SEO START */}
-
-
-{this.state.keywords.map((item, i) => {
-                return (
-                  <Route path={"/" + (item.keyword + " in gorakhpur").replace(/\s/g, "-").toLowerCase()} element={<HomePageSeo  title={item.keyword.replace(/(^\w|\s\w)/g, m => m.toUpperCase()) + " in Gorakhpur"}  />} />
-                )
- })}
-
- {this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/grocery-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Grocery Delivery in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/grocery-delivery-app-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Grocery Delivery App in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/grocery-delivery-website-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Grocery Delivery Website in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
- {this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/online-grocery-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Online Grocery Delivery in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/online-vegetables-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Online Vegetables Delivery in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/vegetables-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Vegetables Delivery in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/vegetables-delivery-app-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Vegetables Delivery App in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/vegetables-delivery-website-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Vegetables Delivery Website in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/online-fruits-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Online Fruits Delivery in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/fruits-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Fruits Delivery in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/fruits-delivery-app-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Fruits Delivery App in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
-
-{this.state.seo_area.map((areadata, i) => {
-        return (
-
-          <Route path={"/fruits-delivery-website-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase()+"-gorakhpur"} element={<HomePageSeo  title={"Fruits Delivery Website in "+ (areadata.area)+" "+ (areadata.city)}  />} />
-        )
-})}
+                {/* USER ACCOUNT END */}
+                {/* SEO START */}
 
 
-              {/* SEO END */}
-            </Routes>
-          </BrowserRouter>
-          {/* </ChakraProvider> */}
+                {this.state.keywords.map((item, i) => {
+                  return (
+                    <Route path={"/" + (item.keyword + " in gorakhpur").replace(/\s/g, "-").toLowerCase()} element={<HomePageSeo title={item.keyword.replace(/(^\w|\s\w)/g, m => m.toUpperCase()) + " in Gorakhpur"} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/grocery-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Grocery Delivery in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/grocery-delivery-app-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Grocery Delivery App in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/grocery-delivery-website-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Grocery Delivery Website in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/online-grocery-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Online Grocery Delivery in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/online-vegetables-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Online Vegetables Delivery in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/vegetables-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Vegetables Delivery in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/vegetables-delivery-app-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Vegetables Delivery App in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/vegetables-delivery-website-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Vegetables Delivery Website in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/online-fruits-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Online Fruits Delivery in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/fruits-delivery-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Fruits Delivery in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/fruits-delivery-app-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Fruits Delivery App in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+                {this.state.seo_area.map((areadata, i) => {
+                  return (
+
+                    <Route path={"/fruits-delivery-website-in-" + (areadata.area).replace(/\s/g, "-").toLowerCase() + "-gorakhpur"} element={<HomePageSeo title={"Fruits Delivery Website in " + (areadata.area) + " " + (areadata.city)} />} />
+                  )
+                })}
+
+
+                {/* SEO END */}
+              </Routes>
+            </BrowserRouter>
+          </ChakraProvider>
         </ContextProvider>
       );
     } else {

@@ -239,39 +239,39 @@ class Address extends Component {
                                             </div>
 
                                             {/* <label class="form-label">Locate your delivery address on map   <label class="text-danger"> - Move red location marker to your delivery address</label></label> */}
-                                            {/* <div class="container-fluid">
-                                            <div class="map-responsive">
-                                                <Map
-                                                    google={window.google}
-                                                    center={this.state.position}
-                                                    zoom={this.state.zoom}
-                                                    defaultZoom="Zoom"
-                                                    initialCenter={{
-                                                        lat: this.state.position.lat,
-                                                        lng: this.state.position.lng
-                                                    }}
-                                                    onIdle={this.handleMapIdle}
-                                                >
-                                                    {this.state.mapLoaded && (
-                                                        <Marker
-                                                            // map={window.google}
-                                                            draggable={true}
-                                                            position={{ lat: this.state.position.lat, lng: this.state.position.lng }}
-                                                            onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
-                                                            name="Delivery Location" />
-                                                        // animation={window.google.maps.Animation.DROP} />
-                                                    )}
-                                                    <InfoWindow
-                                                        position={{ lat: (this.state.position.lat + 0.0018), lng: this.state.position.lng }}
-
+                                            <div class="container-fluid">
+                                                <div class="map-responsive">
+                                                    {/* <Map
+                                                        google={window.google}
+                                                        center={this.state.position}
+                                                        zoom={this.state.zoom}
+                                                        defaultZoom="Zoom"
+                                                        initialCenter={{
+                                                            lat: this.state.position.lat,
+                                                            lng: this.state.position.lng
+                                                        }}
+                                                        onIdle={this.handleMapIdle}
                                                     >
-                                                        <div>
-                                                            <p style={{ padding: 0, margin: 0 }}>hello</p>
-                                                        </div>
-                                                    </InfoWindow>
-                                                </Map>
+                                                        {this.state.mapLoaded && (
+                                                            <Marker
+                                                                // map={window.google}
+                                                                draggable={true}
+                                                                position={{ lat: this.state.position.lat, lng: this.state.position.lng }}
+                                                                onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
+                                                                name="Delivery Location" />
+                                                            // animation={window.google.maps.Animation.DROP} />
+                                                        )}
+                                                        <InfoWindow
+                                                            position={{ lat: (this.state.position.lat + 0.0018), lng: this.state.position.lng }}
+
+                                                        >
+                                                            <div>
+                                                                <p style={{ padding: 0, margin: 0 }}>hello</p>
+                                                            </div>
+                                                        </InfoWindow>
+                                                    </Map> */}
+                                                </div>
                                             </div>
-                                        </div> */}
                                             <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Flat / House / Office No.</label>
                                                 <input onChange={this.onChange} type="text" value={this.state.user_house_no} id="user_house_no" class="form-control" />
                                             </div>

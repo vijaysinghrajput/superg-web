@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import MainData from '../context/MainContext';
-import { useDisclosure, useMediaQuery, Select } from '@chakra-ui/react';
+import { useDisclosure, useMediaQuery, Select, Text } from '@chakra-ui/react';
 import { MdOutlineShoppingCart, MdArrowForwardIos } from 'react-icons/md';
 import { BiCategory, BiSearchAlt2 } from 'react-icons/bi';
 // import { BsWhatsapp } from 'react-icons/bs';
 import { FcSearch } from 'react-icons/fc';
 import { AiOutlineLogin } from 'react-icons/ai';
-import { BsWhatsapp, BsFillTelephoneFill } from 'react-icons/bs';
+import { BsWhatsapp, BsFillTelephoneFill, BsArrowLeft } from 'react-icons/bs';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { constants } from '../URL';
 import Drawer from './comman/Drawer';
 import { useMemo } from 'react';
+import { HiArrowNarrowLeft } from 'react-icons/hi';
 
 const Header = () => {
 
@@ -92,18 +94,18 @@ const Header = () => {
       {!isNotSmallerScreen &&
         <>
           <Drawer isOpen={isOpen} onClose={onClose} />
-          {cartItems.length !== 0 && pathname !== "/cart" && pathname !== "/login" && pathname !== "/verification" &&
+          {cartItems.length !== 0 && pathname !== "/cart" && pathname !== "/login" && pathname !== "/verification" && pathname !== "/location" &&
             <div className="pb-0 pt-2 px-3 letItFlowInAir">
               <Link to="/cart">
                 <div class="rounded shadow bg-success p-3 text-white">
                   <div class="d-flex align-items-center justify-content-between">
-                    <div className='d-flex align-items-center'><MdOutlineShoppingCart size={20} style={{ fontWeight: "700" }} /><h6 class="m-0 ml-2">{cartItems.length} items. ₹{Math.round(GetTotal)}</h6></div> <h6 className='ml-auto mb-0'>view cart <MdArrowForwardIos /></h6>
+                    <div className='d-flex align-items-center'><MdOutlineShoppingCart size={20} style={{ fontWeight: "700" }} /><h6 class="m-0 ml-2">{cartItems.length} items. ₹{Math.round(GetTotal)}</h6></div> <h6 className='ml-auto mb-0 d-flex'>view cart <MdArrowForwardIos /></h6>
                   </div>
                 </div>
               </Link>
             </div>
           }
-          {pathname !== "/cart" && pathname !== "/login" && pathname !== "/verification" &&
+          {pathname !== "/cart" && pathname !== "/login" && pathname !== "/verification" && pathname !== "/location" &&
             <div class="osahan-menu-fotter fixed-bottom bg-white text-center border-top">
               <div class="row m-0">
                 <Link to="/" class={pathname === "/" ? "text-dark small col font-weight-bold text-decoration-none p-2 selected" : "text-muted col small text-decoration-none p-2"}>
@@ -140,13 +142,13 @@ const Header = () => {
       }
       {
         !isNotSmallerScreen && pathname !== "/" ? (
-          <div class="p-3 border-bottom mobile-nav">
+          <div class="p-3 border-bottom mobile-nav bg-light">
             <div class="d-flex align-items-center">
               <div class="font-weight-bold text-success text-decoration-none" onClick={() => navigate(-1)}>
-                <i class="icofont-rounded-left back-page"></i></div>
-              <h5 class="font-weight-bold m-0 ml-3">{pathname?.replace(/-.*/, '').replace(/\//, '').toUpperCase()}</h5>
+                <HiArrowNarrowLeft size={26} style={{ fontWeight: "800", cursor: "pointer" }} />
+              </div>
+              <Text fontSize={18} fontWeight="600" ml={3}>{pathname?.replace(/-.*/, '').replace(/\//, '').toUpperCase()}</Text>
               <a class="ml-auto hc-nav-trigger hc-nav-1" href="javascript:void(0)" onClick={onOpen}><i class="icofont-navigation-menu"></i></a>
-
             </div>
           </div>
         ) : (

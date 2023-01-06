@@ -1367,9 +1367,9 @@ label {
 
 .plusMinusFun {
 	box-shadow: rgb(194 194 194) 0px 1px 5px 0px;
-	padding: 5px;
-	background: #efefef;
-	border-radius: 12px;
+	padding: 4px;
+	background: #fff;
+	border-radius: 8px;
 }
 
 .cartItemCount {
@@ -1468,4 +1468,21 @@ label {
 
 iframe {
 	pointer-events: none;
+}
+
+.btn-custom {
+	background: #1eb866;
+	border: 1px solid #1eb866;
+	color: #fff;
+	padding: 16px;
+	border-radius: 10px;
+	letter-spacing: 1px;
+	font-size: 20px;
+	box-shadow: 0 8px 12px -8px rgba(60, 60, 60, 0.721);
+	width: 100%;
+	font-size: 18px;
+}
+
+svg {
+	display: unset !important;
 }

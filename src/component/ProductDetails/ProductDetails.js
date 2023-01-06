@@ -5,6 +5,10 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import { BasicVegitableFruit } from '../ProductsCards/BasicVegitableFruit';
 import Seo from "../Seo";
+import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
+import { FcApproval } from 'react-icons/fc';
+import { HiOutlineCake } from 'react-icons/hi';
+
 
 
 const ProductDetails = () => {
@@ -45,8 +49,6 @@ const ProductDetails = () => {
                 descreption={product?.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
                 image={URL + "/images/product-images/" + product?.product_image}
             />
-
-            {console.log("about product", product)}
             <section className="pb-4 osahan-main-body">
                 <div className="container">
                     <div className="row">
@@ -57,7 +59,7 @@ const ProductDetails = () => {
                                     title={product?.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"} />
                             </div>
                         </div>
-                        <div className="col-lg-6">
+                        {/* <div className="col-lg-6">
                             <div className="p-4 bg-white rounded shadow-sm">
                                 <div className="pt-0">
                                     <h2 className="font-weight-bold">{product?.product_name} <h3>{product?.hindi_name}</h3></h2>
@@ -128,6 +130,115 @@ const ProductDetails = () => {
                                     <div className="pt-3">
                                         <p className="font-weight-bold my-2">Product Details</p>
                                         <p className="text-muted small mb-0">{product?.products_description}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
+                        <div className="col-lg-6">
+                            <div className="p-4 bg-white rounded shadow-sm">
+                                <div className="pt-0">
+                                    <h2 className="font-weight-bold" style={{ fontSize: 28, fontWeight: "800" }}>{product?.product_name} <h3>{product?.hindi_name}</h3></h2>
+                                    <HStack mt={4} mb={2}>
+                                        <FcApproval size={24} />
+                                        <Text fontSize={16}>Trusted</Text>
+                                    </HStack>
+                                    <HStack>
+                                        <Text fontSize={18}>₹</Text>
+                                        <Text fontSize={40} fontWeight="800">
+                                            {Math.round((product?.price) - (product?.price * product?.discount / 100))}
+                                        </Text>
+                                        <Box>
+                                            <Text>
+                                                <span style={{ textDecoration: "line-through", fontSize: 16 }}>₹{product?.price}</span>
+                                                <span className="text-success ml-2">{product?.discount}% off</span>
+                                            </Text>
+                                            <Text fontSize={10}>Inclusive of all taxes</Text>
+                                        </Box>
+                                    </HStack>
+                                    <SimpleGrid columns={{ base: 2 }}>
+                                        {product?.descreption && <Box
+                                            padding={6}
+                                        >
+                                            <Text fontSize={14} color="#d4d4d4" display="flex" alignItems={"center"}>
+                                                Description
+                                            </Text>
+                                            <Text fontSize={18} mt={2} fontWeight="800">
+                                                {product?.products_description}
+                                            </Text>
+                                        </Box>}
+                                    </SimpleGrid>
+                                </div>
+                                <div className="pt-2 mb-3 mt-2">
+                                    <p className="font-weight-bold m-0">Available in:</p>
+                                    <HStack mt={2}>
+                                        <Box border={"1px solid #ff8d35"} background="#ff8d35" color="#fff" borderRadius={50} p={1} px={4}>{product?.product_size + product?.product_unit}</Box>
+                                    </HStack>
+                                    {/* <p className="text-muted m-0">{product?.product_size + product?.product_unit}</p> */}
+                                </div>
+                                <div className="details">
+                                    <div className="pt-3 bg-white">
+                                        <div>
+                                            {product?.status != "0" ?
+                                                !product?.itemQuant ? (
+                                                    <div>
+                                                        <a href="javascript:void(0)" onClick={() =>
+                                                            addToCart({
+                                                                ...product,
+                                                                itemQuant: 1,
+                                                                cartId: product?.id
+                                                            })
+                                                        } className="btn btn-custom btn-block d-flex align-items-center justify-content-center mr-3">Add to Cart</a>
+
+                                                    </div>
+                                                ) : (
+                                                    <div class="d-flex justify-content-center px-3 align-items-center">
+                                                        <Box
+                                                            borderRadius={8}
+                                                            background="#1eb866"
+                                                            p={2}
+                                                        >
+                                                            {product?.itemQuant === 1 ? (
+                                                                <MdDelete
+                                                                    style={{ fontSize: 26, cursor: "pointer", color: "#fff" }}
+                                                                    onClick={() =>
+                                                                        removeFromCart(product?.id)}
+                                                                />
+                                                            ) : (
+                                                                <AiOutlineMinus
+                                                                    style={{ fontSize: 26, cursor: "pointer", color: "#fff" }}
+                                                                    onClick={() => addToCart({
+                                                                        ...product,
+                                                                        itemQuant: product?.itemQuant - 1,
+                                                                        price: product?.price - product?.price,
+                                                                        cartId: product?.id
+                                                                    })}
+                                                                />
+                                                            )}
+                                                        </Box>
+                                                        <h5 className="mb-0 mx-4" style={{ fontSize: 26 }}>{product?.itemQuant}</h5>
+                                                        <Box
+                                                            borderRadius={8}
+                                                            background="#1eb866"
+                                                            p={2}
+                                                        >
+
+                                                            <AiOutlinePlus
+                                                                style={{ fontSize: 26, cursor: "pointer", color: "#fff" }}
+                                                                onClick={() =>
+                                                                    addToCart({
+                                                                        ...product,
+                                                                        itemQuant: product?.itemQuant + 1,
+                                                                        price: parseInt(product?.price) + parseInt(product?.price),
+                                                                        cartId: product?.id
+                                                                    })
+                                                                }
+                                                            />
+                                                        </Box>
+                                                    </div>
+                                                ) : <Box>
+                                                    <Text textAlign={"center"} fontSize={18} fontWeight="800">Out of stock</Text>
+                                                </Box>}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -8,7 +8,16 @@ import PlacesAutocomplete, {
 import $ from 'jquery';
 
 import Geocode from "react-geocode";
-
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+} from '@chakra-ui/react'
 import Base64 from "../../helper/EncodeDecode";
 import Cookies from 'universal-cookie';
 import { DualHelixLoader } from '../../component/Loaders/DualHelix';
@@ -19,8 +28,9 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 import URL from '../../URL'
 import { position } from '@chakra-ui/styled-system';
-import { Box } from '@chakra-ui/react';
-
+import { Box, Button } from '@chakra-ui/react';
+import getLocation from '../../modules/modules';
+import MapOverview from '../map/New/MapOverview';
 const searchOptions = {
     // input: 'Gorakhpur Uttar Pardesh',
     location: window.google?.maps?.LatLng(26.7606, 83.3732),
@@ -49,6 +59,26 @@ Geocode.setRegion("in");
 // Geocode.enableDebug();
 
 
+function BasicUsage() {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    return (
+        <>
+            <Button onClick={onOpen}>Open Modal</Button>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalCloseButton zIndex={9999} />
+                    <ModalBody bg="none" p={0}>
+                        <Box h={"90vh"}>
+                            <MapOverview />
+                        </Box>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+        </>
+    )
+}
 
 
 class AddressComp extends Component {
@@ -76,16 +106,7 @@ class AddressComp extends Component {
             user_city: '',
             user_addres_type: 'Home',
             UserAddressData: [],
-            mapLoaded: false
-
-
-
-
-
-
-
-
-
+            mapLoaded: false,
 
 
         }
@@ -151,6 +172,21 @@ class AddressComp extends Component {
             .catch((error) => { });
     }
 
+
+    getCurrentLocation = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const p = position.coords;
+            console.log("location ===>", p);
+            this.setState({
+                position: {
+                    lat: p.latitude,
+                    lng: p.longitude
+                }
+            })
+        })
+    }
+
+
     render() {
 
 
@@ -166,6 +202,8 @@ class AddressComp extends Component {
                                 My Addresses <a href="#" data-toggle="modal" data-target="#addAddressModal" class="text-decoration-none text-success ml-auto"> <i class="icofont-plus-circle mr-1"></i>Add New </a>
                             </button>
                         </h2>
+
+                        <BasicUsage />
 
                         {this.state.isDataLoading ? (
                             <DualHelixLoader />
@@ -250,8 +288,6 @@ class AddressComp extends Component {
                                                         onChange={this.handleChange}
                                                         onSelect={this.handleSelect}
                                                         searchOptions={searchOptions}
-
-
                                                     >
 
                                                         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
@@ -308,8 +344,9 @@ class AddressComp extends Component {
                                             </React.Fragment>
 
 
-
-
+                                            <Button variant={"solid"} onClick={() => this.getCurrentLocation()}>
+                                                Get Location
+                                            </Button>
 
 
                                             <label class="form-label">Locate your delivery address on map   <label class="text-danger"> - Move red location marker to your delivery address</label></label>
@@ -326,17 +363,7 @@ class AddressComp extends Component {
                                                             lng: this.state.position.lng
                                                         }}
                                                         onIdle={this.handleMapIdle}
-
-
-
-
                                                     >
-
-
-
-
-
-
                                                         {this.state.mapLoaded && (
                                                             <Marker
                                                                 // map={window.google}
