@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState,Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import MainContext from '../../context/MainContext';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
@@ -9,6 +9,7 @@ import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
 import { FcApproval } from 'react-icons/fc';
 import { HiOutlineCake } from 'react-icons/hi';
 
+import {Img} from 'react-image'
 
 
 const ProductDetails = () => {
@@ -54,9 +55,24 @@ const ProductDetails = () => {
                     <div className="row">
                         <div className="col-lg-6">
                             <div className="d-flex mb-3">
-                                <img src={URL + "/images/product-images/" + product?.product_image} className="img-fluid mx-auto shadow-sm rounded"
-                                    alt={product?.product_name + " in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-                                    title={product?.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"} />
+
+                            <Suspense>
+                                <Img 
+                                                     src={URL + "/images/product-images/" + product?.product_image}
+                                                     className="img-fluid mx-auto shadow-sm rounded"
+                                                     alt={data.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                                     title={data.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+
+                                                      loader={<Img 
+                                                          src="/img/logo-500.png" />}
+                                                      unloader={<Img 
+                                                           src="/img/logo-500.png" />}
+
+                               />
+    </Suspense>
+                          
+
+
                             </div>
                         </div>
                         {/* <div className="col-lg-6">
