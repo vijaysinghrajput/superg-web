@@ -53,8 +53,7 @@ export const BasicVegitableFruit = ({ data }) => {
                                                      title={data.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
                                                      style={data.status == "0" ? { filter: "blur(0px)" } : {}}
 
-                                                      loader={<Img 
-                                                          style={data.status == "0" ? { filter: "blur(0px)" } : {}} src="/img/logo-500.png" />}
+                                               
                                                       unloader={<Img 
                                                           style={data.status == "0" ? { filter: "blur(0px)" } : {}}  src="/img/logo-500.png" />}
 

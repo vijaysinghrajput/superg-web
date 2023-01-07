@@ -239,9 +239,9 @@ class Address extends Component {
                                             </div>
 
                                             {/* <label class="form-label">Locate your delivery address on map   <label class="text-danger"> - Move red location marker to your delivery address</label></label> */}
-                                            <div class="container-fluid">
+                                            {/* <div class="container-fluid">
                                                 <div class="map-responsive">
-                                                    {/* <Map
+                                                    <Map
                                                         google={window.google}
                                                         center={this.state.position}
                                                         zoom={this.state.zoom}
@@ -269,9 +269,9 @@ class Address extends Component {
                                                                 <p style={{ padding: 0, margin: 0 }}>hello</p>
                                                             </div>
                                                         </InfoWindow>
-                                                    </Map> */}
+                                                    </Map>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div class="col-md-12 form-group"><label class="form-label"> <label class="text-danger">*</label> Flat / House / Office No.</label>
                                                 <input onChange={this.onChange} type="text" value={this.state.user_house_no} id="user_house_no" class="form-control" />
                                             </div>

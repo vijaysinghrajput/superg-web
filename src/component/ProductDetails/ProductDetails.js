@@ -63,8 +63,7 @@ const ProductDetails = () => {
                                                      alt={product?.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
                                                      title={product?.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
 
-                                                      loader={<Img 
-                                                          src="/img/logo-500.png" />}
+                                                    
                                                       unloader={<Img 
                                                            src="/img/logo-500.png" />}
 
