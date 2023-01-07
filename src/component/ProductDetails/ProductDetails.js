@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState,Suspense } from 'react';
+import React, { useContext, useEffect, useState, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import MainContext from '../../context/MainContext';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
@@ -9,7 +9,7 @@ import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
 import { FcApproval } from 'react-icons/fc';
 import { HiOutlineCake } from 'react-icons/hi';
 
-import {Img} from 'react-image'
+import { Img } from 'react-image'
 
 
 const ProductDetails = () => {
@@ -56,20 +56,20 @@ const ProductDetails = () => {
                         <div className="col-lg-6">
                             <div className="d-flex mb-3">
 
-                            <Suspense>
-                                <Img 
-                                                     src={URL + "/images/product-images/" + product?.product_image}
-                                                     className="img-fluid mx-auto shadow-sm rounded"
-                                                     alt={product?.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-                                                     title={product?.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                <Suspense>
+                                    <Img
+                                        src={URL + "/images/product-images/" + product?.product_image}
+                                        className="img-fluid mx-auto shadow-sm rounded"
+                                        alt={product?.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                        title={product?.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
 
-                                                    
-                                                      unloader={<Img 
-                                                           src="/img/logo-500.png" />}
 
-                               />
-    </Suspense>
-                          
+                                        unloader={<Img
+                                            src="/img/logo-500.png" />}
+
+                                    />
+                                </Suspense>
+
 
 
                             </div>
@@ -155,23 +155,23 @@ const ProductDetails = () => {
                                     <h2 className="font-weight-bold" style={{ fontSize: 28, fontWeight: "800" }}>{product?.product_name} <h3>{product?.hindi_name}</h3></h2>
                                     <HStack mt={4} mb={2}>
                                         <FcApproval size={24} />
-                                        <Text fontSize={16}>{product?.parent_id == 11 || product?.parent_id == 1 || product?.parent_id == 4? "Fresh":"Trusted"}</Text>
+                                        <Text fontSize={16}>{product?.parent_id == 11 || product?.parent_id == 1 || product?.parent_id == 4 ? "Fresh" : "Trusted"}</Text>
                                     </HStack>
                                     {product?.status == "1" &&
-                                    <HStack>
-                                        <Text fontSize={18}>₹</Text>
-                                        <Text fontSize={40} fontWeight="800">
-                                            {Math.round((product?.price) - (product?.price * product?.discount / 100))}
-                                        </Text>
-                                        <Box>
-                                            <Text>
-                                                <span style={{ textDecoration: "line-through", fontSize: 17 ,fontWeight:'600' }}>₹{product?.price}</span>
-                                                {product?.discount != 0 && <span className="text-success ml-2" style={{  fontSize: 18 }}>{Math.round(product?.discount)}% off</span>}
+                                        <HStack>
+                                            <Text fontSize={18}>₹</Text>
+                                            <Text fontSize={40} fontWeight="800">
+                                                {Math.round((product?.price) - (product?.price * product?.discount / 100))}
                                             </Text>
-                                            <Text fontSize={10}>Inclusive of all taxes</Text>
-                                        </Box>
-                                    </HStack>}
-                                    <SimpleGrid columns={{ base: 2 }}>
+                                            <Box>
+                                                <Text>
+                                                    <span style={{ textDecoration: "line-through", fontSize: 17, fontWeight: '600' }}>₹{product?.price}</span>
+                                                    {product?.discount != 0 && <span className="text-success ml-2" style={{ fontSize: 18 }}>{Math.round(product?.discount)}% off</span>}
+                                                </Text>
+                                                <Text fontSize={10}>Inclusive of all taxes</Text>
+                                            </Box>
+                                        </HStack>}
+                                    <SimpleGrid columns={{ base: 1 }}>
                                         {product?.products_description && <Box
                                             padding={6}
                                         >

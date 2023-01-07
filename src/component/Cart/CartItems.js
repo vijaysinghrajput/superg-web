@@ -6,7 +6,7 @@ import { CartItemsCard } from '../ProductsCards/CartItems';
 const CartItems = (props) => {
 
     const data = useContext(MainContext);
-    const { cartItems, auth, products } = data;
+    const { cartItems, auth, products, condition, totalAmount } = data;
     const navigation = useNavigate();
     const location = useLocation();
     const GetTotal = cartItems.reduce(function (a, b) {
@@ -38,23 +38,31 @@ const CartItems = (props) => {
                                 )
                             })}
                             <div>
-                                {auth.isUserLogin ?
-                                    <a href="#" className="text-decoration-none btn btn-block p-3" type="button" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo">
-                                        <div className="rounded shadow bg-success d-flex align-items-center p-3 text-white">
-                                            <div className="more">
-                                                <h6 className="m-0">Subtotal ₹{Math.round(GetTotal)}</h6>
-                                                <p className="small m-0">Proceed to checkout</p>
-                                            </div>
-                                            <div className="ml-auto"><i className="icofont-simple-right" /></div>
+                                {Number(condition[0].minimum_order) > totalAmount ? <div className='p-3'>
+                                    <div className="rounded shadow bg-dark d-flex align-items-center p-3 text-white">
+                                        <div className="more w-100">
+                                            <h6 className='text-center'>Minimum order must be more than ₹{condition[0].minimum_order} 😢</h6>
                                         </div>
-                                    </a> : <Link to="/login" state={location.pathname} className="text-decoration-none btn btn-block p-3">
-                                        <div className="rounded shadow bg-danger d-flex align-items-center p-4 text-white">
-                                            <div className="more">
-                                                <h6 className="m-0">Please Login First</h6>
+                                    </div>
+                                </div>
+                                    :
+                                    auth.isUserLogin ?
+                                        <a href="#" className="text-decoration-none btn btn-block p-3" type="button" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo">
+                                            <div className="rounded shadow bg-success d-flex align-items-center p-3 text-white">
+                                                <div className="more">
+                                                    <h6 className="m-0">Subtotal ₹{Math.round(GetTotal)}</h6>
+                                                    <p className="small m-0">Proceed to checkout</p>
+                                                </div>
+                                                <div className="ml-auto"><i className="icofont-simple-right" /></div>
                                             </div>
-                                            <div className="ml-auto"><i className="icofont-simple-right" /></div>
-                                        </div>
-                                    </Link>}
+                                        </a> : <Link to="/login" state={location.pathname} className="text-decoration-none btn btn-block p-3">
+                                            <div className="rounded shadow bg-danger d-flex align-items-center p-4 text-white">
+                                                <div className="more">
+                                                    <h6 className="m-0">Please Login First</h6>
+                                                </div>
+                                                <div className="ml-auto"><i className="icofont-simple-right" /></div>
+                                            </div>
+                                        </Link>}
                             </div>
                         </div>
                     </div>

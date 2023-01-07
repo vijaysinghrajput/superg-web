@@ -49,8 +49,9 @@ const MapOverview = ({ coords, zoom, handleMapIdle, mapLoaded, onMarkerDragEnd, 
                         draggable={true}
                         position={coords}
                         onDragend={(t, map, coord) => onMarkerDragEnd(coord)}
-                        name="Delivery Location"
-                        animation={window.google.maps.Animation.BOUNCE}
+                        title={"Delivery Here"}
+                        name={"Delivery Here"}
+                    // animation={window.google.maps.Animation.BOUNCE}
                     />
                 )}
 

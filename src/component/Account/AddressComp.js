@@ -925,12 +925,12 @@ class AddressComp extends Component {
     };
 
     handleSelect = async (address) => {
-
+        console.log("handelchange ====>", address);
         await geocodeByAddress(address)
             .then(
                 (results) => {
 
-
+                    console.log("results ===>", results);
 
                     this.gettingCoords(results[0])
                     this.gettingAddressFormating(results[0])
@@ -994,14 +994,15 @@ class AddressComp extends Component {
                         address_line_3 = response.address_components[i].long_name;
                         break;
 
-
                     case "sublocality_level_1":
                         address_line_4 = response.address_components[i].long_name;
                         break;
 
-
-
                     case "administrative_area_level_2":
+                        city = response.address_components[i].long_name;
+                        break;
+
+                    case "administrative_area_level_3":
                         city = response.address_components[i].long_name;
                         break;
 
@@ -1016,7 +1017,7 @@ class AddressComp extends Component {
             return element !== undefined;
         });
 
-        // console.log('addrees', Addressdata[0])
+        console.log('addrees', Addressdata[0], "city =>>>>", city)
 
         this.setState({ user_full_address: Addressdata[0] })
         this.setState({ user_city: city })

@@ -32,6 +32,7 @@ const useMapData = () => {
         user_full_address: "",
         user_city: ""
     });
+    const [fullAddressByUser, setFullAddress] = useState();
 
     const handleMapIdle = () => {
         setMapLoaded(true);
@@ -65,7 +66,7 @@ const useMapData = () => {
                     case "sublocality_level_1":
                         address_line_4 = response.address_components[i].long_name;
                         break;
-                    case "administrative_area_level_2":
+                    case "administrative_area_level_3":
                         city = response.address_components[i].long_name;
                         break;
                 }
@@ -78,7 +79,7 @@ const useMapData = () => {
             return element !== undefined;
         });
 
-        // console.log('addrees', Addressdata[0])
+        console.log('addrees', Addressdata[0], "city  ====>", city);
 
         setAddress({ user_city: city, user_full_address: Addressdata[0] });
 
@@ -177,7 +178,20 @@ const useMapData = () => {
 
 
 
-    return { position, zoom, handleMapIdle, mapLoaded, onMarkerDragEnd, getCurrentLocation, address, gettingAddressFormating, setPosition, handleSelect, gettingCoords };
+    return {
+        position,
+        zoom,
+        handleMapIdle,
+        mapLoaded,
+        onMarkerDragEnd,
+        getCurrentLocation,
+        address,
+        gettingAddressFormating,
+        setPosition,
+        handleSelect,
+        gettingCoords,
+        setFullAddress
+    };
 
 
 }
