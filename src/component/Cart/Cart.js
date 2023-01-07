@@ -110,6 +110,11 @@ const Cart = (props) => {
         onClose();
     }
 
+    const GetTotal = cartItems.reduce(function (a, b) {
+        const price = Math.round(((b.price) - ((b.price) * (b.discount / 100))) * b.itemQuant)
+        return a + Number(price);
+    }, 0);
+
     return (
         <>
             <section className="pb-4 osahan-main-body">
@@ -119,7 +124,7 @@ const Cart = (props) => {
                             {navigate ? <Checkout setNavigate={setNavigate} checkOutData={checkOutData} /> : (
                                 <div className="accordion" id="accordionExample">
                                     <CartItems />
-                                    {auth.isUserLogin && Number(condition[0].minimum_order) <= totalAmount && <>
+                                    {auth.isUserLogin && Number(condition[0].minimum_order) <= GetTotal && <>
                                         <Address setAddress={setAddress} />
                                         <DeliveryTiming setDeliveryTiming={setDeliveryTiming} />
                                         <PaymentOption selectedAddress={selectedAddress} setNavigate={checkIfAllItemsAvilable} setPayment={setPayment} />

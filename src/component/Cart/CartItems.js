@@ -38,7 +38,8 @@ const CartItems = (props) => {
                                 )
                             })}
                             <div>
-                                {Number(condition[0].minimum_order) > totalAmount ? <div className='p-3'>
+                                {console.log("ajsasd ===>", Number(condition[0].minimum_order) > GetTotal, condition[0].minimum_order, GetTotal)}
+                                {Number(condition[0].minimum_order) > GetTotal ? <div className='p-3'>
                                     <div className="rounded shadow bg-dark d-flex align-items-center p-3 text-white">
                                         <div className="more w-100">
                                             <h6 className='text-center'>Minimum order must be more than ₹{condition[0].minimum_order} 😢</h6>
