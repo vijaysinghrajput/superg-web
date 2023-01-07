@@ -76,10 +76,10 @@ export const BasicVegitableFruit = ({ data }) => {
                                 <h6 className='px-3 pt-3 pb-0' style={{ color: "#000" }}>{data.product_name} <small>{data?.hindi_name}</small></h6>
                             </Link>
                             <div class="d-flex align-items-center px-3 pb-3 pt-0">
-                                <div>
+                            {data.status == "1" && <div>
                                     <h6 class="price m-0 text-dark mt-1" style={{ textDecoration: "line-through" }}>₹{Math.round((data.price))}/{data.product_size + data.product_unit}</h6>
                                     <h6 class="price m-0 text-success mt-1" style={{ fontSize: 18 }}>₹{Math.round((data.price) - ((data.price) * (data.discount / 100)))}/{data.product_size + data.product_unit}</h6>
-                                </div>
+                                </div>}
                                 <div className="ml-auto plus-minus-container">
                                     <div>
                                         {data.status != "0" ?

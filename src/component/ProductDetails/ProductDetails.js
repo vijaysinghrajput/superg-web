@@ -156,8 +156,9 @@ const ProductDetails = () => {
                                     <h2 className="font-weight-bold" style={{ fontSize: 28, fontWeight: "800" }}>{product?.product_name} <h3>{product?.hindi_name}</h3></h2>
                                     <HStack mt={4} mb={2}>
                                         <FcApproval size={24} />
-                                        <Text fontSize={16}>Trusted</Text>
+                                        <Text fontSize={16}>{product?.parent_id == 11 || product?.parent_id == 1 || product?.parent_id == 4? "Fresh":"Trusted"}</Text>
                                     </HStack>
+                                    {product?.status == "1" &&
                                     <HStack>
                                         <Text fontSize={18}>₹</Text>
                                         <Text fontSize={40} fontWeight="800">
@@ -165,12 +166,12 @@ const ProductDetails = () => {
                                         </Text>
                                         <Box>
                                             <Text>
-                                                <span style={{ textDecoration: "line-through", fontSize: 16 }}>₹{product?.price}</span>
-                                                <span className="text-success ml-2">{product?.discount}% off</span>
+                                                <span style={{ textDecoration: "line-through", fontSize: 17 ,fontWeight:'600' }}>₹{product?.price}</span>
+                                                {product?.discount != 0 && <span className="text-success ml-2" style={{  fontSize: 18 }}>{Math.round(product?.discount)}% off</span>}
                                             </Text>
                                             <Text fontSize={10}>Inclusive of all taxes</Text>
                                         </Box>
-                                    </HStack>
+                                    </HStack>}
                                     <SimpleGrid columns={{ base: 2 }}>
                                         {product?.descreption && <Box
                                             padding={6}
