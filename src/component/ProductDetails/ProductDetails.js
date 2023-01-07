@@ -60,8 +60,8 @@ const ProductDetails = () => {
                                 <Img 
                                                      src={URL + "/images/product-images/" + product?.product_image}
                                                      className="img-fluid mx-auto shadow-sm rounded"
-                                                     alt={data.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-                                                     title={data.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                                     alt={product?.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                                     title={product?.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
 
                                                       loader={<Img 
                                                           src="/img/logo-500.png" />}
@@ -173,13 +173,13 @@ const ProductDetails = () => {
                                         </Box>
                                     </HStack>}
                                     <SimpleGrid columns={{ base: 2 }}>
-                                        {product?.descreption && <Box
+                                        {product?.products_description && <Box
                                             padding={6}
                                         >
                                             <Text fontSize={14} color="#d4d4d4" display="flex" alignItems={"center"}>
                                                 Description
                                             </Text>
-                                            <Text fontSize={18} mt={2} fontWeight="800">
+                                            <Text fontSize={14} mt={2} fontWeight="600">
                                                 {product?.products_description}
                                             </Text>
                                         </Box>}
