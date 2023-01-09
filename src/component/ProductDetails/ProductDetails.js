@@ -5,7 +5,7 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import { BasicVegitableFruit } from '../ProductsCards/BasicVegitableFruit';
 import Seo from "../Seo";
-import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, HStack, Image, SimpleGrid, Text } from '@chakra-ui/react';
 import { FcApproval } from 'react-icons/fc';
 import { HiOutlineCake } from 'react-icons/hi';
 
@@ -55,20 +55,16 @@ const ProductDetails = () => {
                     <div className="row">
                         <div className="col-lg-6">
                             <div className="d-flex mb-3">
-
-                                <Suspense>
-                                    <Img
-                                        src={URL + "/images/product-images/" + product?.product_image}
-                                        className="img-fluid mx-auto shadow-sm rounded"
-                                        alt={product?.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-                                        title={product?.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-
-
-                                        unloader={<Img
-                                            src="/img/logo-500.png" />}
-
-                                    />
-                                </Suspense>
+                                <Image
+                                    src={URL + "/images/product-images/" + product?.product_image}
+                                    className="img-fluid mx-auto shadow-sm rounded"
+                                    alt={product?.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                    title={product?.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.onerror = null; // prevents looping
+                                        currentTarget.src = "/img/logo-500.png";
+                                    }}
+                                />
 
 
 
@@ -165,7 +161,7 @@ const ProductDetails = () => {
                                             </Text>
                                             <Box>
                                                 <Text>
-                                                    <span style={{ textDecoration: "line-through", fontSize: 17, fontWeight: '600' }}>₹{product?.price}</span>
+                                                    {product?.discount != 0 && <span style={{ textDecoration: "line-through", fontSize: 17, fontWeight: '600' }}>₹{product?.price}</span>}
                                                     {product?.discount != 0 && <span className="text-success ml-2" style={{ fontSize: 18 }}>{Math.round(product?.discount)}% off</span>}
                                                 </Text>
                                                 <Text fontSize={10}>Inclusive of all taxes</Text>
@@ -175,7 +171,7 @@ const ProductDetails = () => {
                                         {product?.products_description && <Box
                                             padding={6}
                                         >
-                                            <Text fontSize={14} color="#d4d4d4" display="flex" alignItems={"center"}>
+                                            <Text fontSize={14} color="#303b52" display="flex" alignItems={"center"}>
                                                 Description
                                             </Text>
                                             <Text fontSize={14} mt={2} fontWeight="600">

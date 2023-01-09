@@ -1,11 +1,12 @@
+import { Alert, AlertIcon, Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
 export const DeliveryTiming = ({ setDeliveryTiming }) => {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [timingSlot, setTimingSlot] = useState("5PM - 8PM");
+    const [timingSlot, setTimingSlot] = useState("5PM - 7PM");
     const [date] = useState(new Date());
-    const DELIVERY_SLOT_TIMING = 18;
+    const DELIVERY_SLOT_TIMING = 17;
 
     const toady = date;
     const dayName = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -19,10 +20,10 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
     }, [selectedDate, timingSlot]);
 
     useEffect(() => {
-        // new Date().getDate() === selectedDate.getDate() && selectedDate.getHours() > 6 && setTimingSlot("5PM - 8PM");
+        // new Date().getDate() === selectedDate.getDate() && selectedDate.getHours() > 6 && setTimingSlot("5PM - 7PM");
         selectedDate.getHours() > DELIVERY_SLOT_TIMING && setSelectedDate(new Date(new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0)));
-        setTimingSlot("5PM - 8PM")
-        console.log("khfsdf", selectedDate, " ok date --->", selectedDate.getHours(), "dates --->", date.getDate(), " nn", selectedDate.getDate())
+        setTimingSlot("5PM - 7PM")
+        // console.log("khfsdf", selectedDate, " ok date --->", selectedDate.getHours(), "dates --->", date.getDate(), " nn", selectedDate.getDate())
     }, [selectedDate])
 
     const getTomorrow = () => {
@@ -80,22 +81,34 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
                                 </ul>
                                 <div className="tab-content filter bg-white" id="myTabContent">
                                     <div className="tab-pane fade show active" id="mon" role="tabpanel" aria-labelledby="mon-tab">
-                                        {/* <div onClick={() => setTimingSlot("7AM - 11AM")} className={selectedDate.getHours() > 6 ? "custom-control border-bottom px-0 custom-radio inactive" : "custom-control border-bottom px-0 custom-radio"}>
-                                            <input className="custom-control-input" type="radio" name="exampleRadios" id="mon1" defaultValue="mon1" defaultChecked={selectedDate.getHours() > 6 ? false : true} />
+                                        <div onClick={() => setTimingSlot("2PM - 4PM")} className={selectedDate.getHours() > 13 ? "custom-control border-bottom px-0 custom-radio inactive" : "custom-control border-bottom px-0 custom-radio"}>
+                                            <input className="custom-control-input" type="radio" name="exampleRadios" id="mon1" defaultValue="mon1" defaultChecked={selectedDate.getHours() > 13 ? false : true} />
                                             <label className="custom-control-label py-3 w-100 px-3" htmlFor="mon1">
-                                                <i className="icofont-clock-time mr-2" /> 7AM - 11AM <span style={{ fontSize: 10, marginLeft: 5 }}>(Sunrise Delivery)</span>
+                                                <i className="icofont-clock-time mr-2" /> 2PM - 4PM <span style={{ fontSize: 10, marginLeft: 5 }}>(Afternoon Delivery)</span>
                                             </label>
-                                        </div> */}
-                                        <div onClick={() => setTimingSlot("5PM - 8PM")} className={selectedDate.getHours() > DELIVERY_SLOT_TIMING ? "custom-control border-bottom px-0 custom-radio inactive" : "custom-control border-bottom px-0 custom-radio"}>
+                                        </div>
+                                        <div onClick={() => setTimingSlot("5PM - 7PM")} className={selectedDate.getHours() > DELIVERY_SLOT_TIMING ? "custom-control border-bottom px-0 custom-radio inactive" : "custom-control border-bottom px-0 custom-radio"}>
                                             <input className="custom-control-input" type="radio" name="exampleRadios" id="mon2" defaultValue="mon2" defaultChecked={selectedDate.getHours() > DELIVERY_SLOT_TIMING ? false : true} />
                                             <label className="custom-control-label py-3 w-100 px-3" htmlFor="mon2">
-                                                <i className="icofont-clock-time mr-2" /> 5PM - 8PM <span style={{ fontSize: 10, marginLeft: 5 }}>(Sunset Delivery)</span>
+                                                <i className="icofont-clock-time mr-2" /> 5PM - 7PM <span style={{ fontSize: 10, marginLeft: 5 }}>(Sunset Delivery)</span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {selectedDate.getHours() > DELIVERY_SLOT_TIMING &&
+                            <Box p={3}>
+                                <Alert status='warning' borderRadius={8}>
+                                    <AlertIcon />
+                                    Delivery will be given the next day (2PM - 4PM )
+                                </Alert>
+                                <Alert status='warning' borderRadius={8} mt={2}>
+                                    <AlertIcon />
+                                    डिलीवरी अगले दिन (2PM - 4PM ) तक की जाएगी
+                                </Alert>
+                            </Box>
+                        }
                         <div className="p-3">
                             <a href="#" className="btn btn-success btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapsefour" aria-expanded="true" aria-controls="collapsefour">Schedule Order</a>
                         </div>

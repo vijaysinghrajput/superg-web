@@ -45,6 +45,11 @@ const CartItems = (props) => {
                                             <h6 className='text-center'>Minimum order must be more than ₹{condition[0].minimum_order} 😢</h6>
                                         </div>
                                     </div>
+                                    <div className="rounded shadow bg-success mt-2 d-flex align-items-center p-3 text-white">
+                                        <div className="more w-100">
+                                            <h6 className='text-center'>Shop more...</h6>
+                                        </div>
+                                    </div>
                                 </div>
                                     :
                                     auth.isUserLogin ?

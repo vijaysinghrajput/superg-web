@@ -5,7 +5,7 @@ import URL from '../../URL';
 import ContextData from '../../context/MainContext';
 import { MdDelete } from 'react-icons/md';
 import { BsFillBellFill, BsPlusLg } from 'react-icons/bs';
-import { Box, Button, Text } from '@chakra-ui/react';
+import { Box, Button, Image, Text } from '@chakra-ui/react';
 import { Img } from 'react-image'
 
 
@@ -45,20 +45,18 @@ export const BasicVegitableFruit = ({ data }) => {
                         <div class="">
                             <Link state={location.pathname} to={"/" + (data.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + data.id}>
                                 <Box position={"relative"} p={1}>
-                                    <Suspense>
-                                        <Img
-                                            src={URL + "/images/product-images/" + data.product_image}
-                                            class="img-fluid item-img w-100 mb-3"
-                                            alt={data.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-                                            title={data.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-                                            style={data.status == "0" ? { filter: "blur(0px)" } : {}}
+                                    <Image
+                                        src={URL + "/images/product-images/" + data.product_image}
+                                        class="img-fluid item-img w-100 mb-3"
+                                        alt={data.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                        title={data.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
+                                        style={data.status == "0" ? { filter: "blur(0px)" } : {}}
+                                        onError={({ currentTarget }) => {
+                                            currentTarget.onerror = null; // prevents looping
+                                            currentTarget.src = "/img/logo-500.png";
+                                        }}
+                                    />
 
-
-                                            unloader={<Img
-                                                style={data.status == "0" ? { filter: "blur(0px)" } : {}} src="/img/logo-500.png" />}
-
-                                        />
-                                    </Suspense>
 
 
 
@@ -76,7 +74,7 @@ export const BasicVegitableFruit = ({ data }) => {
                             </Link>
                             <div class="d-flex align-items-center px-3 pb-3 pt-0">
                                 {data.status == "1" && <div>
-                                    <h6 class="price m-0 text-dark mt-1" style={{ textDecoration: "line-through" }}>₹{Math.round((data.price))}/{data.product_size + data.product_unit}</h6>
+                                    {data.discount != 0 && <h6 class="price m-0 text-dark mt-1" style={{ textDecoration: "line-through" }}>₹{Math.round((data.price))}/{data.product_size + data.product_unit}</h6>}
                                     <h6 class="price m-0 text-success mt-1" style={{ fontSize: 18 }}>₹{Math.round((data.price) - ((data.price) * (data.discount / 100)))}/{data.product_size + data.product_unit}</h6>
                                 </div>}
                                 <div className="ml-auto plus-minus-container">
