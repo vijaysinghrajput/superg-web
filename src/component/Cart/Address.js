@@ -106,7 +106,7 @@ class Address extends Component {
         await this.setState({ UserID })
         this.FetchAllAddress();
 
-        console.log("addres check ---->", this.state.UserAddressData);
+        //console.log("addres check ---->", this.state.UserAddressData);
     }
 
     FetchAllAddress() {
@@ -119,7 +119,7 @@ class Address extends Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log('address', responseJson);
+                //console.log('address', responseJson);
                 responseJson.address.length ? this.setState({
                     isDataLoading: false,
                     UserAddressData: responseJson.address,
@@ -175,7 +175,7 @@ class Address extends Component {
                                                                                 <a href="#" onClick={() => this.EditCalled(item.address_id)} data-toggle="modal" data-target={"#EditAddressModal" + i} class="text-decoration-none text-success">
                                                                                     <i class="icofont-edit"></i> Edit</a>
                                                                             </span>
-                                                                            <span class="small ml-3"><a href="#" data-toggle="modal" data-target={"#delete" + i} class="text-decoration-none text-danger"><i class="icofont-trash"></i> Delete</a></span>
+                                                                            {/* <span class="small ml-3"><a href="#" data-toggle="modal" data-target={"#delete" + i} class="text-decoration-none text-danger"><i class="icofont-trash"></i> Delete</a></span> */}
                                                                         </p>
                                                                     </div>
 
@@ -531,7 +531,7 @@ class Address extends Component {
 
         const { user_name, user_mobile, user_house_no, user_street, user_addres_type, user_city, base_address, address } = this.state;
 
-        console.log("hey data ---->", this.state);
+        //console.log("hey data ---->", this.state);
 
         var phoneno = /^\d{10}$/;
 
@@ -624,7 +624,7 @@ class Address extends Component {
                     this.setState({ isClickedAdd: false })
 
 
-                    //  console.log(responseJson)
+                    //  //console.log(responseJson)
 
                     if (responseJson.status == 'done') {
 
@@ -696,7 +696,7 @@ class Address extends Component {
                 (latLng) => {
                     this.setState({ position: latLng })
 
-                    // console.log('place holer coord', position)
+                    // //console.log('place holer coord', position)
 
                 }
             ).catch(error => console.error(error));
@@ -760,7 +760,7 @@ class Address extends Component {
             return element !== undefined;
         });
 
-        // console.log('addrees', Addressdata[0])
+        // //console.log('addrees', Addressdata[0])
 
         this.setState({ user_full_address: Addressdata[0] })
         this.setState({ user_city: city })
@@ -779,8 +779,8 @@ class Address extends Component {
         const lat = latLng.lat();
         const lng = latLng.lng();
 
-        // console.log('marker postion lat', lat)
-        // console.log('marker postion lng', lng)
+        // //console.log('marker postion lat', lat)
+        // //console.log('marker postion lng', lng)
 
         this.getAddressFromLatAndLng(lat, lng)
 

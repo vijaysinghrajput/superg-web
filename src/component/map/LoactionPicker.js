@@ -146,7 +146,7 @@ export default class LoactionPicker extends React.Component {
                         }
                     }
                 }
-                // console.log(city, state, country);
+                // //console.log(city, state, country);
 
                 var user_house_no, user_full_address, user_city;
                 if (user_house_no !== undefined) {
@@ -174,8 +174,8 @@ export default class LoactionPicker extends React.Component {
         const lat = latLng.lat();
         const lng = latLng.lng();
 
-        // console.log('marker postion lat', lat)
-        // console.log('marker postion lng', lng)
+        // //console.log('marker postion lat', lat)
+        // //console.log('marker postion lng', lng)
 
         this.getAddressFromLatAndLng(lat, lng)
 

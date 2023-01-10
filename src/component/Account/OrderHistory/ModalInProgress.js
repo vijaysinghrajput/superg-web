@@ -16,6 +16,8 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import ContextData from '../../../context/MainContext';
 import { FcCancel } from 'react-icons/fc';
+import { BsCalendarCheck } from 'react-icons/bs';
+import { AiOutlineClockCircle } from 'react-icons/ai';
 
 
 export const ModalProgress = ({ items, fetchData }) => {
@@ -26,7 +28,16 @@ export const ModalProgress = ({ items, fetchData }) => {
     const { isOpen: isOpenModal, onOpen: onOpenModal, onClose: onCloseModal } = useDisclosure();
     const [isLoading, setIsLoading] = useState(false);
     const [coupon, setCoupon] = useState(Number(items.iscouponApplied) && data?.coupons?.find(o => o.coupon_id === items.couponid));
-    const Expected_date = new Date(Number(items.order_time));
+
+    const formatDate = (start_date) => {
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var today = new Date(start_date);
+        const getDate = (today).toLocaleDateString("en-US", options);
+        const getTime = (today).toLocaleTimeString();
+        return { getDate, getTime };
+    }
+
+    const Expected_date = formatDate(new Date(Number(items.order_time)));
 
     const cancelOrder = (order_number) => {
         setIsLoading(true);
@@ -58,20 +69,16 @@ export const ModalProgress = ({ items, fetchData }) => {
                     <div class="p-3 rounded shadow-sm bg-white">
                         <div class="d-flex align-items-center mb-3">
                             <p class="bg-warning text-white py-1 px-2 mb-0 rounded small">{items.Order_status}</p>
-                            <p class="text-muted ml-auto small mb-0"><i class="icofont-clock-time"></i>
-                                {Expected_date.toLocaleDateString()}; {Expected_date.toLocaleTimeString()}</p>
                         </div>
-                        <div class="d-flex">
-                            <p class="text-muted m-0">Transaction. ID<br />
-                                <span class="text-dark font-weight-bold">#{items.order_number}</span>
+                        <div className='my-2'>
+                            <p class="text-muted ml-auto small mb-0"><BsCalendarCheck /> {Expected_date.getDate},  <AiOutlineClockCircle /> {Expected_date.getTime}</p>
+                        </div>
+                        <div class="d">
+                            <p class="text-muted my-2">O. N.
+                                <span class="text-dark font-weight-bold ml-2">#{items.order_number}</span>
                             </p>
-                            {isNotSmallerScreen &&
-                                <p class="text-muted m-0 ml-auto">Delivering to<br />
-                                    <span class="text-dark font-weight-bold">{items.address_details.address_type}</span>
-                                </p>
-                            }
-                            <p class="text-muted m-0 ml-auto">Total Payment<br />
-                                <span class="text-dark font-weight-bold">₹{Number(items.is_carry_bag_taken) ? Math.round(items.total_amount) + Number(items.carry_bag_charge) : Math.round(items.total_amount)}</span>
+                            <p class="text-muted m-0 ml-auto">Total Payment
+                                <span class="text-dark font-weight-bold ml-2">₹{Number(items.is_carry_bag_taken) ? Math.round(items.total_amount) + Number(items.carry_bag_charge) : Math.round(items.total_amount)}</span>
                             </p>
                         </div>
                     </div>
@@ -107,12 +114,12 @@ export const ModalProgress = ({ items, fetchData }) => {
                                     <div className="orderPaymentHistory mt-3">
                                         <div className="orderTotal mx-3">
                                             <h6>Total</h6>
-                                            {/* {console.log("idddd")} */}
+                                            {/* {//console.log("idddd")} */}
                                             <h6 style={{ fontWeight: "700" }}>₹{Math.round(items.isDevApplied ? (items.total_amount - items.delcharge) : (items.total_amount)) + Number(items.couponPrice)}</h6>
                                         </div>
                                         {coupon ? <div className="orderTotal mx-3">
                                             <h6>Discount</h6>
-                                            {/* {console.log("idddd")} */}
+                                            {/* {//console.log("idddd")} */}
                                             <h6 style={{ fontWeight: "700" }}>- ₹{items.couponPrice}</h6>
                                         </div> : null}
                                         {Number(items.isDevApplied) ? <div className="orderTotal mx-3">
@@ -130,7 +137,7 @@ export const ModalProgress = ({ items, fetchData }) => {
                                     </div>
                                     <div className="destination mt-3">
                                         <h6 style={{ fontWeight: "700", fontSize: 18 }}>Shiping to :</h6>
-                                        <div className="mx-3">
+                                        <div className="mx-3 mt-3">
                                             <h6 style={{ fontWeight: "700", fontSize: 14 }}>{items.address_details.name}</h6>
                                             <p className='mb-1'>{items.address_details.user_house_no},  {items.address_details.address}, {items.address_details.base_address}, {items.address_details.city}</p>
                                             <p style={{ fontWeight: "700", fontSize: 14 }}>Phone: {items.address_details.phone}</p>
@@ -140,7 +147,9 @@ export const ModalProgress = ({ items, fetchData }) => {
                             </div>
                         </ModalBody>
                         <ModalFooter justifyContent={"center"}>
-                            <Button colorScheme={"red"} onClick={onOpenModal} >Cancel Order</Button>
+                            {items.Order_status == "Order Placed" &&
+                                <Button colorScheme={"red"} onClick={onOpenModal} >Cancel Order</Button>
+                            }
                         </ModalFooter>
                     </ModalContent>
                 </Modal>

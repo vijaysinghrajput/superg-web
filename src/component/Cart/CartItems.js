@@ -38,8 +38,7 @@ const CartItems = (props) => {
                                 )
                             })}
                             <div>
-                                {console.log("ajsasd ===>", Number(condition[0].minimum_order) > GetTotal, condition[0].minimum_order, GetTotal)}
-                                {Number(condition[0].minimum_order) > GetTotal ? <div className='p-3'>
+                                {Number(condition[0]?.minimum_order) > GetTotal ? <div className='p-3'>
                                     <div className="rounded shadow bg-dark d-flex align-items-center p-3 text-white">
                                         <div className="more w-100">
                                             <h6 className='text-center'>Minimum order must be more than ₹{condition[0].minimum_order} 😢</h6>
@@ -47,7 +46,7 @@ const CartItems = (props) => {
                                     </div>
                                     <div className="rounded shadow bg-success mt-2 d-flex align-items-center p-3 text-white">
                                         <div className="more w-100">
-                                            <h6 className='text-center'>Shop more...</h6>
+                                            <h6 className='text-center' style={{ cursor: "pointer" }} onClick={() => navigation("/category")}>Shop more...</h6>
                                         </div>
                                     </div>
                                 </div>

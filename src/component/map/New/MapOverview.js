@@ -10,7 +10,7 @@ const MapOverview = ({ coords, zoom, handleMapIdle, mapLoaded, onMarkerDragEnd, 
         height: '100%'
     }
 
-    console.log("from map ===>", coords, address);
+    //console.log("from map ===>", coords, address);
 
     // const coords = { lat: -21.805149, lng: -49.0921657 };
 

@@ -71,7 +71,7 @@ class App extends Component {
 
     insertUserFun() {
 
-        // console.log('innn')
+        // //console.log('innn')
         fetch(URL + "/APP-API/App/InsertUser", {
             method: 'post',
             header: {
@@ -96,7 +96,7 @@ class App extends Component {
 
 
 
-                // console.log('backend', responseJson)
+                // //console.log('backend', responseJson)
 
 
 
@@ -114,12 +114,12 @@ class App extends Component {
 
 
         const responseFacebook = (response) => {
-            // console.log(response);
+            // //console.log(response);
             this.signup(response, 'facebook');
         }
 
         const responseGoogle = (response) => {
-            // console.log(response);
+            // //console.log(response);
             this.signup(response, 'google');
         }
 

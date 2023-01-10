@@ -3,9 +3,7 @@ import Category from './Category';
 import OshanContainer from '../comman/OshanContainer';
 import Promo from './Promo';
 import TodayPicks from './TodayPicks';
-
-import Seo from '../Seo'
-import { SeoData } from '../../URL';
+import { Box } from '@chakra-ui/react';
 
 const HomeComponent = (props) => {
 
@@ -14,11 +12,12 @@ const HomeComponent = (props) => {
 
 
 
-        
+
 
 
             <OshanContainer >
 
+                <Box p={6} />
                 <Category />
 
                 <Promo />

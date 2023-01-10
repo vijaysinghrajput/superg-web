@@ -88,8 +88,7 @@ function AddressType() {
 
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: 'framework',
-        defaultValue: 'react',
-        onChange: console.log,
+        defaultValue: 'react'
     })
 
     const group = getRootProps()

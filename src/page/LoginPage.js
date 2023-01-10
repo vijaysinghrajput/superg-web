@@ -18,7 +18,7 @@ const LoginPage = (props) => {
 
     // const navigate = useNavigate();
 
-    // console.log()
+    // //console.log()
 
     if (data.auth.isUserLogin || cookies.get("isUserLogin")) {
         return <Navigate to="/" />

@@ -21,7 +21,7 @@ const MainConditionComponent = (props) => {
     const condition = data.condition[0];
     const Storefaq = data.Storefaq;
 
-    // console.log('faq', faq)
+    // //console.log('faq', faq)
 
     const location = useLocation();
 

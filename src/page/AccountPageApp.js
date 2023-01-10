@@ -12,7 +12,7 @@ const AccountPage = () => {
 
     localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
 
-    // console.log("daat", data)
+    // //console.log("daat", data)
 
     return (
         <>

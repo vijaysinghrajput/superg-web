@@ -167,7 +167,7 @@ class AddressComp extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({ isDataLoading: false, UserAddressData: responseJson.address, })
-                // console.log('address', responseJson.address)
+                // //console.log('address', responseJson.address)
             })
             .catch((error) => { });
     }
@@ -176,7 +176,7 @@ class AddressComp extends Component {
     getCurrentLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
             const p = position.coords;
-            console.log("location ===>", p);
+            //console.log("location ===>", p);
             this.setState({
                 position: {
                     lat: p.latitude,
@@ -881,7 +881,7 @@ class AddressComp extends Component {
                     this.setState({ isClickedAdd: false })
 
 
-                    //  console.log(responseJson)
+                    //  //console.log(responseJson)
 
                     if (responseJson.status == 'done') {
 
@@ -925,12 +925,12 @@ class AddressComp extends Component {
     };
 
     handleSelect = async (address) => {
-        console.log("handelchange ====>", address);
+        //console.log("handelchange ====>", address);
         await geocodeByAddress(address)
             .then(
                 (results) => {
 
-                    console.log("results ===>", results);
+                    //console.log("results ===>", results);
 
                     this.gettingCoords(results[0])
                     this.gettingAddressFormating(results[0])
@@ -952,7 +952,7 @@ class AddressComp extends Component {
                 (latLng) => {
                     this.setState({ position: latLng })
 
-                    // console.log('place holer coord', position)
+                    // //console.log('place holer coord', position)
 
                 }
             ).catch(error => console.error(error));
@@ -1017,7 +1017,7 @@ class AddressComp extends Component {
             return element !== undefined;
         });
 
-        console.log('addrees', Addressdata[0], "city =>>>>", city)
+        //console.log('addrees', Addressdata[0], "city =>>>>", city)
 
         this.setState({ user_full_address: Addressdata[0] })
         this.setState({ user_city: city })
@@ -1036,8 +1036,8 @@ class AddressComp extends Component {
         const lat = latLng.lat();
         const lng = latLng.lng();
 
-        // console.log('marker postion lat', lat)
-        // console.log('marker postion lng', lng)
+        // //console.log('marker postion lat', lat)
+        // //console.log('marker postion lng', lng)
 
         this.getAddressFromLatAndLng(lat, lng)
 

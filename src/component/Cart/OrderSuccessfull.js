@@ -14,7 +14,7 @@ export const OrderSuccessFull = (props) => {
 
 
     useEffect(() => {
-        // console.log("orderhisotry", location.state.order)
+        // //console.log("orderhisotry", location.state.order)
         // location.state.order === undefined ? navigate("/") : setTimeout(() => navigate("/orders"), 10000);
     }, [props.order]);
 

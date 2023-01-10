@@ -515,7 +515,7 @@ class CheackOut extends Component {
 
                     }
                     else {
-                        // console.log('TOTAL IS OK',)
+                        // //console.log('TOTAL IS OK',)
                         if (responseJson.data[0].coupon_type == 'percentage') {
 
                             const discount = this.state.afterDiscountTotal * (Math.floor(responseJson.data[0].coupon_discount) / 100)
@@ -630,7 +630,7 @@ class CheackOut extends Component {
                     this.setState({ clickedPaymen: false })
 
 
-                    // console.log('Payment Server',responseJson)
+                    // //console.log('Payment Server',responseJson)
 
                     if (responseJson.status == 'Success') {
 
@@ -716,7 +716,7 @@ class CheackOut extends Component {
 
                     this.setState({ clickedPaymen: false })
 
-                    // console.log('Payment Server',responseJson)
+                    // //console.log('Payment Server',responseJson)
 
                     if (responseJson !== '') {
 

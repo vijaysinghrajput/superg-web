@@ -49,7 +49,7 @@ const Cart = (props) => {
         setOrderSuccessFull(true);
         const couponId = cartDetails.couponDetails !== undefined ? cartDetails.couponDetails[0]?.coupon_id : "";
 
-        console.log("sll list", cartItems, wantCarryBag)
+        //console.log("sll list", cartItems, wantCarryBag)
 
         fetch(URL + "/APP-API/App/finalPlaceOrder", {
             method: 'post',

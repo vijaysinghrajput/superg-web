@@ -11,13 +11,25 @@ import {
     useMediaQuery
 } from '@chakra-ui/react';
 import URL from '../../../URL';
+import { BsCalendarCheck } from 'react-icons/bs';
+import { AiOutlineClockCircle } from 'react-icons/ai';
 
 export const ModalDeliverd = ({ items }) => {
 
     const [isNotSmallerScreen] = useMediaQuery("(min-width:1024px)");
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const Expected_date = new Date(Number(items.order_time));
+
+    const formatDate = (start_date) => {
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var today = new Date(start_date);
+        const getDate = (today).toLocaleDateString("en-US", options);
+        const getTime = (today).toLocaleTimeString();
+        return { getDate, getTime };
+    }
+
+    const Expected_date = formatDate(new Date(Number(items.order_time)));
+
 
     return (
         <>
@@ -25,21 +37,17 @@ export const ModalDeliverd = ({ items }) => {
                 <a href="javascript:void(0)" class="text-decoration-none text-dark">
                     <div class="p-3 rounded shadow-sm bg-white">
                         <div class="d-flex align-items-center mb-3">
-                            <p class="bg-success text-white py-1 px-2 mb-0 rounded small">Delivered</p>
-                            <p class="text-muted ml-auto small mb-0"><i class="icofont-clock-time"></i>
-                                {Expected_date.toLocaleDateString()}; {Expected_date.toLocaleTimeString()}</p>
+                            <p class="bg-success text-white py-1 px-2 mb-0 rounded small">{items.Order_status}</p>
                         </div>
-                        <div class="d-flex">
-                            <p class="text-muted m-0">Transaction. ID<br />
-                                <span class="text-dark font-weight-bold">#{items.order_number}</span>
+                        <div className='my-2'>
+                            <p class="text-muted ml-auto small mb-0"><BsCalendarCheck /> {Expected_date.getDate},  <AiOutlineClockCircle /> {Expected_date.getTime}</p>
+                        </div>
+                        <div class="d">
+                            <p class="text-muted my-2">O. N.
+                                <span class="text-dark font-weight-bold ml-2">#{items.order_number}</span>
                             </p>
-                            {isNotSmallerScreen &&
-                                <p class="text-muted m-0 ml-auto">Date of delivery<br />
-                                    <span class="text-dark font-weight-bold">{items.Delivered_date}</span>
-                                </p>
-                            }
-                            <p class="text-muted m-0 ml-auto">Total Payment<br />
-                                <span class="text-dark font-weight-bold">₹{Number(items.is_carry_bag_taken) ? Math.round(items.total_amount) + Number(items.carry_bag_charge) : Math.round(items.total_amount)}</span>
+                            <p class="text-muted m-0 ml-auto">Total Payment
+                                <span class="text-dark font-weight-bold ml-2">₹{Number(items.is_carry_bag_taken) ? Math.round(items.total_amount) + Number(items.carry_bag_charge) : Math.round(items.total_amount)}</span>
                             </p>
                         </div>
                     </div>

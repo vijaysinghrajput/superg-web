@@ -57,7 +57,7 @@ const ContextProvider = props => {
             })
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log("resjosn", responseJson);
+                // //console.log("resjosn", responseJson);
                 functionality.fetchAllData(responseJson);
                 // fetchAllData(responseJson);
             })

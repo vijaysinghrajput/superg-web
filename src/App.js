@@ -60,9 +60,9 @@ class App extends Component {
     // const posi = coords.latitude;
     // const geo = navigator.geolocation.getCurrentPosition;
     // if (!geo) {
-    //   console.log('Geolocation is not supported');
+    //   //console.log('Geolocation is not supported');
     //   return;
-    // } else console.log("heyyy --->", geo, posi);
+    // } else //console.log("heyyy --->", geo, posi);
 
     // navigator.geolocation.getCurrentPosition((position) => {
     //   const p = position.coords;

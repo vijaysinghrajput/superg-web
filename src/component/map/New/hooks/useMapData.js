@@ -79,7 +79,7 @@ const useMapData = () => {
             return element !== undefined;
         });
 
-        console.log('addrees', Addressdata[0], "city  ====>", city);
+        //console.log('addrees', Addressdata[0], "city  ====>", city);
 
         setAddress({ user_city: city, user_full_address: Addressdata[0] });
 
@@ -102,7 +102,7 @@ const useMapData = () => {
 
         getAddressFromLatAndLng(lat, lng)
 
-        console.log("on drop ====>", lat, lng);
+        //console.log("on drop ====>", lat, lng);
 
         setZoom(16)
 
@@ -125,7 +125,7 @@ const useMapData = () => {
 
 
     useEffect(() => {
-        console.log("position ====>", position, address);
+        //console.log("position ====>", position, address);
     }, [position])
 
     function FetchAllAddress(UserID) {
@@ -141,7 +141,7 @@ const useMapData = () => {
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({ isDataLoading: false, UserAddressData: responseJson.address, })
-                // console.log('address', responseJson.address)
+                // //console.log('address', responseJson.address)
             })
             .catch((error) => { });
     }
@@ -150,7 +150,7 @@ const useMapData = () => {
     const getCurrentLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
             const p = position.coords;
-            console.log("location ===>", p);
+            //console.log("location ===>", p);
             setPosition({
                 lat: p.latitude,
                 lng: p.longitude
@@ -159,7 +159,7 @@ const useMapData = () => {
     }
 
     const handleSelect = async (address) => {
-        console.log("autocomplete ====>", address);
+        //console.log("autocomplete ====>", address);
         await geocodeByAddress(address)
             .then(
                 (results) => {
@@ -172,7 +172,7 @@ const useMapData = () => {
 
     const gettingCoords = async (Googleresult) => {
         const coords = await getLatLng(Googleresult);
-        console.log("from autocomplete =====>", coords);
+        //console.log("from autocomplete =====>", coords);
         setPosition(coords);
     }
 

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import MainData from '../context/MainContext';
 import { useDisclosure, useMediaQuery, Select, Text } from '@chakra-ui/react';
@@ -14,7 +13,7 @@ import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { constants } from '../URL';
 import Drawer from './comman/Drawer';
 import { useMemo } from 'react';
-import { HiArrowNarrowLeft } from 'react-icons/hi';
+import { HiArrowNarrowLeft, HiOutlineHome } from 'react-icons/hi';
 
 const Header = () => {
 
@@ -37,7 +36,7 @@ const Header = () => {
     cartItems.filter((data, i) => {
       const newP = products.find(o => o.id == data.id);
       const newIndex = oldCartItem.findIndex((obj => obj.id === data.id));
-      // console.log("asdasd", newP?.price, newIndex)
+      // //console.log("asdasd", newP?.price, newIndex)
       if (newP) {
         oldCartItem[newIndex]["price"] = newP?.price;
         oldCartItem[newIndex]["discount"] = newP?.discount;
@@ -143,12 +142,20 @@ const Header = () => {
       {
         !isNotSmallerScreen && pathname !== "/" ? (
           <div class="p-3 border-bottom mobile-nav bg-light">
-            <div class="d-flex align-items-center">
-              <div class="font-weight-bold text-success text-decoration-none" onClick={() => navigate(-1)}>
-                <HiArrowNarrowLeft size={26} style={{ fontWeight: "800", cursor: "pointer" }} />
+            <div class="d-flex align-items-center justify-content-between">
+              <div className="d-flex align-items-center">
+                <div class="font-weight-bold text-success text-decoration-none" onClick={() => navigate(-1)}>
+                  <HiArrowNarrowLeft size={26} style={{ fontWeight: "800", cursor: "pointer" }} />
+                </div>
+                <Text fontSize={18} fontWeight="600" ml={3}>{pathname?.replace(/-.*/, '').replace(/\//, '').toUpperCase()}</Text>
+                <a class="ml-auto hc-nav-trigger hc-nav-1" href="javascript:void(0)" onClick={onOpen}><i class="icofont-navigation-menu"></i></a>
               </div>
-              <Text fontSize={18} fontWeight="600" ml={3}>{pathname?.replace(/-.*/, '').replace(/\//, '').toUpperCase()}</Text>
-              <a class="ml-auto hc-nav-trigger hc-nav-1" href="javascript:void(0)" onClick={onOpen}><i class="icofont-navigation-menu"></i></a>
+              <div className='mr-3'
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate("/")}
+              >
+                <HiOutlineHome size={24} />
+              </div>
             </div>
           </div>
         ) : (
@@ -158,12 +165,12 @@ const Header = () => {
                 <img class="osahan-logo mr-2" src="/img/logo.svg" />
                 <h4 class="font-weight-bold text-success m-0">SuperG.in</h4>
               </Link>
-              <div class="dropdown mr-3">
+              <div class="dropdown">
                 <a class="text-dark dropdown-toggle d-flex align-items-center osahan-location-drop" href="#">
                   <div><i class="icofont-location-pin d-flex align-items-center bg-light rounded-pill p-2 icofont-size border shadow-sm mr-2"></i></div>
                   <div>
                     <p class="text-muted mb-0 small">Delivery Area</p>
-                    <Select size="xs" icon="none" style={{ border: "none", padding: 0, maxWidth: "fit-content", cursor: "pointer" }} >
+                    <Select size="xs" style={{ border: "none", padding: 0, maxWidth: "fit-content", cursor: "pointer" }} >
                       {serviceArea?.sort((a, b) => a.area_name.localeCompare(b.area_name)).map((areas, i) => {
                         return (
                           <option className='p-1' style={{ background: "#fff" }} value={areas.area_name}>{areas.area_name}</option>

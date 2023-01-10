@@ -17,7 +17,7 @@ export const PaymentDetails = ({ setCarryBagMain }) => {
     const youHaveToTakeCarryBag = cartItems.length > CARRY_BAG_CHARGE_MINIMUM_QTY ? true : false;
     const [wantCarryBag, setCarryBag] = useState(true);
 
-    console.log("hey nvaett", youHaveToTakeCarryBag, CARRY_BAG_CHARGE_MINIMUM_QTY);
+    //console.log("hey nvaett", youHaveToTakeCarryBag, CARRY_BAG_CHARGE_MINIMUM_QTY);
 
     useEffect(() => {
         setCarryBagMain(wantCarryBag);
@@ -33,7 +33,7 @@ export const PaymentDetails = ({ setCarryBagMain }) => {
         return a + Number(price);
     }, 0);
 
-    console.log("asdsa", wantCarryBag);
+    //console.log("asdsa", wantCarryBag);
 
     useEffect(() => {
         setTotal(GetTotal);
@@ -74,7 +74,7 @@ export const PaymentDetails = ({ setCarryBagMain }) => {
 
     useEffect(() => {
         cartDetails?.discountPriceByCoupon && setGrandTotal(Number(total) + Number(deliveryCharge) - cartDetails?.discountPriceByCoupon);
-        console.log("cartdetails ->", cartDetails)
+        //console.log("cartdetails ->", cartDetails)
     }, [cartDetails?.discountPriceByCoupon, total]);
 
 

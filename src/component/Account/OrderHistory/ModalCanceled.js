@@ -24,21 +24,14 @@ export const ModalCanceled = ({ items }) => {
                 <a href="javascript:void(0)" class="text-decoration-none text-dark">
                     <div class="p-3 rounded shadow-sm bg-white">
                         <div class="d-flex align-items-center mb-3">
-                            <p class="bg-danger text-white py-1 px-2 mb-0 rounded small">Canceled</p>
-                            <p class="text-muted ml-auto small mb-0"><i class="icofont-clock-time"></i>
-                                {items.delivery_date}</p>
+                            <p class="bg-danger text-white py-1 px-2 mb-0 rounded small">{items.Order_status}ed</p>
                         </div>
-                        <div class="d-flex">
-                            <p class="text-muted m-0">Transaction. ID<br />
-                                <span class="text-dark font-weight-bold">#{items.order_number}</span>
+                        <div class="d">
+                            <p class="text-muted my-2">O. N.
+                                <span class="text-dark font-weight-bold ml-2">#{items.order_number}</span>
                             </p>
-                            {isNotSmallerScreen &&
-                                <p class="text-muted m-0 ml-auto">Delivering to<br />
-                                    <span class="text-dark font-weight-bold">{items.address_details?.address_type}</span>
-                                </p>
-                            }
-                            <p class="text-muted m-0 ml-auto">Total Payment<br />
-                                <span class="text-dark font-weight-bold">₹{Math.round(items.total_amount)}</span>
+                            <p class="text-muted m-0 ml-auto">Total Payment
+                                <span class="text-dark font-weight-bold ml-2">₹{Number(items.is_carry_bag_taken) ? Math.round(items.total_amount) + Number(items.carry_bag_charge) : Math.round(items.total_amount)}</span>
                             </p>
                         </div>
                     </div>
