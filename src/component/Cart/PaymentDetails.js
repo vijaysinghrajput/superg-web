@@ -80,7 +80,7 @@ export const PaymentDetails = ({ setCarryBagMain }) => {
 
     return (
         <>
-            <div className="bg-white rounded overflow-hidden shadow-sm mb-3 checkout-sidebar">
+            <div className="bg-white rounded overflow-hidden mb-3 checkout-sidebar">
                 <div className="d-flex align-items-center osahan-cart-item-profile border-bottom bg-white p-3">
                     <img alt="osahan" src="/img/logo.svg" className="mr-3 rounded-circle img-fluid" />
                     <div className="d-flex flex-column">

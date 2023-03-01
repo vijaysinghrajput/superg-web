@@ -272,7 +272,7 @@ class CheackOut extends Component {
 
                                 {this.state.UserAddressData.map((item, key) => {
                                     return (
-                                        <div onClick={() => this.setState({ addressId: item.address_id })} className="col-12 col-md-6 col-lg-4 col-xl-4 mb-3 d-flex align-items-stretch">
+                                        <div key={key} onClick={() => this.setState({ addressId: item.address_id })} className="col-12 col-md-6 col-lg-4 col-xl-4 mb-3 d-flex align-items-stretch">
                                             <div className="card shadow-sm border-0  p-4">
                                                 <h6 className="small">Address {key + 1} </h6>
 

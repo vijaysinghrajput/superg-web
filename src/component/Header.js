@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import MainData from '../context/MainContext';
-import { useDisclosure, useMediaQuery, Select, Text } from '@chakra-ui/react';
+import { useDisclosure, useMediaQuery, Select, Text, Button, Box } from '@chakra-ui/react';
 import { MdOutlineShoppingCart, MdArrowForwardIos } from 'react-icons/md';
 import { BiCategory, BiSearchAlt2 } from 'react-icons/bi';
 // import { BsWhatsapp } from 'react-icons/bs';
@@ -13,15 +13,18 @@ import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { constants } from '../URL';
 import Drawer from './comman/Drawer';
 import { useMemo } from 'react';
-import { HiArrowNarrowLeft, HiOutlineHome } from 'react-icons/hi';
+import { HiArrowNarrowLeft, HiOutlineHome, HiOutlineMenuAlt3 } from 'react-icons/hi';
+import MainDrawer from './comman/Drawer';
+import LoginDrawer from './Authentication/LoginDrawer';
 
-const Header = () => {
+const Header = ({ }) => {
 
   const data = useContext(MainData);
   localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpenDrawer, onOpen: onOpenDrawer, onClose: onCloseDrawer } = useDisclosure();
   const [isNotSmallerScreen] = useMediaQuery("(min-width:1024px)");
-  const { products, logOut, serviceArea, subcategories, cartItems, auth } = data;
+  const { products, logOut, serviceArea, subcategories, cartItems, auth, isLoginOpen, onLoginOpen, onLoginClose } = data;
   const { pathname } = useLocation();
   const [searchedProduct, setSearchedProduct] = useState(products);
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,6 +33,7 @@ const Header = () => {
   const onBlur = () => setFocused(false);
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
+
 
   useMemo(() => {
     const oldCartItem = [...cartItems];
@@ -90,10 +94,23 @@ const Header = () => {
 
   return (
     <>
+      <LoginDrawer isLoginOpen={isLoginOpen} onLoginClose={onLoginClose} onLoginOpen={onLoginOpen} />
       {!isNotSmallerScreen &&
         <>
           <Drawer isOpen={isOpen} onClose={onClose} />
-          {cartItems.length !== 0 && pathname !== "/cart" && pathname !== "/login" && pathname !== "/verification" && pathname !== "/location" &&
+          {cartItems.length !== 0
+            && pathname !== "/cart"
+            && pathname !== "/login"
+            && pathname !== "/verification"
+            && pathname !== "/location"
+            && pathname !== "/saveMyAddress"
+            && pathname !== "/accountApp"
+            && pathname !== "/orders"
+            && pathname !== "/orderDetails"
+            && pathname !== "/search"
+            // && pathname !== "/category"
+            && pathname !== "/address"
+            &&
             <div className="pb-0 pt-2 px-3 letItFlowInAir">
               <Link to="/cart">
                 <div class="rounded shadow bg-success p-3 text-white">
@@ -104,7 +121,7 @@ const Header = () => {
               </Link>
             </div>
           }
-          {pathname !== "/cart" && pathname !== "/login" && pathname !== "/verification" && pathname !== "/location" &&
+          {pathname !== "/cart" && pathname !== "/login" && pathname !== "/verification" && pathname !== "/location" && pathname !== "/saveMyAddress" &&
             <div class="osahan-menu-fotter fixed-bottom bg-white text-center border-top">
               <div class="row m-0">
                 <Link to="/" class={pathname === "/" ? "text-dark small col font-weight-bold text-decoration-none p-2 selected" : "text-muted col small text-decoration-none p-2"}>
@@ -130,10 +147,11 @@ const Header = () => {
                 {auth.isUserLogin ? <Link to="/accountApp" class={pathname === "/accountApp" ? "text-dark small col font-weight-bold text-decoration-none p-2 selected" : "text-muted col small text-decoration-none p-2"}>
                   <p class="h5 m-0"><i class="icofont-user"></i></p>
                   Account
-                </Link> : <Link to="/login" class={pathname === "/accountApp" ? "text-dark small col font-weight-bold text-decoration-none p-2 selected" : "text-muted col small text-decoration-none p-2"}>
+                </Link> : <Box className='text-muted col small text-decoration-none p-2' onClick={onLoginOpen}>
                   <p class="h5 m-0"><AiOutlineLogin /></p>
                   Login
-                </Link>}
+                </Box>
+                }
               </div>
             </div>
           }
@@ -141,14 +159,14 @@ const Header = () => {
       }
       {
         !isNotSmallerScreen && pathname !== "/" ? (
-          <div class="p-3 border-bottom mobile-nav bg-light">
+          <div class="p-3 border-bottom mobile-nav" style={{ background: "#fff", boxShadow: "0 1px 5px 0px #dadada" }}>
             <div class="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center">
                 <div class="font-weight-bold text-success text-decoration-none" onClick={() => navigate(-1)}>
                   <HiArrowNarrowLeft size={26} style={{ fontWeight: "800", cursor: "pointer" }} />
                 </div>
-                <Text fontSize={18} fontWeight="600" ml={3}>{pathname?.replace(/-.*/, '').replace(/\//, '').toUpperCase()}</Text>
-                <a class="ml-auto hc-nav-trigger hc-nav-1" href="javascript:void(0)" onClick={onOpen}><i class="icofont-navigation-menu"></i></a>
+                <Text fontSize={16} textTransform="capitalize" fontWeight="600" ml={3}>{pathname?.replace(/-.*/, '').replace(/\//, '')}</Text>
+                <a class="ml-auto hc-nav-trigger hc-nav-1" href="#" onClick={onOpen}><i class="icofont-navigation-menu"></i></a>
               </div>
               <div className='mr-3'
                 style={{ cursor: "pointer" }}
@@ -159,13 +177,19 @@ const Header = () => {
             </div>
           </div>
         ) : (
-          <div class="border-bottom p-3 d-none mobile-nav">
+          <div class="border-bottom p-3 d-none mobile-nav" style={{ background: "#fff" }}>
             <div class="title d-flex align-items-center justify-content-between">
               <Link to="/" class="text-decoration-none text-dark d-flex align-items-center">
-                <img class="osahan-logo mr-2" src="/img/logo.svg" />
+                <img
+                  class="osahan-logo mr-2"
+                  // src="/img/logo.svg" 
+                  src='https://media.tenor.com/LagCHLX1iosAAAAi/india-flag-india.gif'
+                />
                 <h4 class="font-weight-bold text-success m-0">SuperG.in</h4>
               </Link>
-              <div class="dropdown">
+              <MainDrawer isOpen={isOpenDrawer} onClose={onCloseDrawer} />
+              <HiOutlineMenuAlt3 size={24} style={{ cursor: "pointer" }} onClick={onOpenDrawer} />
+              {/* <div class="dropdown">
                 <a class="text-dark dropdown-toggle d-flex align-items-center osahan-location-drop" href="#">
                   <div><i class="icofont-location-pin d-flex align-items-center bg-light rounded-pill p-2 icofont-size border shadow-sm mr-2"></i></div>
                   <div>
@@ -179,13 +203,13 @@ const Header = () => {
                     </Select>
                   </div>
                 </a>
-              </div>
+              </div> */}
               {/* <a href="#" role="button" class="toggle ml-auto"><i class="icofont-navigation-menu"></i></a> */}
-              <a class="ml-auto hc-nav-trigger hc-nav-1" href="javascript:void(0)" onClick={onOpen} role="button" aria-controls="hc-nav-1"><i class="icofont-navigation-menu"></i></a>
+              <a class="ml-auto hc-nav-trigger hc-nav-1" href="#" onClick={onOpen} role="button" aria-controls="hc-nav-1"><i class="icofont-navigation-menu"></i></a>
 
             </div>
             <div className='position-relative'>
-              <div class="input-group mt-3 rounded shadow-sm overflow-hidden bg-white">
+              <div class="input-group mt-3 rounded shadow-sm overflow-hidden bg-white" style={{ border: "1px solid #efefef" }}>
                 <div class="input-group-prepend">
                   <button class="border-0 btn btn-outline-secondary text-success bg-white"><i class="icofont-search"></i></button>
                 </div>
@@ -207,7 +231,10 @@ const Header = () => {
 
       <div class="bg-white shadow-sm osahan-main-nav position-fixed w-100" style={{ zIndex: 99 }}>
         <nav class="navbar navbar-expand-lg navbar-light bg-white osahan-header py-0 container">
-          <Link class="navbar-brand mr-0" to="/"><img class="img-fluid logo-img rounded-pill border shadow-sm" src="/img/logo.svg" /></Link>
+          <Link class="navbar-brand mr-0" to="/"><img class="img-fluid logo-img rounded-pill border shadow-sm"
+            // src="/img/logo.svg" 
+            src='https://media.tenor.com/LagCHLX1iosAAAAi/india-flag-india.gif'
+          /></Link>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -220,7 +247,7 @@ const Header = () => {
                   <Select size="xs" icon="none" style={{ border: "none", padding: 0, width: "unset", cursor: "pointer" }} >
                     {serviceArea?.sort((a, b) => a.area_name.localeCompare(b.area_name)).map((areas, i) => {
                       return (
-                        <option className='p-1' style={{ background: "#fff" }} value={areas.area_name}>{areas.area_name}</option>
+                        <option className='p-1' key={i} style={{ background: "#fff" }} value={areas.area_name}>{areas.area_name}</option>
                       )
                     })}
                   </Select>
@@ -237,7 +264,7 @@ const Header = () => {
                 <div class="search-items-layout" aria-labelledby="dropdownMenuButton">
                   {searchedProduct.length ? searchedProduct.slice(0, 10).map((item, i) => {
                     return (
-                      <Link onClick={onBlur} class="dropdown-item" to={"/" + (item.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + item.id}>
+                      <Link key={i} onClick={onBlur} class="dropdown-item" to={"/" + (item.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + item.id}>
                         <div>
                           <img src={URL + "/images/product-images/" + item?.product_image} style={{ height: 30, marginRight: 5 }} /> {item.product_name} <small className='mr-2'>{item.hindi_name}</small>
                           <span className='ml-auto'>₹{Math.round((item?.price) - (item?.price * item?.discount / 100))}/{item?.product_size + item?.product_unit}</span>
@@ -258,7 +285,11 @@ const Header = () => {
             {data.auth.isUserLogin ? (
               <div class="dropdown mr-3">
                 <a href="#" class="dropdown-toggle text-dark" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src={data?.user?.user_info?.provider_pic ? data?.user?.user_info?.provider_pic : "/img/user.png"} class="img-fluid rounded-circle header-user mr-2" /> Hi {data.user?.user_info?.name?.replace(/ .*/, '')}
+                  <img
+                    src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${data.UserID}`}
+                    alt="avatar"
+                    class="img-fluid rounded-circle header-user mr-2"
+                  /> Hi {data.user?.user_info?.name?.replace(/ .*/, '')}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right top-profile-drop" aria-labelledby="dropdownMenuButton">
                   {/* <a class="dropdown-item" href="#" onClick={() => navigate("/notification")}>Notification</a> */}
@@ -270,7 +301,7 @@ const Header = () => {
                   <a class="dropdown-item" href="#" onClick={() => logOut()}>Logout</a>
                 </div>
               </div>
-            ) : <a href="#" onClick={() => navigate("/login")} data-toggle="modal" data-target="#login" class="mr-2 text-dark bg-light rounded-pill p-2 icofont-size border shadow-sm">
+            ) : <a href="#" onClick={() => onLoginOpen()} class="mr-2 text-dark bg-light rounded-pill p-2 icofont-size border shadow-sm">
               <i class="icofont-login"></i>
             </a>}
 
@@ -297,7 +328,7 @@ const Header = () => {
                     <>
                       {subcategories.map((item, i) => {
                         return (
-                          <Link to={"/" + (item.name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + item.id + "/" + item.name}>
+                          <Link key={i} to={"/" + (item.name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + item.id + "/" + item.name}>
                             <a class="dropdown-item" href="#">{item.name}</a>
                           </Link>
                         )

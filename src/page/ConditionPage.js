@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Header from '../component/Header';
 import Footer from '../component/Footer';
 import contextData from '../context/MainContext';

@@ -10,6 +10,7 @@ import Terms from './Terms'
 
 
 import { useLocation } from 'react-router-dom'
+import { useMediaQuery } from '@chakra-ui/react';
 
 
 
@@ -20,7 +21,7 @@ const MainConditionComponent = (props) => {
     const data = useContext(MainData);
     const condition = data.condition[0];
     const Storefaq = data.Storefaq;
-
+    const [isNotSmallerScreen] = useMediaQuery("(min-width:1024px)");
     // //console.log('faq', faq)
 
     const location = useLocation();
@@ -32,11 +33,7 @@ const MainConditionComponent = (props) => {
 
 
             <AccountContainer>
-                <AccountNavigatinMenu />
-
-
-
-
+                {isNotSmallerScreen && <AccountNavigatinMenu />}
 
                 {location.pathname == '/about' ? <Terms conditionTitel="About" conditionData={condition.about} /> : null}
                 {location.pathname == '/term-and-condition' ? <Terms conditionTitel="Term & Condition" conditionData={condition.terms} /> : null}

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 export const DeliveryTiming = ({ setDeliveryTiming }) => {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [timingSlot, setTimingSlot] = useState("5PM - 7PM");
+    const [timingSlot, setTimingSlot] = useState("6PM - 8PM");
     const [date] = useState(new Date());
     const DELIVERY_SLOT_TIMING = 17;
 
@@ -20,9 +20,9 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
     }, [selectedDate, timingSlot]);
 
     useEffect(() => {
-        // new Date().getDate() === selectedDate.getDate() && selectedDate.getHours() > 6 && setTimingSlot("5PM - 7PM");
+        // new Date().getDate() === selectedDate.getDate() && selectedDate.getHours() > 6 && setTimingSlot("6PM - 8PM");
         selectedDate.getHours() > DELIVERY_SLOT_TIMING && setSelectedDate(new Date(new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0)));
-        setTimingSlot("5PM - 7PM")
+        setTimingSlot("6PM - 8PM")
         // //console.log("khfsdf", selectedDate, " ok date --->", selectedDate.getHours(), "dates --->", date.getDate(), " nn", selectedDate.getDate())
     }, [selectedDate])
 
@@ -34,7 +34,7 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
 
     return (
         <>
-            <div className="card border-0 osahan-accor rounded shadow-sm overflow-hidden mt-3">
+            <div className="card border-0 osahan-accor rounded overflow-hidden mt-3">
                 <div className="card-header bg-white border-0 p-0" id="headingthree">
                     <h2 className="mb-0">
                         <button className="btn d-flex align-items-center bg-white btn-block text-left btn-lg h5 px-3 py-4 m-0" type="button" data-toggle="collapse" data-target="#collapsethree" aria-expanded="true" aria-controls="collapsethree">
@@ -81,16 +81,16 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
                                 </ul>
                                 <div className="tab-content filter bg-white" id="myTabContent">
                                     <div className="tab-pane fade show active" id="mon" role="tabpanel" aria-labelledby="mon-tab">
-                                        <div onClick={() => setTimingSlot("2PM - 4PM")} className={selectedDate.getHours() > 13 ? "custom-control border-bottom px-0 custom-radio inactive" : "custom-control border-bottom px-0 custom-radio"}>
-                                            <input className="custom-control-input" type="radio" name="exampleRadios" id="mon1" defaultValue="mon1" defaultChecked={selectedDate.getHours() > 13 ? false : true} />
+                                        <div onClick={() => setTimingSlot("2PM - 4PM")} className={selectedDate.getHours() > 12 ? "custom-control border-bottom px-0 custom-radio inactive" : "custom-control border-bottom px-0 custom-radio"}>
+                                            <input className="custom-control-input" type="radio" name="exampleRadios" id="mon1" defaultValue="mon1" defaultChecked={selectedDate.getHours() > 12 ? false : true} />
                                             <label className="custom-control-label py-3 w-100 px-3" htmlFor="mon1">
                                                 <i className="icofont-clock-time mr-2" /> 2PM - 4PM <span style={{ fontSize: 10, marginLeft: 5 }}>(Afternoon Delivery)</span>
                                             </label>
                                         </div>
-                                        <div onClick={() => setTimingSlot("5PM - 7PM")} className={selectedDate.getHours() > DELIVERY_SLOT_TIMING ? "custom-control border-bottom px-0 custom-radio inactive" : "custom-control border-bottom px-0 custom-radio"}>
+                                        <div onClick={() => setTimingSlot("6PM - 8PM")} className={selectedDate.getHours() > DELIVERY_SLOT_TIMING ? "custom-control border-bottom px-0 custom-radio inactive" : "custom-control border-bottom px-0 custom-radio"}>
                                             <input className="custom-control-input" type="radio" name="exampleRadios" id="mon2" defaultValue="mon2" defaultChecked={selectedDate.getHours() > DELIVERY_SLOT_TIMING ? false : true} />
                                             <label className="custom-control-label py-3 w-100 px-3" htmlFor="mon2">
-                                                <i className="icofont-clock-time mr-2" /> 5PM - 7PM <span style={{ fontSize: 10, marginLeft: 5 }}>(Sunset Delivery)</span>
+                                                <i className="icofont-clock-time mr-2" /> 6PM - 8PM <span style={{ fontSize: 10, marginLeft: 5 }}>(Sunset Delivery)</span>
                                             </label>
                                         </div>
                                     </div>

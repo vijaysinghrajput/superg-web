@@ -124,11 +124,13 @@ const Cart = (props) => {
                             {navigate ? <Checkout setNavigate={setNavigate} checkOutData={checkOutData} /> : (
                                 <div className="accordion" id="accordionExample">
                                     <CartItems />
-                                    {auth.isUserLogin && Number(condition[0].minimum_order) <= GetTotal && <>
-                                        <Address setAddress={setAddress} />
-                                        <DeliveryTiming setDeliveryTiming={setDeliveryTiming} />
-                                        <PaymentOption selectedAddress={selectedAddress} setNavigate={checkIfAllItemsAvilable} setPayment={setPayment} />
-                                    </>}
+                                    {auth.isUserLogin && Number(condition[0]?.minimum_order) <= GetTotal &&
+                                        <>
+                                            <Address setAddress={setAddress} />
+                                            <DeliveryTiming setDeliveryTiming={setDeliveryTiming} />
+                                            <PaymentOption selectedAddress={selectedAddress} setNavigate={checkIfAllItemsAvilable} setPayment={setPayment} />
+                                        </>
+                                    }
                                 </div>
                             )}
                         </div>

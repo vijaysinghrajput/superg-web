@@ -31,6 +31,8 @@ import { position } from '@chakra-ui/styled-system';
 import { Box, Button } from '@chakra-ui/react';
 import getLocation from '../../modules/modules';
 import MapOverview from '../map/New/MapOverview';
+import { GetCurrentLocation } from '../map/New/GetCurrentLocation';
+import Address, { AddressMainComponent } from '../Cart/Address';
 const searchOptions = {
     // input: 'Gorakhpur Uttar Pardesh',
     location: window.google?.maps?.LatLng(26.7606, 83.3732),
@@ -65,13 +67,14 @@ function BasicUsage() {
         <>
             <Button onClick={onOpen}>Open Modal</Button>
 
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} size="full">
                 <ModalOverlay />
-                <ModalContent>
-                    <ModalCloseButton zIndex={9999} />
+                <ModalContent overflow={"hidden"}>
+                    <ModalHeader>Save your address</ModalHeader>
+                    <ModalCloseButton zIndex={9999} top="2%" />
                     <ModalBody bg="none" p={0}>
                         <Box h={"90vh"}>
-                            <MapOverview />
+                            <GetCurrentLocation />
                         </Box>
                     </ModalBody>
                 </ModalContent>
@@ -194,16 +197,17 @@ class AddressComp extends Component {
         return (
             <>
 
-                <div class="col-lg-8 p-4 bg-white rounded shadow-sm">
+                <div class="col-lg-8 bg-white rounded shadow-sm px-0">
                     <div class="osahan-my_address">
 
-                        <h2 class="mb-0">
+                        <AddressMainComponent />
+
+                        {/* <h2 class="mb-0">
                             <button onClick={() => this.refreshSate()} class="btn d-flex align-items-center bg-white btn-block text-left btn-lg h5 px-3 py-4 m-0" type="button" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo">
                                 My Addresses <a href="#" data-toggle="modal" data-target="#addAddressModal" class="text-decoration-none text-success ml-auto"> <i class="icofont-plus-circle mr-1"></i>Add New </a>
                             </button>
                         </h2>
 
-                        <BasicUsage />
 
                         {this.state.isDataLoading ? (
                             <DualHelixLoader />
@@ -216,8 +220,7 @@ class AddressComp extends Component {
                                     <>
                                         {this.state.UserAddressData.map((item, i) => {
                                             return (
-                                                <div class="custom-control custom-radio px-0 mb-3 position-relative border-custom-radio">
-                                                    {/* <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" /> */}
+                                                <div class="custom-control custom-radio px-0 mb-3 position-relative border-custom-radio" key={i}>
                                                     <label class="custom-control-label w-100" for="customRadioInline1">
                                                         <div>
                                                             <div class="p-3 bg-white rounded shadow-sm w-100">
@@ -244,7 +247,7 @@ class AddressComp extends Component {
 
                             </>
 
-                        )}
+                        )} */}
 
                     </div>
                 </div>
@@ -640,9 +643,7 @@ class AddressComp extends Component {
                     <>
                         {this.state.UserAddressData.map((item, i) => {
                             return (
-
-
-                                <div class="modal fade modal" id={"delete" + i} tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                                <div key={i} class="modal fade modal" id={"delete" + i} tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-sm modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">

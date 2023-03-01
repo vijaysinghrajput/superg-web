@@ -5,7 +5,7 @@ export const PaymentOption = ({ setPayment, setNavigate, selectedAddress }) => {
 
     return (
         <>
-            <div className="card border-0 osahan-accor rounded shadow-sm overflow-hidden mt-3">
+            <div className="card border-0 osahan-accor rounded overflow-hidden mt-3">
                 <div className="card-header bg-white border-0 p-0" id="headingfour">
                     <h2 className="mb-0">
                         <button className="btn d-flex align-items-center bg-white btn-block text-left btn-lg h5 px-3 py-4 m-0" type="button" data-toggle="collapse" data-target="#collapsefour" aria-expanded="true" aria-controls="collapsefour">

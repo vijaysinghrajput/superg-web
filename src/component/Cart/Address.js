@@ -11,35 +11,32 @@ import Geocode from "react-geocode";
 
 import Base64 from "../../helper/EncodeDecode";
 import Cookies from 'universal-cookie';
-import { Box, Select } from '@chakra-ui/react'
-
-
+import { Box, Button, Select } from '@chakra-ui/react'
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+} from '@chakra-ui/react'
 import URL from '../../URL'
 import { position } from '@chakra-ui/styled-system';
+import { GetCurrentLocation } from '../map/New/GetCurrentLocation';
+import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const searchOptions = {
     // input: 'Gorakhpur Uttar Pardesh',
     location: window.google?.maps?.LatLng(26.7606, 83.3732),
     types: ['address'],
     componentRestrictions: { country: "in" },
-
-
-
 }
 
-
-
-
-
-
-// import LoactionPicker from '../map/LoactionPicker'
-
-
-
-
-const cookies = new Cookies()
-
-
+const cookies = new Cookies();
 
 Geocode.setApiKey("AIzaSyDDirDSiLgvG8Gl8crjbvrGRXlCPOTYRzE");
 Geocode.setLanguage("en");
@@ -48,6 +45,28 @@ Geocode.setRegion("in");
 // Geocode.enableDebug();
 
 
+function AddressInModal({ setUserAddressData, type = "ADD", editData }) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    return (
+        <>
+            {type === "ADD" ? <Button onClick={onOpen} w="100%" color={"#000"} bg={"#fff"} border="2px solid #11982a">+ Add New Address</Button>
+                : <div class="text-decoration-none text-success" onClick={onOpen}><i class="icofont-edit"></i> Edit</div>}
+
+            <Modal isOpen={isOpen} onClose={onClose} size="full">
+                <ModalOverlay />
+                <ModalContent overflow={"hidden"} borderRadius={0}>
+                    <ModalHeader>Save your address</ModalHeader>
+                    <ModalCloseButton zIndex={9999} top="2%" />
+                    <ModalBody bg="none" p={0}>
+                        <Box h={"90vh"}>
+                            <GetCurrentLocation onClose={onClose} setUserAddressData={setUserAddressData} type={type} editData={editData} />
+                        </Box>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+        </>
+    )
+}
 
 
 class Address extends Component {
@@ -81,6 +100,13 @@ class Address extends Component {
     handleMapIdle = () => {
         this.setState({
             mapLoaded: true
+        });
+    }
+
+    setUserAddressData(data) {
+        console.log("kaam kr bhi rha hai...??", data)
+        this.setState({
+            UserAddressData: data
         });
     }
 
@@ -141,7 +167,7 @@ class Address extends Component {
 
         return (
             <>
-                <div className="card border-0 osahan-accor rounded shadow-sm overflow-hidden mt-3">
+                <div className="card border-0 osahan-accor rounded overflow-hidden mt-3">
                     <div className="card-header bg-white border-0 p-0" id="headingtwo">
                         <h2 className="mb-0">
                             <button onClick={() => this.refreshSate()} className="btn d-flex align-items-center bg-white btn-block text-left btn-lg h5 px-3 py-4 m-0" type="button" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo">
@@ -153,34 +179,34 @@ class Address extends Component {
                         <div className="card-body p-0 border-top">
                             <div className="osahan-order_address">
                                 <div className="p-3 row">
-                                    <div className="col-12 my-3">
+                                    <div className="col-12 mb-3">
                                         {/* <a href="#" className="btn btn-success btn-lg w-50 mx-auto btn-block mt-3" type="button" >Please Add Delivery Address</a> */}
-                                        <a href="#" data-toggle="modal" data-target="#addAddressModal" className="text-decoration-none text-success ml-2"> <i className="icofont-plus-circle mr-1" />Add New  Address</a>
+                                        {/* <a href="#" data-toggle="modal" data-target="#addAddressModal" className="text-decoration-none text-success ml-2"> <i className="icofont-plus-circle mr-1" />Add Address</a> */}
+                                        <AddressInModal setUserAddressData={(e) => this.setUserAddressData(e)} />
                                     </div>
                                     <>
                                         {this.state.UserAddressData.length ? (
                                             <>
                                                 {this.state.UserAddressData.map((item, i) => {
                                                     return (
-                                                        <div class="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio defaultChecked">
+                                                        <div key={i} class="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio defaultChecked" style={{ position: "relative" }}>
                                                             {/* <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" /> */}
                                                             <label class="custom-control-label w-100" for="customRadioInline1">
                                                                 <div>
-                                                                    <div class="p-3 bg-white rounded shadow-sm w-100">
-                                                                        <p class="small text-muted m-0">{item.name} , {item.phone}</p>
+                                                                    <div class="p-3 bg-white rounded w-100">
+                                                                        <p class="mb-2 m-0" style={{ fontSize: 16, fontWeight: "700", color: "#000", textTransform: "capitalize" }}>{item.name} , {item.phone}</p>
                                                                         <p class="small text-muted m-0">{item.user_house_no} , {item.address}</p>
                                                                         <p class="small text-muted m-0">{item.base_address} , {item.city}</p>
-                                                                        <p class="pt-2 m-0 text-right">
+                                                                        <p class="pt-2 m-0 text-right" style={{ position: "absolute", top: 0, right: 16 }}>
                                                                             <span class="small">
-                                                                                <a href="#" onClick={() => this.EditCalled(item.address_id)} data-toggle="modal" data-target={"#EditAddressModal" + i} class="text-decoration-none text-success">
-                                                                                    <i class="icofont-edit"></i> Edit</a>
+                                                                                <AddressInModal setUserAddressData={(e) => this.setUserAddressData(e)} type="EDIT" editData={item} />
                                                                             </span>
                                                                             {/* <span class="small ml-3"><a href="#" data-toggle="modal" data-target={"#delete" + i} class="text-decoration-none text-danger"><i class="icofont-trash"></i> Delete</a></span> */}
                                                                         </p>
                                                                     </div>
 
-                                                                    <span data-toggle="collapse" data-target="#collapsethree" onClick={() => { this.setState({ selectedDeliveryAddress: item.address_id }); this.props.setAddress(item) }} className={this.state.selectedDeliveryAddress == item.address_id ? 'btn btn-success border-top btn-lg btn-block' : 'btn btn-default border-top btn-lg btn-block'} >
-                                                                        Deliver Here
+                                                                    <span data-toggle="collapse" data-target="#collapsethree" onClick={() => { this.setState({ selectedDeliveryAddress: item.address_id }); this.props.setAddress(item) }} className={this.state.selectedDeliveryAddress == item.address_id ? 'pb-3 pt-2 text-center btn-block deliverHere-txt' : 'btn btn-default text-center btn-lg btn-block'} >
+                                                                        Deliver Here <HiOutlineArrowNarrowRight />
                                                                     </span>
 
                                                                 </div>
@@ -197,9 +223,7 @@ class Address extends Component {
                                             </>
                                         )}
                                     </>
-                                    {this.state.selectedDeliveryAddress == null && !this.state.UserAddressData.length ? (
-                                        <a href="#" data-toggle="modal" data-target="#addAddressModal" className="btn btn-danger w-75 mx-auto btn-lg btn-block mt-3" type="button" >Please Add Delivery Address</a>
-                                    ) : (
+                                    {!this.state.selectedDeliveryAddress == null && this.state.UserAddressData.length && (
                                         <a href="#" className="btn btn-success btn-lg btn-block mt-3" type="button" data-toggle="collapse" data-target="#collapsethree" aria-expanded="true" aria-controls="collapsethree">Continue</a>
                                     )}
                                 </div>
@@ -225,7 +249,7 @@ class Address extends Component {
                                                 <Select size="sm" onChange={this.handleChange} id="base_address" value={this.state.base_address}>
                                                     {this.state.serviceArea.map((areas, i) => {
                                                         return (
-                                                            <option style={{}} value={areas.area_name}>{areas.area_name}</option>
+                                                            <option key={i} value={areas.area_name}>{areas.area_name}</option>
                                                         )
                                                     })}
                                                 </Select>
@@ -315,7 +339,7 @@ class Address extends Component {
                                                                 <Select size="sm" onChange={this.handleChange} id="base_address" value={this.state.base_address}>
                                                                     {this.state.serviceArea.map((areas, i) => {
                                                                         return (
-                                                                            <option style={{}} value={areas.area_name}>{areas.area_name}</option>
+                                                                            <option key={i} value={areas.area_name}>{areas.area_name}</option>
                                                                         )
                                                                     })}
                                                                 </Select>
@@ -371,9 +395,7 @@ class Address extends Component {
                     <>
                         {this.state.UserAddressData.map((item, i) => {
                             return (
-
-
-                                <div class="modal fade modal DeleteAddressModal" id={"delete" + i} tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                                <div key={i} class="modal fade modal DeleteAddressModal" id={"delete" + i} tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-sm modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -531,7 +553,7 @@ class Address extends Component {
 
         const { user_name, user_mobile, user_house_no, user_street, user_addres_type, user_city, base_address, address } = this.state;
 
-        //console.log("hey data ---->", this.state);
+        console.log("hey data for base address ---->", this.state);
 
         var phoneno = /^\d{10}$/;
 
@@ -591,7 +613,7 @@ class Address extends Component {
 
         else {
 
-
+            console.log("base adrees from line 618 --->", base_address);
 
             this.setState({ isClickedAdd: true })
             fetch(URL + "/APP-API/App/insertUserAddress", {
@@ -800,6 +822,91 @@ class Address extends Component {
     };
 
 
+}
+
+
+export function AddressMainComponent({ }) {
+
+    const [UserAddressData, setUserAddressData] = useState([]);
+
+
+    useEffect(() => {
+        fetchAllAddress();
+    }, []);
+
+    const UserIDs = cookies.get("userID");
+    const UserID = UserIDs && Base64.atob(UserIDs);
+
+
+    const fetchAllAddress = () => {
+        fetch(URL + "/APP-API/App/getAllAddress", {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }, body: JSON.stringify({ UserID })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                responseJson.address.length && setUserAddressData(responseJson.address);
+            })
+            .catch((error) => { });
+    }
+
+
+
+    return (
+        <div className="card-body p-0 border-top">
+            <div className="osahan-order_address">
+                <div className="p-3 row">
+                    <div className="col-12 mb-3">
+                        {/* <a href="#" className="btn btn-success btn-lg w-50 mx-auto btn-block mt-3" type="button" >Please Add Delivery Address</a> */}
+                        {/* <a href="#" data-toggle="modal" data-target="#addAddressModal" className="text-decoration-none text-success ml-2"> <i className="icofont-plus-circle mr-1" />Add Address</a> */}
+                        <AddressInModal setUserAddressData={setUserAddressData} />
+                    </div>
+                    <>
+                        {UserAddressData.length ? (
+                            <>
+                                {UserAddressData.map((item, i) => {
+                                    return (
+                                        <div key={i} class="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio defaultChecked" style={{ position: "relative" }}>
+                                            {/* <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" /> */}
+                                            <label class="custom-control-label w-100" for="customRadioInline1">
+                                                <div>
+                                                    <div class="p-3 bg-white rounded w-100">
+                                                        <p class="mb-2 m-0" style={{ fontSize: 16, fontWeight: "700", color: "#000", textTransform: "capitalize" }}>{item.name} , {item.phone}</p>
+                                                        <p class="small text-muted m-0">{item.user_house_no} , {item.address}</p>
+                                                        <p class="small text-muted m-0">{item.base_address} , {item.city}</p>
+                                                        <p class="pt-2 m-0 text-right" style={{ position: "absolute", top: 0, right: 16 }}>
+                                                            <span class="small">
+                                                                <AddressInModal setUserAddressData={setUserAddressData} type="EDIT" editData={item} />
+                                                            </span>
+                                                            {/* <span class="small ml-3"><a href="#" data-toggle="modal" data-target={"#delete" + i} class="text-decoration-none text-danger"><i class="icofont-trash"></i> Delete</a></span> */}
+                                                        </p>
+                                                    </div>
+
+                                                    {/* <span data-toggle="collapse" data-target="#collapsethree" className='btn btn-default text-center btn-lg btn-block' >
+                                                        Deliver Here <HiOutlineArrowNarrowRight />
+                                                    </span> */}
+
+                                                </div>
+                                            </label>
+                                        </div>
+                                    )
+                                })}
+                            </>
+                        ) : (
+                            <>
+                                {/* <div className="card-header bg-white border-0 p-0" id="headingtwo">
+                                                <a href="#" data-toggle="modal" data-target="#addAddressModal" className="text-decoration-none text-success ml-auto"> <i className="icofont-plus-circle mr-1" />Add New Delivery Address</a>
+                                            </div> */}
+                            </>
+                        )}
+                    </>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Address;

@@ -37,7 +37,7 @@ const Terms = ({ conditionTitel, conditionData }) => {
                                         <>
                                             {conditionData.map((item, i) => {
                                                 return (
-                                                    <div class="box border rounded mb-1 bg-white">
+                                                    <div class="box border rounded mb-1 bg-white" key={i}>
                                                         <div id={"ABC" + i}>
                                                             <h5 class="mb-0">
                                                                 <button class="shadow-none btn btn-block d-flex align-items-center justify-content-between card-btn p-3 collapsed" data-toggle="collapse" data-target={"#col" + i} aria-expanded="false" aria-controls="basicsCollapseOne">
@@ -69,9 +69,9 @@ const Terms = ({ conditionTitel, conditionData }) => {
 
                     (
                         <div class="col-lg-8 p-4 bg-white rounded shadow-sm">
-                            <h4 class="mb-4 profile-title">{conditionTitel}</h4>
+                            <h4 class="mb-3 profile-title" style={{ fontSize: 24 }}>{conditionTitel == "About" ? "About Us" : conditionTitel}</h4>
                             <div id="terms_conditions">
-                                <p class="text-muted">{conditionData}</p>
+                                <p class="text-muted" style={{ fontSize: 12 }}>{conditionData}</p>
                             </div>
                         </div>
                     )

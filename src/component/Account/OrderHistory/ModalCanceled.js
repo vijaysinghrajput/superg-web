@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import URL from '../../../URL';
 
-export const ModalCanceled = ({ items }) => {
+export const ModalCanceled = ({ items, key }) => {
 
     const [isNotSmallerScreen] = useMediaQuery("(min-width:1024px)");
 
@@ -20,8 +20,8 @@ export const ModalCanceled = ({ items }) => {
 
     return (
         <>
-            <div class="pb-3" onClick={onOpen}>
-                <a href="javascript:void(0)" class="text-decoration-none text-dark">
+            <div class="pb-3" onClick={onOpen} key={key}>
+                <a href="#" class="text-decoration-none text-dark">
                     <div class="p-3 rounded shadow-sm bg-white">
                         <div class="d-flex align-items-center mb-3">
                             <p class="bg-danger text-white py-1 px-2 mb-0 rounded small">{items.Order_status}ed</p>
@@ -56,7 +56,7 @@ export const ModalCanceled = ({ items }) => {
                                     <div className="container_orderItems">
                                         {items.orderItems.map((data, i) => {
                                             return (
-                                                <div className="orderItems d-flex align-items-center">
+                                                <div className="orderItems d-flex align-items-center" key={i}>
                                                     <img style={{ height: 50 }} src={URL + "/images/product-images/" + data.p_image} alt="" />
                                                     <h6 className='mb-0 ml-4'>{data.p_name} <span style={{ fontWeight: "700", marginBottom: 0 }}>x {data.p_qty}</span></h6>
                                                     <h6 className='mb-0 ml-auto mr-3' style={{ fontWeight: "700" }}>₹{Math.round((data.p_price) - ((data.p_price) * (data.p_discount / 100))) * data.p_qty}</h6>

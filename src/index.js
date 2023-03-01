@@ -4,13 +4,32 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ChakraProvider } from '@chakra-ui/react';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
+import ContextProvider from './context/contextProvider';
 
+
+
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // default: true
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider resetCSS={false}>
-      <App />
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ContextProvider>
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
+      </ContextProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

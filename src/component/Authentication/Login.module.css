@@ -1,0 +1,29 @@
+.c_label {
+    padding: 10px;
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: 0.2s;
+    transition-timing-function: ease;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+    opacity: 0.5;
+    background: #fff;
+}
+
+.c_input {
+    padding: 10px;
+}
+
+.c_input:focus+.c_label,
+.c_input:not(:placeholder-shown)+.c_label {
+    opacity: 1;
+    transform: scale(0.75) translateY(-70%) translateX(-14px);
+}
+
+.placeholder_container {
+    margin: 0px 0 20px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}

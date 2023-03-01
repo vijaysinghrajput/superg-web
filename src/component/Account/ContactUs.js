@@ -29,10 +29,42 @@ import {
     MdOutlineEmail,
 } from 'react-icons/md';
 import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import Cookies from 'universal-cookie';
+import Base64 from '../../helper/EncodeDecode';
+
+
+const cookies = new Cookies();
+
+
 
 const ContactUs = (props) => {
 
     const navigate = useNavigate();
+    const [token, setToken] = useState("");
+    const [cokki, setCookie] = useState("");
+    const [userIDD, setUserIDD] = useState("");
+    const [aaa, setaaa] = useState("");
+
+    const getToken = async () => {
+        const token = window?.Android && await window.Android.getDeviceToken();
+        token ? setToken(token) : setToken("SuperG");
+    }
+
+    useEffect(() => {
+        getToken();
+        const userMob = cookies.get("userMobile");
+        const UserMobile = userMob && Base64.atob(userMob);
+
+        const userID = cookies.get("userID");
+        // console.log("hey cookieess===>", userID);
+        const UserID = userID && Base64.atob(userID);
+
+        setCookie(UserMobile);
+        setUserIDD(UserID);
+        setaaa(userID);
+    }, [])
 
     return (
         <>
@@ -45,6 +77,10 @@ const ContactUs = (props) => {
                         <p>Call Us @ <br /> <a href="tel:6391000414">6391000414</a> <br /> <a href="tel:6391000415">6391000415</a> <br /> <a href="tel:6391000416">6391000416</a></p>
                         <p>Whatsapp @ <br /> <a href={`https://api.whatsapp.com/send?text=Hello SuperG.in!&phone=${constants.phone}`}>{constants.phone}</a></p>
                         <p>Email @ <br /> <a href={`mailto:${constants.email}`}>{constants.email}</a></p>
+                        <Text>Token : {token}</Text>
+                        <Text>User ID : {userIDD}</Text>
+                        <Text>mobile : {cokki}</Text>
+                        <Text>main User ID : {aaa}</Text>
                     </div>
                     {/* <WrapItem>
                         <Box bg="white" borderRadius="lg">

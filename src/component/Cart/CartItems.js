@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MainContext from '../../context/MainContext';
@@ -6,7 +7,7 @@ import { CartItemsCard } from '../ProductsCards/CartItems';
 const CartItems = (props) => {
 
     const data = useContext(MainContext);
-    const { cartItems, auth, products, condition, totalAmount } = data;
+    const { cartItems, auth, products, condition, totalAmount, onLoginOpen } = data;
     const navigation = useNavigate();
     const location = useLocation();
     const GetTotal = cartItems.reduce(function (a, b) {
@@ -20,7 +21,7 @@ const CartItems = (props) => {
 
     return (
         <>
-            <div className="card border-0 osahan-accor rounded shadow-sm overflow-hidden">
+            <div className="card border-0 osahan-accor rounded overflow-hidden">
                 <div className="card-header bg-white border-0 p-0" id="headingOne">
                     <h2 className="mb-0">
                         <button className="btn d-flex align-items-center bg-white btn-block text-left btn-lg h5 px-3 py-4 m-0" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -34,7 +35,7 @@ const CartItems = (props) => {
                             {cartItems.map((data, i) => {
                                 const outOfStock = products.find(o => o.id == data.id);
                                 return (
-                                    <CartItemsCard data={data} outOfStock={outOfStock} />
+                                    <CartItemsCard key={i} data={data} outOfStock={outOfStock} />
                                 )
                             })}
                             <div>
@@ -60,14 +61,14 @@ const CartItems = (props) => {
                                                 </div>
                                                 <div className="ml-auto"><i className="icofont-simple-right" /></div>
                                             </div>
-                                        </a> : <Link to="/login" state={location.pathname} className="text-decoration-none btn btn-block p-3">
+                                        </a> : <Box onClick={onLoginOpen} className="text-decoration-none btn btn-block p-3">
                                             <div className="rounded shadow bg-danger d-flex align-items-center p-4 text-white">
                                                 <div className="more">
                                                     <h6 className="m-0">Please Login First</h6>
                                                 </div>
                                                 <div className="ml-auto"><i className="icofont-simple-right" /></div>
                                             </div>
-                                        </Link>}
+                                        </Box>}
                             </div>
                         </div>
                     </div>

@@ -25,6 +25,7 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	overflow-x: hidden;
 }
 
 body {
@@ -344,6 +345,10 @@ small {
 .back-page {
 	font-size: 19px;
 	vertical-align: bottom;
+}
+
+.no-scroll::-webkit-scrollbar {
+	display: none;
 }
 
 div,
@@ -670,7 +675,7 @@ span.c-number {
 
 .opt {
 	font-size: 23px !important;
-	width: 3em !important;
+	width: 2.4em !important;
 }
 
 /* Bootstrap custom */
@@ -1293,7 +1298,7 @@ label {
 	}
 
 	.osahan-main-body {
-		padding-top: 5rem !important;
+		padding-top: 4rem !important;
 	}
 
 	.plus-minus-container {
@@ -1307,7 +1312,7 @@ label {
 		display: block !important;
 		position: fixed;
 		width: 100%;
-		z-index: 2;
+		z-index: 99;
 		background: #f0f2f5;
 	}
 
@@ -1368,8 +1373,15 @@ label {
 .plusMinusFun {
 	box-shadow: rgb(194 194 194) 0px 1px 5px 0px;
 	padding: 4px;
-	background: #fff;
-	border-radius: 8px;
+	background: #ffffffab;
+	border-radius: 10px;
+	border: 2px solid #149d14;
+}
+
+.selected_item {
+	background: #149d14;
+	color: #fff;
+	padding: 7px;
 }
 
 .cartItemCount {
@@ -1485,4 +1497,17 @@ iframe {
 
 svg {
 	display: unset !important;
+}
+
+.css-taj3dd:focus,
+.css-taj3dd[data-focus],
+button:focus {
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+.deliverHere-txt {
+	color: #1dbd1d;
+	font-weight: 700;
+	font-size: 14px;
 }

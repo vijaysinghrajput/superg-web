@@ -8,6 +8,8 @@ import { useMediaQuery } from '@chakra-ui/react';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import Cookies from 'universal-cookie';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const cookies = new Cookies();
 
@@ -20,6 +22,39 @@ const Login = () => {
     const [userMobileNumber, setUserMobileNumber] = useState("");
     const [isPhoneValid, setIsPhoneValid] = useState(false);
     const [isLoading, setLoading] = useState(false);
+    auth.languageCode = 'it';
+
+    const genrateRecaptcha = () => {
+
+        // if (!window.recaptchaVerifier) {
+        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+            'size': 'normal',
+            'callback': (response) => {
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+                // onSignInSubmit();
+                console.log("hey nvneet ===>", response);
+            }
+        }, auth);
+        // }
+    }
+
+
+    const requestOtp = async () => {
+        genrateRecaptcha();
+        const appVerifier = window.recaptchaVerifier;
+        console.log("dherer ===>", appVerifier);
+        const phoneNumber = "+91" + userMobileNumber;
+        console.log("phoneNumber ===>", phoneNumber);
+        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+            .then((confirmationResult) => {
+                console.log("otp sent...!");
+                window.recaptchaVerifier.recaptcha.reset();
+                window.confirmationResult = confirmationResult;
+            }).catch((error) => {
+                console.log("some error...", error);
+            });
+    }
+
 
     useEffect(() => {
         const phoneno = /^\d{10}$/;
@@ -116,6 +151,7 @@ const Login = () => {
                                         <label>Mobile Number</label>
                                         <input placeholder="Your Mobile Number" type="tel" class="form-control" maxlength={10}
                                             onChange={e => setUserMobileNumber(e.target.value)} onKeyDown={e => e.key === "Enter" && sendOTP()} />
+                                        <div id="recaptcha-container"></div>
                                     </div>
                                     {isLoading ? (
                                         <Button
@@ -125,7 +161,7 @@ const Login = () => {
                                             variant='outline'
                                         />
                                     ) : (
-                                        <button type="button" disabled={isPhoneValid} onClick={() => sendOTP()} class="btn btn-success btn-lg rounded btn-block">Send Otp</button>
+                                        <button type="button" disabled={isPhoneValid} onClick={() => requestOtp()} class="btn btn-success btn-lg rounded btn-block">Send Otp</button>
                                     )}
                                     {/* <p class="text-muted text-center small m-0 py-3">or</p>
                                     <FacebookLogin

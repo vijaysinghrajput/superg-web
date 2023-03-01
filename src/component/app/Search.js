@@ -47,7 +47,7 @@ const Search = (props) => {
                                 searchedProducts.slice(0, 8).map((product, i) => {
                                     return (
                                         <>
-                                            <div className="col-12 p-2">
+                                            <div className="col-12 p-2" key={i}>
                                                 <Link to={"/" + (product.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + product.id}>
                                                     <div className="row">
                                                         <div className="col-2 d-flex justify-content-center">

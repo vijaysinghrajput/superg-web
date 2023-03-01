@@ -9,7 +9,7 @@ import { Box, Button, Image, Text } from '@chakra-ui/react';
 import { Img } from 'react-image'
 
 
-export const BasicVegitableFruit = ({ data }) => {
+export const BasicVegitableFruit = ({ data, key, mdSize = 2 }) => {
 
     const mainData = useContext(ContextData);
     const location = useLocation();
@@ -36,7 +36,7 @@ export const BasicVegitableFruit = ({ data }) => {
 
     return (
         <>
-            <div class="col-6 col-md-3 mb-3">
+            <div class={`col-6 col-md-${mdSize} mb-0 p-1`} key={key}>
                 <div
                     class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                     <div class="list-card-image">
@@ -56,21 +56,12 @@ export const BasicVegitableFruit = ({ data }) => {
                                             currentTarget.src = "/img/logo-500.png";
                                         }}
                                     />
-
-
-
-
-                                    {/* <img src={URL + "/images/product-images/" + data.product_image}
-                                        class="img-fluid item-img w-100 mb-3"
-                                        alt={data.product_name + " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-                                        title={data.product_name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-                                        style={data.status == "0" ? { filter: "blur(0px)" } : {}}
-                                    /> */}
                                     {data.status == "0" && <Box position={"absolute"} transform="translate(0%, -36%)" top="50%" p={4} bg="#ffffffde" backdropFilter={"blur(1px)"} width="100%">
                                         <Text textAlign={"center"} fontSize={{ base: 14, md: 20 }} color="red" fontWeight={"800"}>Out Of Stock</Text>
                                     </Box>}
                                 </Box>
-                                <h6 className='px-3 pt-3 pb-0' style={{ color: "#000" }}>{data.product_name} <small>{data?.hindi_name}</small></h6>
+                                {/* <h6 className='px-3 pt-3 pb-0' style={{ color: "#000" }}>{data.product_name} <small>{data?.hindi_name}</small></h6> */}
+                                <Text px={4} noOfLines={1}>{data.product_name} <small>{data?.hindi_name}</small></Text>
                             </Link>
                             <div class="d-flex align-items-center px-3 pb-3 pt-0">
                                 {data.status == "1" && <div>
@@ -81,26 +72,37 @@ export const BasicVegitableFruit = ({ data }) => {
                                     <div>
                                         {data.status != "0" ?
                                             !productData.itemQuant ? (
-                                                <div className="plusMinusFun d-flex justify-content-between px-3 align-items-center" style={{ width: 'fit-content', padding: 8, marginLeft: "auto" }}>
-                                                    <BsPlusLg style={{ color: "#454545", cursor: "pointer", fontSize: 18 }} onClick={() =>
+                                                <div
+                                                    className="plusMinusFun d-flex justify-content-between px-3 align-items-center"
+                                                    style={{ width: 'fit-content', padding: 8, marginLeft: "auto", cursor: "pointer", backdropFilter: "blur(8px)" }}
+                                                    onClick={() =>
                                                         mainData.addToCart({
                                                             ...data,
                                                             itemQuant: 1,
                                                             cartId: data.id
                                                         })
-                                                    } />
+                                                    }
+                                                >
+                                                    <Box
+                                                        display="flex"
+                                                        color={"#008500"}
+                                                        alignItems="center"
+                                                    >
+                                                        {/* <BsPlusLg style={{ cursor: "pointer" }} size={16} /> */}
+                                                        <Text mx={2} fontSize={14} fontWeight="700">ADD</Text>
+                                                    </Box>
                                                 </div>
                                             ) : (
-                                                <div class="plusMinusFun d-flex justify-content-between px-3 align-items-center">
+                                                <div class="plusMinusFun d-flex justify-content-between px-3 align-items-center selected_item">
                                                     {productData.itemQuant === 1 ? (
                                                         <MdDelete
-                                                            style={{ fontSize: 22, cursor: "pointer", color: "#454545" }}
+                                                            style={{ fontSize: 22, cursor: "pointer" }}
                                                             onClick={() =>
                                                                 mainData.removeFromCart(data.id)}
                                                         />
                                                     ) : (
                                                         <AiOutlineMinus
-                                                            style={{ fontSize: 22, cursor: "pointer", color: "#454545" }}
+                                                            style={{ fontSize: 22, cursor: "pointer" }}
                                                             onClick={() => mainData.addToCart({
                                                                 ...data,
                                                                 itemQuant: productData.itemQuant - 1,
@@ -111,7 +113,7 @@ export const BasicVegitableFruit = ({ data }) => {
                                                     )}
                                                     <h5 className="mb-0" style={{ fontSize: 18 }}>{productData.itemQuant}</h5>
                                                     <AiOutlinePlus
-                                                        style={{ fontSize: 22, cursor: "pointer", color: "#454545" }}
+                                                        style={{ fontSize: 22, cursor: "pointer" }}
                                                         onClick={() =>
                                                             mainData.addToCart({
                                                                 ...data,

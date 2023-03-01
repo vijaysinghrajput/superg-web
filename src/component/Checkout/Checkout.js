@@ -139,7 +139,7 @@ const Checkout = ({ setNavigate, checkOutData }) => {
 
     return (
         <>
-            <div class="bg-white rounded shadow-sm overflow-hidden">
+            <div class="bg-white rounded overflow-hidden">
                 <div class="p-3">
                     <div class="d-flex align-items-center">
                         <span class="small">

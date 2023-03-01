@@ -7,44 +7,22 @@ import { useState } from 'react';
 import { ModalDeliverd } from './OrderHistory/ModalDeliverd';
 import { ModalProgress } from './OrderHistory/ModalInProgress';
 import { ModalCanceled } from './OrderHistory/ModalCanceled';
+import { Box, Image, Spinner, Text } from '@chakra-ui/react';
+import { OrderListItem } from './OrderComponentV2/OrderListItem';
+import { fetchAllOrders } from '../../api';
+import { useQuery } from 'react-query';
 
 const cookies = new Cookies();
 
 export const MyOrder = (props) => {
 
-    const [ordersHistory, setOrdersHistory] = useState([]);
+    const { data } = useQuery('user_all_order', () => fetchAllOrders());
 
-
-    useEffect(() => {
-        fetchData();
-    }, [])
-
-    const fetchData = () => {
-        const userID = cookies.get("userID");
-        const UserID = Base64.atob(userID)
-        fetch(URL + "/APP-API/App/FetchOrders", {
-            method: 'POST',
-            header: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                UserID
-            })
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                // functionality.fetchAllData(responseJson);
-                setOrdersHistory(responseJson);
-            })
-            .catch((error) => {
-                //  console.error(error);
-            });
-    };
     return (
         <>
             <section class="col-lg-8">
                 <div class="row">
-                    <div class="col-md-12 mb-3">
+                    {/* <div class="col-md-12 mb-3">
                         <ul class="nav  nav-tabs custom-tabs border-0 flex-row justify-content-around bg-white rounded overflow-hidden shadow-sm p-2 c-t-order"
                             id="myTab" role="tablist">
                             <li class="nav-item border-top" role="presentation">
@@ -63,15 +41,44 @@ export const MyOrder = (props) => {
                                     <i class="icofont-close-line mr-2 text-danger mb-0" style={{ width: "fit-content" }}></i> Canceled</a>
                             </li>
                         </ul>
-                    </div>
-                    <div class="tab-content col-md-12" id="myTabContent">
+                    </div> */}
+                    {!data ?
+                        <Box h="50vh" display={"flex"} justifyContent="center" alignItems={"center"} w="100%">
+                            <Spinner />
+                        </Box>
+                        :
+                        <Box
+                            w="100%"
+                            pb={24}
+                        >
+                            {data.map((items, i) => {
+                                return (
+                                    <OrderListItem key={i} items={items} />
+                                )
+                            })}
+                        </Box>
+                    }
+                    {/* <div class="tab-content col-md-12" id="myTabContent">
                         <div class="tab-pane fade show active" id="progress" role="tabpanel" aria-labelledby="progress-tab">
                             <div class="order-body">
-                                {ordersHistory.map((items, i) => {
-                                    return (
-                                        items?.Order_status !== "Delivered" && items?.Order_status !== "Cancel" && <ModalProgress fetchData={fetchData} items={items} />
-                                    )
-                                })}
+                                {ordersHistory.some(e => e.Order_status !== 'Delivered' && e.Order_status !== 'Cancel') ?
+                                    ordersHistory.map((items, i) => {
+                                        return (
+                                            items?.Order_status !== "Delivered" && items?.Order_status !== "Cancel" && <ModalProgress key={i} fetchData={fetchData} items={items} />
+                                        )
+                                    }) : <Box
+                                        bg="#fff"
+                                        display={"flex"}
+                                        alignItems="center"
+                                        justifyContent={"center"}
+                                        flexDirection="column"
+                                        p={10}
+                                    >
+                                        <Image
+                                            src='https://organickle.com/images/no-order.svg'
+                                        />
+                                        <Text>No orders found</Text>
+                                    </Box>}
                             </div>
                         </div>
                         <div class="tab-pane fade" id="completed" role="tabpanel"
@@ -79,7 +86,7 @@ export const MyOrder = (props) => {
                             <div class="order-body">
                                 {ordersHistory.map((items, i) => {
                                     return (
-                                        items?.Order_status === "Delivered" && <ModalDeliverd items={items} />
+                                        items?.Order_status === "Delivered" && <ModalDeliverd key={i} items={items} />
                                     )
                                 })}
                             </div>
@@ -88,12 +95,12 @@ export const MyOrder = (props) => {
                             <div class="order-body">
                                 {ordersHistory.map((items, i) => {
                                     return (
-                                        items?.Order_status === "Cancel" && <ModalCanceled items={items} />
+                                        items?.Order_status === "Cancel" && <ModalCanceled key={i} items={items} />
                                     )
                                 })}
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </section>
         </>

@@ -1,3 +1,4 @@
+import { Text } from '@chakra-ui/react';
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ContextData from '../../context/MainContext';
@@ -42,7 +43,7 @@ const ProductsBySubcategory = (props) => {
 
             <OshanContainer>
                 <div class="d-flex align-items-center mb-3">
-                    <h4>{subcatName}</h4>
+                    <Text fontSize={24} fontWeight="800">{subcatName}</Text>
                     <div class="m-0 text-center ml-auto">
                         <a href="#" data-toggle="modal" data-target="#exampleModal"
                             class="btn text-muted bg-white mr-2"><i class="icofont-filter mr-1"></i> Filter</a>
@@ -52,7 +53,7 @@ const ProductsBySubcategory = (props) => {
                     {
                         productsBySub.map((data, i) => {
                             return (
-                                <BasicVegitableFruit data={data} />
+                                <BasicVegitableFruit key={i} data={data} />
                             )
                         })
                     }

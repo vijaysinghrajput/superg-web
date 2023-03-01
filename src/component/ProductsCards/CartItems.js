@@ -5,7 +5,7 @@ import ContextData from '../../context/MainContext';
 import { MdDelete } from 'react-icons/md';
 import { useDisclosure, useMediaQuery } from '@chakra-ui/react';
 
-export const CartItemsCard = ({ data, outOfStock }) => {
+export const CartItemsCard = ({ data, outOfStock, key }) => {
 
     const mainData = useContext(ContextData);
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +33,7 @@ export const CartItemsCard = ({ data, outOfStock }) => {
 
     return (
         <>
-            <div className="cart-items bg-white position-relative border-bottom">
+            <div className="cart-items bg-white position-relative border-bottom" key={key}>
                 <div className="position-absolute" style={{ left: "7%" }}>
                     {Number(data.discount) ? <span className="badge badge-danger m-3">{data.discount} %</span> : null}
                 </div>

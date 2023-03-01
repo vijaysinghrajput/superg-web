@@ -16,17 +16,23 @@ const searchOptions = {
 export const AddressAutocomplete = ({ handleSelect, address }) => {
 
     const [addressInput, setAddress] = useState("");
+    const inputRef = useRef(null);
 
     useEffect(() => {
         setAddress(address.user_full_address)
     }, [address])
+
+    const selectAddress = (e) => {
+        handleSelect(e);
+        inputRef.current.blur();
+    }
 
     return (
         <>
             <PlacesAutocomplete
                 value={addressInput}
                 onChange={address => setAddress(address)}
-                onSelect={handleSelect}
+                onSelect={selectAddress}
                 searchOptions={searchOptions}
             >
 
@@ -44,6 +50,7 @@ export const AddressAutocomplete = ({ handleSelect, address }) => {
                                 type="text"
                                 border="1px solid #909090"
                                 bg={"#fcfcfc"}
+                                ref={inputRef}
                                 // placeholder='Search for area, street'
                                 {...getInputProps({
                                     placeholder: 'E.g. Taramandal , Golghar , Mohaddipur',

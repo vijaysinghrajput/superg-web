@@ -59,8 +59,7 @@ const Footer = () => {
                                         < >
                                             {subcategories.map((item, i) => {
                                                 return (
-
-                                                    <Link to={"/" + (item.name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + item.id + "/" + item.name}>
+                                                    <Link key={i} to={"/" + (item.name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + item.id + "/" + item.name}>
                                                         <li>
                                                             <a href="#" class="text-dark">{item.name}</a>
                                                         </li>

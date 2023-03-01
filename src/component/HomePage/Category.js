@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import contextData from '../../context/MainContext';
 import URL from '../../URL';
-import { useMediaQuery } from '@chakra-ui/react';
+import { Box, Text, useMediaQuery } from '@chakra-ui/react';
 // import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
@@ -16,7 +16,7 @@ const Category = (props) => {
     const location = useLocation();
     const [SubCategories, SetSubCategories] = useState([]);
     const [loca, setLcoa] = useState()
-
+    console.log("dat ===>", data);
     useEffect(() => {
         SetSubCategories(data.subcategories);
 
@@ -38,14 +38,8 @@ const Category = (props) => {
     return (
         <>
             <div class="osahan-categories">
-                {location.pathname !== "/category" &&
-                    <div class="d-flex align-items-center mb-2">
-                        <h5 class="m-0">What do you looking for??</h5>
-                        <Link to="/category" class="ml-auto btn btn-outline-success btn-sm">See more</Link>
-                    </div>
-                }
                 <div class="row">
-                    {data.isLoading ? (
+                    {!data.banners.length ? (
                         <>
                             <CategoryLoading />
                             <CategoryLoading />
@@ -56,20 +50,27 @@ const Category = (props) => {
                         < >
                             {SubCategories.map((item, i) => {
                                 return (
-                                    <div class="col-6 col-md-3 mb-3" key={i}>
-                                        <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                                            <div class="p-4">
-
+                                    <div class="col-6 col-md-2 mb-0 p-1" key={i}>
+                                        <Box
+                                            className="list-card h-100 rounded overflow-hidden position-relative shadow-sm"
+                                            bg="#ffb681"
+                                        >
+                                            <Box p={3}>
                                                 <Link state={location.pathname} to={"/" + (item.name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + item.id + "/" + item.name}>
-                                                    <img src={URL + "/images/category_images/" + item.image} class="img-fluid item-img w-100 mb-3"
+                                                    <Text
+                                                        textAlign={"left"}
+                                                        fontSize={24}
+                                                        fontWeight={"700"}
+                                                        color="#fff"
+                                                    >{item.name}</Text>
+                                                    <img src={URL + "/images/category_images/" + item.image} class="img-fluid item-img w-100"
                                                         alt={item.name + " in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
                                                         title={item.name + " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"}
-
+                                                        style={{ height: 110, objectFit: "contain" }}
                                                     />
-                                                    <p class="m-0 pt-2 text-center" style={{ color: "#505050", fontSize: 14 }}>{item.name}</p>
                                                 </Link>
-                                            </div>
-                                        </div>
+                                            </Box>
+                                        </Box>
                                     </div>
                                 )
                             })}

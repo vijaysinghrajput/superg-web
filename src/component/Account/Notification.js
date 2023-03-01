@@ -36,9 +36,9 @@ const Notification = ({ }) => {
 
 
                         <>
-                            {user_notification.map((item, i = 1) => {
+                            {user_notification.map((item, i) => {
                                 return (
-                                    <div class="pb-3">
+                                    <div class="pb-3" key={i}>
                                         <div class="text-decoration-none text-white">
                                             <div className="rounded  shadow-sm p-3 text-white bg-dark" >
                                                 <div class="row align-items-center">

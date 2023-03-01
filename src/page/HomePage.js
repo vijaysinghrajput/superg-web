@@ -1,14 +1,53 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Header from '../component/Header';
 import Footer from '../component/Footer';
-import contextData from '../context/MainContext';
 import HomeComponent from '../component/HomePage/HomeComponent';
-import { SeoData } from '../URL';
-
+import URL, { SeoData } from '../URL';
+import Cookies from 'universal-cookie';
 import { Helmet } from "react-helmet";
+import Base64 from '../helper/EncodeDecode';
+
+
+const cookies = new Cookies();
 
 
 const HomePage = () => {
+
+  const setUserFCMtoken = async (token = "token website", provider_id) => {
+    sessionStorage.setItem("fcmInserted", true);
+    fetch(URL + "/APP-API/App/AddUserFCMtoken", {
+      method: 'post',
+      header: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        token,
+        provider_id
+      })
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log("token ===>", responseJson);
+      })
+      .catch((error) => {
+        //  console.error(error);
+      });
+  }
+
+  useEffect(() => {
+
+    const userMob = cookies.get("userMobile");
+    const inserted = sessionStorage.getItem("fcmInserted");
+
+    const settingFCMtoken = async () => {
+      const token = window?.Android && await window.Android.getDeviceToken();
+      const UserMobile = userMob && Base64.atob(userMob);
+      setUserFCMtoken(token, UserMobile);
+    }
+
+    userMob && !inserted && settingFCMtoken();
+
+  }, []);
 
   return (
     <>

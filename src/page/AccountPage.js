@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Header from '../component/Header';
 import Footer from '../component/Footer';
 import contextData from '../context/MainContext';
 import MainAccountComponent from '../component/Account/MainAccountComponent';
-import { DualHelixLoader } from '../component/Loaders/DualHelix';
+import GlobalSpinner from '../component/comman/GlobalSpinner';
 
 const AccountPage = () => {
 
@@ -11,7 +11,6 @@ const AccountPage = () => {
 
     localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
 
-    // //console.log("daat", data)
 
     return (
         <>
@@ -19,7 +18,7 @@ const AccountPage = () => {
             <Header />
 
             {data.isLoading ? (
-                <DualHelixLoader />
+                <GlobalSpinner />
             ) : (
                 <MainAccountComponent />
             )}
