@@ -17,6 +17,7 @@ import BannerNew from "./v2/BannerNew";
 const ProductsByCategoryHomePage = ({ subCat }) => {
   const { products } = useContext(ContextData);
   const [productsBySub, setProductsBySub] = useState([]);
+  const [isNotSmallerScreen] = useMediaQuery("(min-width:1024px)");
 
   // console.log("navneeteugi ===>", subCat, products)
 
@@ -60,12 +61,18 @@ const ProductsByCategoryHomePage = ({ subCat }) => {
           <Flex
             direction={"row"}
             className="no-scroll"
+            wrap={{ base: "unset", lg: "wrap" }}
             overflow={"auto"}
-            gap={2}
+            gap={{ base: 2, lg: 0 }}
           >
-            {productsBySub.slice(0, 5).map((data, i) => {
-              return <SliderProductCard key={i} data={data} w={9} />;
-            })}
+            {productsBySub
+              .slice(0, !isNotSmallerScreen ? 5 : 11)
+              .map((data, i) => {
+                if (!isNotSmallerScreen) {
+                  return <SliderProductCard key={i} data={data} w={9} />;
+                }
+                return <BasicVegitableFruit key={i} data={data} w={9} />;
+              })}
             <div class="col-6 col-md-2 mb-0 p-1">
               <Link
                 to={

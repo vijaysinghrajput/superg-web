@@ -33,12 +33,12 @@ const BannerNew = () => {
   return (
     <>
       <div
-        class="mt-4 osahan-promos "
-        style={{ borderRadius: 10, background: "#f09ff1" }}
+        class="mt-4 osahan-promos py-3"
+        // style={{ borderRadius: 10, background: "#f09ff1" }}
       >
-        <Text fontSize={16} fontWeight="700" color="#000" mb={1} ml={1} p={2}>
+        {/* <Text fontSize={16} fontWeight="700" color="#000" mb={1} ml={1} p={2}>
           Best deals for you
-        </Text>
+        </Text> */}
         {!data.category_banners?.length ? (
           <>
             <PromoLoading />

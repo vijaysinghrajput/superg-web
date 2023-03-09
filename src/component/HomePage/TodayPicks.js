@@ -27,11 +27,12 @@ const TodayPicks = (props) => {
         borderRadius={5}
         padding="0.5rem 1rem"
         bg="#56ab2f"
-        background="-webkit-linear-gradient(to right, #a8e063, #56ab2f)" /* Chrome 10-25, Safari 5.1-6 */
-        backgroundImage="linear-gradient(to right, #a8e063, #56ab2f)" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        mt={4}
+        background="-webkit-linear-gradient(to right, #637ae0, #2f4bab)" /* Chrome 10-25, Safari 5.1-6 */
+        backgroundImage="linear-gradient(to right, #637ae0, #2f4bab)" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
       >
         <Text fontSize={20} fontWeight="800" mb={4} mt={2} color="#fff">
-          Holi Products
+          Best selling products
         </Text>
         <Box my={4} className="row">
           {/* <Flex

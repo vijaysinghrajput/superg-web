@@ -23,15 +23,15 @@ const HomeComponent = (props) => {
 
         <Promo />
 
-        <TodayPicks />
-
         <HomeCategorys />
+
+        <TodayPicks />
 
         {/* <Promo /> */}
 
         <BannerNew />
 
-        {subcategories.map((subCat, i) => {
+        {subcategories.slice(0, 3).map((subCat, i) => {
           return (
             <Box py={4} key={i}>
               <ProductsByCategoryHomePage subCat={subCat} />
