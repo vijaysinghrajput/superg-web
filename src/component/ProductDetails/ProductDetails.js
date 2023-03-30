@@ -56,7 +56,40 @@ const ProductDetails = () => {
           " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"
         }
         image={URL + "/images/product-images/" + product?.product_image}
+        web_url={"https://superg.in/" + (product?.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + product?.id}
+        availability={product?.status==1?"in stock":"out of stock"}
+        amount={Math.round(
+          product?.price -
+            (product?.price * product?.discount) / 100
+        )}
+        retailer_item_id={product?.id}
+        item_group_id={product?.parent_id}
+        category_id={product?.category_id}
+        product_name={product?.product_name+" "+product?.product_size +" "+ product?.product_unit}
       />
+
+<div itemscope itemtype="http://schema.org/Product">
+  <meta itemprop="brand" content=""/>
+  <meta itemprop="name" content={product?.product_name}/>
+  <meta itemprop="description" content={product?.product_name}/>
+  <meta itemprop="productID" content={product?.id}/>
+  <meta itemprop="url" content={"https://superg.in/" + (product?.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + product?.id}/>
+  <meta itemprop="image" content={URL + "/images/product-images/" + product?.product_image}/>
+  <div itemprop="value" itemscope itemtype="http://schema.org/PropertyValue">
+    <span itemprop="propertyID" content={product?.parent_id}></span>
+    <meta itemprop="value" content={product?.parent_id}></meta>
+  </div>
+  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <link itemprop="availability" href="http://schema.org/InStock"/>{product?.status==1?"in stock":"out of stock"}
+    <link itemprop="itemCondition" href="http://schema.org/NewCondition"/>New
+    <meta itemprop="price" content={Math.round(
+          product?.price -
+            (product?.price * product?.discount) / 100
+        )}/>
+    <meta itemprop="priceCurrency" content="INR"/>
+  </div>
+</div>
+
       <section className="pb-4 osahan-main-body">
         <div className="container">
           <div className="row">
