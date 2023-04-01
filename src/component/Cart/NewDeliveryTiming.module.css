@@ -1,0 +1,9 @@
+.slotSelected {
+  color: green;
+  font-weight: 700;
+}
+
+.slotDisabled {
+  pointer-events: none;
+  opacity: 0.7;
+}

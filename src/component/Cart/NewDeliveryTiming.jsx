@@ -1,7 +1,55 @@
-import { Alert, AlertIcon, Box } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Flex,
+  Radio,
+  RadioGroup,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import styles from "./NewDeliveryTiming.module.css";
+import { AiOutlineFieldTime } from "react-icons/ai";
+import { GiCheckMark } from "react-icons/gi";
 
-export const DeliveryTiming = ({ setDeliveryTiming }) => {
+// 11 AM - 01 PM (before 10 am)
+// 03 PM - 05 PM (before 2 pm)
+// 07 PM - 09 PM (before 6 pm)
+
+const TIMINGS = [
+  {
+    id: 1,
+    name: "slot 1",
+    starts: 11,
+    end: 13,
+    title: "11AM - 01PM",
+    desc: "Sunrase Delivery",
+    delay: 1,
+  },
+  {
+    id: 2,
+    name: "slot 2",
+    starts: 15,
+    end: 17,
+    title: "03PM - 05PM",
+    desc: "Sunshine Delivery",
+    delay: 1,
+  },
+  {
+    id: 3,
+    name: "slot 3",
+    starts: 19,
+    end: 21,
+    title: "07PM - 09PM",
+    desc: "Sunset Delivery",
+    delay: 1,
+  },
+];
+
+export const NewDeliveryTiming = ({ setDeliveryTiming }) => {
+  const now = new Date();
+  const [selectedSlot, setSelectedSlot] = useState();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [timingSlot, setTimingSlot] = useState("6PM - 8PM");
   const [date] = useState(new Date());
@@ -25,12 +73,12 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
   ];
 
   useEffect(() => {
-    console.log("hey ok");
+    console.log("hey ok --------->", selectedDate, selectedSlot);
     setDeliveryTiming({
       day: selectedDate,
-      timingSlot,
+      timingSlot: selectedSlot?.title,
     });
-  }, [selectedDate, timingSlot]);
+  }, [selectedDate, selectedSlot]);
 
   useEffect(() => {
     // new Date().getDate() === selectedDate.getDate() && selectedDate.getHours() > 6 && setTimingSlot("6PM - 8PM");
@@ -40,8 +88,12 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
           new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0)
         )
       );
-    setTimingSlot("6PM - 8PM");
     // //console.log("khfsdf", selectedDate, " ok date --->", selectedDate.getHours(), "dates --->", date.getDate(), " nn", selectedDate.getDate())
+  }, []);
+
+  useEffect(() => {
+    setTimingSlot("6PM - 8PM");
+    setSelectedSlot(TIMINGS.at(-1));
   }, [selectedDate]);
 
   const getTomorrow = () => {
@@ -184,7 +236,7 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
                     </>
                   )}
                 </ul>
-                <div className="tab-content filter bg-white" id="myTabContent">
+                {/* <div className="tab-content filter bg-white" id="myTabContent">
                   <div
                     className="tab-pane fade show active"
                     id="mon"
@@ -250,7 +302,49 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
                       </label>
                     </div>
                   </div>
-                </div>
+                </div> */}
+                <Box>
+                  <Stack>
+                    {TIMINGS.map((slot, i) => {
+                      return (
+                        <Flex
+                          key={i}
+                          justifyContent={"space-between"}
+                          alignItems={"center"}
+                          px={4}
+                          py={4}
+                          borderBottom={"1px solid #d4d4d4"}
+                          mt={"unset !important"}
+                          //   className={styles.slotDisabled}
+                          className={
+                            slot.id === selectedSlot?.id
+                              ? styles.slotSelected
+                              : selectedDate.getHours() + 1 + slot.delay >
+                                slot.starts
+                              ? styles.slotDisabled
+                              : ""
+                          }
+                          onClick={() => {
+                            setSelectedSlot(slot);
+                          }}
+                        >
+                          <Text>
+                            <AiOutlineFieldTime
+                              size={20}
+                              style={{ marginRight: 6 }}
+                            />
+                            {slot.title} <Text as={"span"}>({slot.desc})</Text>
+                          </Text>
+                          {slot.id === selectedSlot?.id && (
+                            <Box mr={5}>
+                              <GiCheckMark />
+                            </Box>
+                          )}
+                        </Flex>
+                      );
+                    })}
+                  </Stack>
+                </Box>
               </div>
             </div>
             {selectedDate.getHours() > DELIVERY_SLOT_TIMING && (
@@ -285,4 +379,4 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
   );
 };
 
-export default DeliveryTiming;
+export default NewDeliveryTiming;
