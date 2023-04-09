@@ -24,14 +24,14 @@ const TodayPicks = (props) => {
   return (
     <>
       <Box
-        borderRadius={5}
-        padding="0.5rem 1rem"
-        bg="#56ab2f"
-        mt={4}
-        background="-webkit-linear-gradient(to right, #637ae0, #2f4bab)" /* Chrome 10-25, Safari 5.1-6 */
-        backgroundImage="linear-gradient(to right, #637ae0, #2f4bab)" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      // borderRadius={5}
+      // padding="0.5rem 1rem"
+      // bg="#56ab2f"
+      // mt={4}
+      // background="-webkit-linear-gradient(to right, #637ae0, #2f4bab)"
+      // backgroundImage="linear-gradient(to right, #637ae0, #2f4bab)"
       >
-        <Text fontSize={20} fontWeight="800" mb={4} mt={2} color="#fff">
+        <Text fontSize={20} fontWeight="800" mb={4} mt={2} color="#000">
           Best selling products
         </Text>
         <Box my={4} className="row">

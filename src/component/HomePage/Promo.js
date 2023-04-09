@@ -6,7 +6,7 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import URL from "../../URL";
 import { PromoLoading } from "../Loaders/SkeletonLoader";
 
-const Promo = (props) => {
+const Promo = ({ type }) => {
   const data = useContext(contextData);
 
   const options = {
@@ -42,18 +42,22 @@ const Promo = (props) => {
               <OwlCarousel className="owl-theme" {...options}>
                 {data.banners.map((item, i) => {
                   return (
-                    <div className="item" key={i}>
-                      <div class="osahan-slider-item mx-2">
-                        <a href="#">
-                          <img
-                            src={URL + "/images/offer-image/" + item.image}
-                            class="img-fluid mx-auto rounded"
-                            style={{ height: 180 }}
-                            alt="Responsive image"
-                          />
-                        </a>
-                      </div>
-                    </div>
+                    <>
+                      {item.type == type && (
+                        <div className="item" key={i}>
+                          <div class="osahan-slider-item mx-2">
+                            <a href="#">
+                              <img
+                                src={URL + "/images/offer-image/" + item.image}
+                                class="img-fluid mx-auto rounded"
+                                style={{ height: 180 }}
+                                alt="Responsive image"
+                              />
+                            </a>
+                          </div>
+                        </div>
+                      )}
+                    </>
                   );
                 })}
               </OwlCarousel>

@@ -24,7 +24,7 @@ const TIMINGS = [
     starts: 11,
     end: 13,
     title: "11AM - 01PM",
-    desc: "Sunrase Delivery",
+    desc: "Sunrise Delivery",
     delay: 1,
   },
   {
@@ -33,7 +33,7 @@ const TIMINGS = [
     starts: 15,
     end: 17,
     title: "03PM - 05PM",
-    desc: "Sunshine Delivery",
+    desc: "Afternoon Delivery",
     delay: 1,
   },
   {
@@ -48,15 +48,13 @@ const TIMINGS = [
 ];
 
 export const NewDeliveryTiming = ({ setDeliveryTiming }) => {
-  const now = new Date();
   const [selectedSlot, setSelectedSlot] = useState();
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [timingSlot, setTimingSlot] = useState("6PM - 8PM");
   const [date] = useState(new Date());
   const DELIVERY_SLOT_TIMING = 16;
 
   const toady = date;
-  const dayName = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  // const dayName = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const monthNames = [
     "January",
     "February",
@@ -73,7 +71,6 @@ export const NewDeliveryTiming = ({ setDeliveryTiming }) => {
   ];
 
   useEffect(() => {
-    console.log("hey ok --------->", selectedDate, selectedSlot);
     setDeliveryTiming({
       day: selectedDate,
       timingSlot: selectedSlot?.title,
@@ -81,18 +78,15 @@ export const NewDeliveryTiming = ({ setDeliveryTiming }) => {
   }, [selectedDate, selectedSlot]);
 
   useEffect(() => {
-    // new Date().getDate() === selectedDate.getDate() && selectedDate.getHours() > 6 && setTimingSlot("6PM - 8PM");
     selectedDate.getHours() > DELIVERY_SLOT_TIMING &&
       setSelectedDate(
         new Date(
           new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0)
         )
       );
-    // //console.log("khfsdf", selectedDate, " ok date --->", selectedDate.getHours(), "dates --->", date.getDate(), " nn", selectedDate.getDate())
   }, []);
 
   useEffect(() => {
-    setTimingSlot("6PM - 8PM");
     setSelectedSlot(TIMINGS.at(-1));
   }, [selectedDate]);
 
@@ -136,7 +130,7 @@ export const NewDeliveryTiming = ({ setDeliveryTiming }) => {
                   {new Date().getDate() !== selectedDate.getDate()
                     ? "Tommorow"
                     : "Today"}
-                  , {timingSlot}
+                  , {selectedSlot?.title}
                 </h6>
               </div>
               <div className="schedule">

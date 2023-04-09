@@ -21,13 +21,15 @@ const HomeComponent = (props) => {
 
         <OrderOnHome />
 
-        <Promo />
+        <Promo type={"Banner"} />
 
         <HomeCategorys />
 
-        <TodayPicks />
+        <Box my={4}>
+          <Promo type={"Second"} />
+        </Box>
 
-        {/* <Promo /> */}
+        <TodayPicks />
 
         <BannerNew />
 
