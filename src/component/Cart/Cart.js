@@ -70,7 +70,7 @@ const Cart = (props) => {
   const handlePayment = useCallback(
     (order_id, orderID) => {
       const options = {
-        key: process.env.REACT_PUBLIC_RAZORPAY_KEY,
+        key: "rzp_live_xOOOHCL8nWfTlk",
         amount: `${Math.round(totalAmount * 100)}`,
         // amount: `100`,
         currency: "INR",

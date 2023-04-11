@@ -6,8 +6,8 @@ export const getOrderIdForRazorpay = async (receipt, amount) => {
       "Content-type": "application/json",
     },
     body: JSON.stringify({
-      key_id: process.env.REACT_PUBLIC_RAZORPAY_KEY,
-      secret: process.env.REACT_PUBLIC_RAZORPAY_SECRET,
+      key_id: "rzp_live_xOOOHCL8nWfTlk",
+      secret: "SOzxTWWV7ixUGgixAPx5nZAo",
       receipt,
       amount,
     }),
