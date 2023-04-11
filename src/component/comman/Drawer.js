@@ -62,13 +62,13 @@ const MainDrawer = ({ isOpen, onClose }) => {
                         </div> */}
             <Flex alignItems={"center"}>
               <Image
-                src={`https://api.dicebear.com/6.x/fun-emoji/svg?seed=${user.user_info.phone}`}
+                src={`https://api.dicebear.com/6.x/fun-emoji/svg?seed=${user?.user_info?.mobile}`}
                 alt="avatar"
                 borderRadius={"50%"}
                 height={10}
               />
               <Box ml={2}>
-                <Text fontSize={16}>Hello customer</Text>
+                <Text fontSize={16}>Hello Family</Text>
                 <Text fontSize={12} fontWeight={"500"}>
                   {auth.isUserLogin && user?.user_info?.mobile}
                 </Text>
@@ -77,140 +77,110 @@ const MainDrawer = ({ isOpen, onClose }) => {
           </DrawerHeader>
           <DrawerBody>
             <div className="cart_options">
-              {auth.isUserLogin ? (
-                <>
-                  <div
-                    onClick={() => navigate("/category")}
-                    className="d-flex align-items-center py-3 close_me_please"
+              <>
+                <Box
+                  py={3}
+                  onClick={() => navigate("/")}
+                  className="d-flex align-items-center close_me_please"
+                >
+                  <RiHome4Line size={22} />{" "}
+                  <p
+                    className="ml-2 mb-0"
+                    style={{ fontWeight: "700", fontSize: 12 }}
                   >
-                    <BsViewStacked size={22} />{" "}
-                    <p className="ml-2 mb-0" style={{ fontWeight: "700" }}>
-                      {" "}
-                      Shop By Main Category
-                    </p>
-                  </div>
-                  <div
-                    onClick={() => navigate("/orders")}
-                    className="d-flex align-items-center py-3 close_me_please"
+                    {" "}
+                    Home
+                  </p>
+                </Box>
+                <Box
+                  py={3}
+                  onClick={() => navigate("/search")}
+                  className="d-flex align-items-center close_me_please"
+                >
+                  <BiSearchAlt2 size={22} />{" "}
+                  <p
+                    className="ml-2 mb-0"
+                    style={{ fontWeight: "700", fontSize: 12 }}
                   >
-                    <BsViewStacked size={22} />{" "}
-                    <p className="ml-2 mb-0" style={{ fontWeight: "700" }}>
-                      {" "}
-                      My Orders
-                    </p>
-                  </div>
-                  <div
+                    {" "}
+                    Search Products
+                  </p>
+                </Box>
+                <Box
+                  py={3}
+                  onClick={() => navigate("/category")}
+                  className="d-flex align-items-center close_me_please"
+                >
+                  <BsViewStacked size={22} />{" "}
+                  <p
+                    className="ml-2 mb-0"
+                    style={{ fontWeight: "700", fontSize: 12 }}
+                  >
+                    {" "}
+                    Shop By Category
+                  </p>
+                </Box>
+                {/* <div onClick={() => navigate("/condition")} className="d-flex align-items-center py-3 close_me_please"><AiOutlineQuestionCircle size={22} /> <p className="ml-2 mb-0" style={{ fontWeight: "700" }}> Terms and Condition</p></div> */}
+                <Box fontWeight={"500"}>
+                  <Flex
+                    py={3}
+                    alignItems={"center"}
+                    gap={2}
+                    onClick={() => navigate("/about")}
+                  >
+                    <HiOutlineInformationCircle size={20} />
+                    <Text fontSize={12} fontWeight={"600"}>
+                      About Us
+                    </Text>
+                  </Flex>
+                  <Flex
+                    py={3}
+                    alignItems={"center"}
+                    gap={2}
                     onClick={() => navigate("/contact")}
-                    className="d-flex align-items-center py-3 close_me_please"
                   >
-                    <FcContacts size={22} />{" "}
-                    <p className="ml-2 mb-0" style={{ fontWeight: "700" }}>
-                      {" "}
+                    <BsTelephone size={20} />
+                    <Text fontSize={12} fontWeight={"600"}>
                       Contact Us
-                    </p>
-                  </div>
-                  <div
-                    onClick={() => logOut()}
-                    className="d-flex align-items-center py-3 close_me_please"
-                  >
-                    <AiOutlinePoweroff size={22} />{" "}
-                    <p className="ml-2 mb-0" style={{ fontWeight: "700" }}>
-                      {" "}
-                      Logout
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <Box
+                    </Text>
+                  </Flex>
+                  <Flex
                     py={3}
-                    onClick={() => navigate("/")}
-                    className="d-flex align-items-center close_me_please"
+                    alignItems={"center"}
+                    gap={2}
+                    onClick={() => navigate("/privacy-and-policy")}
                   >
-                    <RiHome4Line size={22} />{" "}
-                    <p
-                      className="ml-2 mb-0"
-                      style={{ fontWeight: "700", fontSize: 12 }}
-                    >
-                      {" "}
-                      Home
-                    </p>
-                  </Box>
-                  <Box
+                    <BsFileLock2 size={20} />
+                    <Text fontSize={12} fontWeight={"600"}>
+                      Privacy & Policy
+                    </Text>
+                  </Flex>
+                  <Flex
                     py={3}
-                    onClick={() => navigate("/search")}
-                    className="d-flex align-items-center close_me_please"
+                    alignItems={"center"}
+                    gap={2}
+                    onClick={() => navigate("/return-and-refund-policy")}
                   >
-                    <BiSearchAlt2 size={22} />{" "}
-                    <p
-                      className="ml-2 mb-0"
-                      style={{ fontWeight: "700", fontSize: 12 }}
+                    <TbFileCheck size={20} />
+                    <Text fontSize={12} fontWeight={"600"}>
+                      Return & Refund Policy
+                    </Text>
+                  </Flex>
+                </Box>
+                {auth.isUserLogin ? (
+                  <>
+                    <div
+                      onClick={() => logOut()}
+                      className="d-flex align-items-center py-3 close_me_please"
                     >
-                      {" "}
-                      Search Products
-                    </p>
-                  </Box>
-                  <Box
-                    py={3}
-                    onClick={() => navigate("/category")}
-                    className="d-flex align-items-center close_me_please"
-                  >
-                    <BsViewStacked size={22} />{" "}
-                    <p
-                      className="ml-2 mb-0"
-                      style={{ fontWeight: "700", fontSize: 12 }}
-                    >
-                      {" "}
-                      Shop By Category
-                    </p>
-                  </Box>
-                  {/* <div onClick={() => navigate("/condition")} className="d-flex align-items-center py-3 close_me_please"><AiOutlineQuestionCircle size={22} /> <p className="ml-2 mb-0" style={{ fontWeight: "700" }}> Terms and Condition</p></div> */}
-                  <Box fontWeight={"500"}>
-                    <Flex
-                      py={3}
-                      alignItems={"center"}
-                      gap={2}
-                      onClick={() => navigate("/about")}
-                    >
-                      <HiOutlineInformationCircle size={20} />
-                      <Text fontSize={12} fontWeight={"600"}>
-                        About Us
-                      </Text>
-                    </Flex>
-                    <Flex
-                      py={3}
-                      alignItems={"center"}
-                      gap={2}
-                      onClick={() => navigate("/contact")}
-                    >
-                      <BsTelephone size={20} />
-                      <Text fontSize={12} fontWeight={"600"}>
-                        Contact Us
-                      </Text>
-                    </Flex>
-                    <Flex
-                      py={3}
-                      alignItems={"center"}
-                      gap={2}
-                      onClick={() => navigate("/privacy-and-policy")}
-                    >
-                      <BsFileLock2 size={20} />
-                      <Text fontSize={12} fontWeight={"600"}>
-                        Privacy & Policy
-                      </Text>
-                    </Flex>
-                    <Flex
-                      py={3}
-                      alignItems={"center"}
-                      gap={2}
-                      onClick={() => navigate("/return-and-refund-policy")}
-                    >
-                      <TbFileCheck size={20} />
-                      <Text fontSize={12} fontWeight={"600"}>
-                        Return & Refund Policy
-                      </Text>
-                    </Flex>
-                  </Box>
+                      <AiOutlinePoweroff size={22} />{" "}
+                      <p className="ml-2 mb-0" style={{ fontWeight: "700" }}>
+                        {" "}
+                        Logout
+                      </p>
+                    </div>
+                  </>
+                ) : (
                   <div
                     onClick={openLogin}
                     className="d-flex justify-content-center pt-5 align-items-center py-3 close_me_please"
@@ -221,8 +191,8 @@ const MainDrawer = ({ isOpen, onClose }) => {
                       Login
                     </p>
                   </div>
-                </>
-              )}
+                )}
+              </>
             </div>
           </DrawerBody>
 

@@ -25,7 +25,7 @@ export const DeliveryTiming = ({ setDeliveryTiming }) => {
   ];
 
   useEffect(() => {
-    console.log("hey ok");
+    // console.log("hey ok");
     setDeliveryTiming({
       day: selectedDate,
       timingSlot,

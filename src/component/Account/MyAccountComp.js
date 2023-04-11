@@ -38,7 +38,6 @@ const MyAccountComp = (props) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log("hey there --->", responseJson);
         responseJson &&
           toast({
             title: "Successfully updated..!!",
@@ -52,8 +51,6 @@ const MyAccountComp = (props) => {
         //  console.error(error);
       });
   };
-
-  console.log("sjagdkjsdfjas --->", UserData);
 
   return (
     <>

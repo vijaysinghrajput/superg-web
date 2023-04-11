@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Button, useMediaQuery } from "@chakra-ui/react";
+import { Button, useMediaQuery, useToast } from "@chakra-ui/react";
 import Address from "./Address";
 import CartItems from "./CartItems";
 import PaymentDetails from "./PaymentDetails";
@@ -22,6 +22,11 @@ import NewDeliveryTiming from "./NewDeliveryTiming";
 import { useCallback } from "react";
 import useRazorpay from "react-razorpay";
 import { getOrderIdForRazorpay } from "./useOnlinePayment";
+import Cookies from "universal-cookie";
+import Base64 from "../../helper/EncodeDecode";
+import { useNavigate } from "react-router-dom";
+
+const cookies = new Cookies();
 
 const Cart = (props) => {
   const [isNotSmallerScreen] = useMediaQuery("(min-width:1024px)");
@@ -36,6 +41,8 @@ const Cart = (props) => {
     genRanHex,
     totalAmount,
     cartDetails,
+    removeCart,
+    setCartDetails,
   } = useContext(MainContext);
   const [selectedAddress, setAddress] = useState();
   const [selectedDeliveryTiming, setDeliveryTiming] = useState();
@@ -43,7 +50,11 @@ const Cart = (props) => {
   const [orderSuccessFull, setOrderSuccessFull] = useState(false);
   const [navigate, setNavigate] = useState(false);
   const [wantCarryBag, setCarryBag] = useState(false);
+  const UserIDs = cookies.get("userID");
+  const UserID = UserIDs === undefined ? "" : Base64.atob(UserIDs);
   const Razorpay = useRazorpay();
+  const navigator = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     reloadData();
@@ -57,17 +68,33 @@ const Cart = (props) => {
   };
 
   const handlePayment = useCallback(
-    (order_id) => {
+    (order_id, orderID) => {
       const options = {
-        key: "rzp_live_xOOOHCL8nWfTlk",
+        key: process.env.REACT_PUBLIC_RAZORPAY_KEY,
         amount: `${Math.round(totalAmount * 100)}`,
+        // amount: `100`,
         currency: "INR",
         name: "SuperG.in",
         description: "Perpaid",
         image: "https://superg.in/img/logo.svg",
         order_id,
+
         handler: (res) => {
-          console.log(res);
+          // console.log("hellow world responce ---->", res);
+          placeOrerByStatus({
+            razorpay_payment_id: res.razorpay_payment_id,
+            razorpay_order_id: res.razorpay_order_id,
+            razorpay_signature: res.razorpay_signature,
+            PaymentMode: "ONLINE",
+            orderID,
+            payment_status: "Paid",
+          });
+          //           {
+          //     "razorpay_payment_id": "pay_LcSmwH8BlPpU6P",
+          //     "razorpay_order_id": "order_LcSmSrNDzmMOXA",
+          //     "razorpay_signature": "d610bd03e13f18da614d249a4976bdd1b40118accb958dbc327d2bc723b042c3",
+          //     "status_code": 200
+          // }
         },
         prefill: {
           name: "Navneet Pal",
@@ -80,199 +107,109 @@ const Cart = (props) => {
         theme: {
           color: "#3399cc",
         },
+        modal: {
+          ondismiss: function () {
+            // console.log("Checkout form closed");
+            toast({
+              title: `Payment Failed..!!`,
+              status: "error",
+              isClosable: true,
+              duration: 5000,
+            });
+            setOrderSuccessFull(false);
+          },
+        },
       };
 
       const rzpay = new Razorpay(options);
+      rzpay.on("payment.failed", function (response) {
+        setOrderSuccessFull(false);
+        // console.log(response);
+      });
       rzpay.open();
     },
-    [Razorpay, totalAmount]
+    [Razorpay, totalAmount, cartDetails]
   );
-
-  function loadScript(src) {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  }
-
-  // async function displayRazorpay(orderID) {
-  //   const res = await loadScript(
-  //     "https://checkout.razorpay.com/v1/checkout.js"
-  //   );
-
-  //   if (!res) {
-  //     alert("Razorpay SDK failed to load. Are you online?");
-  //     return;
-  //   }
-
-  //   // creating a new order
-  //   // const result = await axios.post("http://localhost:5000/payment/orders");
-
-  //   // if (!result) {
-  //   //   alert("Server error. Are you online?");
-  //   //   return;
-  //   // }
-
-  //   // // Getting the order details back
-  //   // const { amount, id: order_id, currency } = result.data;
-
-  //   const orderIdRazorpay = await getOrderIdForRazorpay(
-  //     orderID,
-  //     Math.round(totalAmount * 100)
-  //   );
-  //   //  orderIdRazorpay && handlePayment(orderIdRazorpay);
-
-  //   const options = {
-  //     key: "rzp_live_xOOOHCL8nWfTlk", // Enter the Key ID generated from the Dashboard
-  //     amount: `${Math.round(totalAmount * 100)}`,
-  //     currency: "INR",
-  //     name: "SuperG.in",
-  //     description: "Prepaid",
-  //     image: "https://superg.in/img/logo.svg",
-  //     order_id: orderIdRazorpay,
-  //     modal: {
-  //       ondismiss: function () {
-  //         console.log("Checkout form closed");
-  //       },
-  //     },
-  //     handler: async function (response) {
-  //       // const data = {
-  //       //   orderCreationId: order_id,
-  //       //   razorpayPaymentId: response.razorpay_payment_id,
-  //       //   razorpayOrderId: response.razorpay_order_id,
-  //       //   razorpaySignature: response.razorpay_signature,
-  //       // };
-
-  //       // const result = await axios.post(
-  //       //   "http://localhost:5000/payment/success",
-  //       //   data
-  //       // );
-
-  //       // alert(result.data.msg);
-  //       console.log("responce data ---->", response);
-  //     },
-  //     prefill: {
-  //       name: "Soumya Dey",
-  //       email: "SoumyaDey@example.com",
-  //       contact: "9999999999",
-  //     },
-  //     notes: {
-  //       address: "Soumya Dey Corporate Office",
-  //     },
-  //     theme: {
-  //       color: "#61dafb",
-  //     },
-  //   };
-
-  //   const paymentObject = new window.Razorpay(options);
-  //   paymentObject.open();
-  // }
-
-  const __DEV__ = document.domain === "localhost";
-
-  // async function displayRazorpay() {
-  //   const res = await loadScript(
-  //     "https://checkout.razorpay.com/v1/checkout.js"
-  //   );
-
-  //   if (!res) {
-  //     alert("Razorpay SDK failed to load. Are you online?");
-  //     return;
-  //   }
-
-  //   const data = await fetch("http://localhost:1337/razorpay", {
-  //     method: "POST",
-  //   }).then((t) => t.json());
-
-  //   console.log(data);
-
-  //   const options = {
-  //     key: __DEV__ ? "rzp_test_diD5e52lqnOy9k" : "PRODUCTION_KEY",
-  //     currency: data.currency,
-  //     amount: data.amount.toString(),
-  //     order_id: data.id,
-  //     name: "Donation",
-  //     description: "Thank you for nothing. Please give us some money",
-  //     image: "http://localhost:1337/logo.svg",
-  //     handler: function (response) {
-  //       alert(response.razorpay_payment_id);
-  //       alert(response.razorpay_order_id);
-  //       alert(response.razorpay_signature);
-  //     },
-  //     prefill: {
-  //       name: "navneet",
-  //       email: "sdfdsjfh2@ndsfdf.com",
-  //       phone_number: "9899999999",
-  //     },
-  //   };
-  //   const paymentObject = new window.Razorpay(options);
-  //   paymentObject.open();
-  // }
 
   const placeOrder = async () => {
     setOrderSuccessFull(true);
-    const orderID = `${+new Date()}${genRanHex(16)}`;
+    const orderID = `${UserID}-${+new Date()}`;
     if (selectedPaymentOption === "ONLINE") {
-      // const orderIdRazorpay = await getOrderIdForRazorpay(
-      //   orderID,
-      //   Math.round(totalAmount * 100)
-      // );
-      // displayRazorpay(orderID);
-      handlePayment();
-      // displayRazorpay();
+      const orderIdRazorpay = await getOrderIdForRazorpay(
+        orderID,
+        Math.round(totalAmount * 100)
+        // "100"
+      );
+      handlePayment(orderIdRazorpay.order_id, orderID);
+    } else {
+      placeOrerByStatus({
+        PaymentMode: "COD",
+        razorpay_order_id: null,
+        razorpay_payment_id: null,
+        razorpay_signature: null,
+        orderID,
+        payment_status: "Unpaid",
+      });
     }
+  };
+
+  const placeOrerByStatus = ({
+    razorpay_signature,
+    razorpay_order_id,
+    razorpay_payment_id,
+    PaymentMode,
+    orderID,
+    payment_status,
+  }) => {
     const couponId =
       cartDetails.couponDetails !== undefined
         ? cartDetails.couponDetails[0]?.coupon_id
         : "";
 
-    //console.log("sll list", cartItems, wantCarryBag)
+    const bodyContent = {
+      orderID,
+      AddressId: cartDetails.selectedAddress.address_id,
+      UserID,
+      FinalTotalAmount: totalAmount,
+      iscouponApplied: cartDetails.couponApplied,
+      couponPrice: cartDetails.discountPriceByCoupon
+        ? cartDetails.discountPriceByCoupon
+        : 0,
+      PaymentMode: PaymentMode,
+      payment_status,
+      couponId,
+      razorpay_signature,
+      razorpay_order_id,
+      razorpay_payment_id,
+      isDevApplied: cartDetails.isDeliveryChargeApplied,
+      delcharge: cartDetails.deliveryCharge,
+      order_time: +new Date(),
+      delivery_date: +new Date(selectedDeliveryTiming.day),
+      delivery_slot: selectedDeliveryTiming.timingSlot,
+      cartItems,
+      is_carry_bag_taken: wantCarryBag,
+      carryBagCharges: condition[0].carry_bag_charge,
+    };
 
-    // fetch(URL + "/APP-API/App/finalPlaceOrder", {
-    //   method: "post",
-    //   header: {
-    //     Accept: "application/json",
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     orderID,
-    //     AddressId: cartDetails.selectedAddress.address_id,
-    //     UserID,
-    //     FinalTotalAmount: totalAmount,
-    //     iscouponApplied: cartDetails.couponApplied,
-    //     couponPrice: cartDetails.discountPriceByCoupon
-    //       ? cartDetails.discountPriceByCoupon
-    //       : 0,
-    //     PaymentMode: cartDetails.selectedPaymentOption,
-    //     couponId,
-    //     isDevApplied: cartDetails.isDeliveryChargeApplied,
-    //     delcharge: cartDetails.deliveryCharge,
-    //     order_time: +new Date(),
-    //     delivery_date: +new Date(selectedDeliveryTiming.day),
-    //     delivery_slot: selectedDeliveryTiming.timingSlot,
-    //     cartItems,
-    //     is_carry_bag_taken: wantCarryBag,
-    //     carryBagCharges: condition[0].carry_bag_charge,
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     // setOrderSuccessFull(true);
-    //     setCartDetails([]);
-    //     removeCart();
-    //     responseJson.status &&
-    //       navigator("/orderSuccess", { state: { order: true } });
-    //   })
-    //   .catch((error) => {
-    //     //  console.error(error);
-    //   });
+    fetch(URL + "/APP-API/App/finalPlaceOrder", {
+      method: "post",
+      header: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(bodyContent),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // setOrderSuccessFull(true);
+        setCartDetails([]);
+        removeCart();
+        responseJson.status &&
+          navigator("/orderSuccess", { state: { order: true } });
+      })
+      .catch((error) => {
+        //  console.error(error);
+      });
   };
 
   const checkIfAllItemsAvilable = () => {
@@ -307,7 +244,7 @@ const Cart = (props) => {
   }, 0);
 
   useEffect(() => {
-    console.log("from cart component ---->", selectedDeliveryTiming);
+    // console.log("from cart component ---->", selectedDeliveryTiming);
   }, [selectedDeliveryTiming]);
 
   return (

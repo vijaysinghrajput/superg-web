@@ -51,7 +51,7 @@ const CartItems = (props) => {
                 const outOfStock = products.find(
                   (o) => o.id == data.id && o.status == "1"
                 );
-                console.log("cart item --->", data, outOfStock);
+                // console.log("cart item --->", data, outOfStock);
                 return (
                   <CartItemsCard key={i} data={data} outOfStock={outOfStock} />
                 );
