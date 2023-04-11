@@ -56,37 +56,37 @@ const Cart = (props) => {
     cartItems,
   };
 
-  // const handlePayment = useCallback(
-  //   (order_id) => {
-  //     const options = {
-  //       key: "rzp_live_xOOOHCL8nWfTlk",
-  //       amount: `${Math.round(totalAmount * 100)}`,
-  //       currency: "INR",
-  //       name: "SuperG.in",
-  //       description: "Perpaid",
-  //       image: "https://superg.in/img/logo.svg",
-  //       order_id,
-  //       handler: (res) => {
-  //         console.log(res);
-  //       },
-  //       prefill: {
-  //         name: "Navneet Pal",
-  //         email: "youremail@example.com",
-  //         contact: "9999999999",
-  //       },
-  //       notes: {
-  //         address: "Razorpay Corporate Office",
-  //       },
-  //       theme: {
-  //         color: "#3399cc",
-  //       },
-  //     };
+  const handlePayment = useCallback(
+    (order_id) => {
+      const options = {
+        key: "rzp_live_xOOOHCL8nWfTlk",
+        amount: `${Math.round(totalAmount * 100)}`,
+        currency: "INR",
+        name: "SuperG.in",
+        description: "Perpaid",
+        image: "https://superg.in/img/logo.svg",
+        order_id,
+        handler: (res) => {
+          console.log(res);
+        },
+        prefill: {
+          name: "Navneet Pal",
+          email: "youremail@example.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
 
-  //     const rzpay = new Razorpay(options);
-  //     rzpay.open();
-  //   },
-  //   [Razorpay, totalAmount]
-  // );
+      const rzpay = new Razorpay(options);
+      rzpay.open();
+    },
+    [Razorpay, totalAmount]
+  );
 
   function loadScript(src) {
     return new Promise((resolve) => {
@@ -177,44 +177,44 @@ const Cart = (props) => {
 
   const __DEV__ = document.domain === "localhost";
 
-  async function displayRazorpay() {
-    const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
+  // async function displayRazorpay() {
+  //   const res = await loadScript(
+  //     "https://checkout.razorpay.com/v1/checkout.js"
+  //   );
 
-    if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
-      return;
-    }
+  //   if (!res) {
+  //     alert("Razorpay SDK failed to load. Are you online?");
+  //     return;
+  //   }
 
-    const data = await fetch("http://localhost:1337/razorpay", {
-      method: "POST",
-    }).then((t) => t.json());
+  //   const data = await fetch("http://localhost:1337/razorpay", {
+  //     method: "POST",
+  //   }).then((t) => t.json());
 
-    console.log(data);
+  //   console.log(data);
 
-    const options = {
-      key: __DEV__ ? "rzp_test_diD5e52lqnOy9k" : "PRODUCTION_KEY",
-      currency: data.currency,
-      amount: data.amount.toString(),
-      order_id: data.id,
-      name: "Donation",
-      description: "Thank you for nothing. Please give us some money",
-      image: "http://localhost:1337/logo.svg",
-      handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-      },
-      prefill: {
-        name: "navneet",
-        email: "sdfdsjfh2@ndsfdf.com",
-        phone_number: "9899999999",
-      },
-    };
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
-  }
+  //   const options = {
+  //     key: __DEV__ ? "rzp_test_diD5e52lqnOy9k" : "PRODUCTION_KEY",
+  //     currency: data.currency,
+  //     amount: data.amount.toString(),
+  //     order_id: data.id,
+  //     name: "Donation",
+  //     description: "Thank you for nothing. Please give us some money",
+  //     image: "http://localhost:1337/logo.svg",
+  //     handler: function (response) {
+  //       alert(response.razorpay_payment_id);
+  //       alert(response.razorpay_order_id);
+  //       alert(response.razorpay_signature);
+  //     },
+  //     prefill: {
+  //       name: "navneet",
+  //       email: "sdfdsjfh2@ndsfdf.com",
+  //       phone_number: "9899999999",
+  //     },
+  //   };
+  //   const paymentObject = new window.Razorpay(options);
+  //   paymentObject.open();
+  // }
 
   const placeOrder = async () => {
     setOrderSuccessFull(true);
@@ -225,7 +225,8 @@ const Cart = (props) => {
       //   Math.round(totalAmount * 100)
       // );
       // displayRazorpay(orderID);
-      displayRazorpay();
+      handlePayment();
+      // displayRazorpay();
     }
     const couponId =
       cartDetails.couponDetails !== undefined
