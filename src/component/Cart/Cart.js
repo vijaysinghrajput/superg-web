@@ -191,7 +191,7 @@ const Cart = (props) => {
       carryBagCharges: condition[0].carry_bag_charge,
     };
 
-    fetch(URL + "/APP-API/App/finalPlaceOrder", {
+    fetch(URL + "/APP-API/App/finalPlaceOrderNew", {
       method: "post",
       header: {
         Accept: "application/json",
