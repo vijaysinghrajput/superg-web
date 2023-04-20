@@ -11,7 +11,19 @@ import Geocode from "react-geocode";
 
 import Base64 from "../../helper/EncodeDecode";
 import Cookies from "universal-cookie";
-import { Box, Button, Select } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Select,
+  Spinner,
+  Text,
+  useBoolean,
+} from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -23,11 +35,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import URL from "../../URL";
-import { position } from "@chakra-ui/styled-system";
 import { GetCurrentLocation } from "../map/New/GetCurrentLocation";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { HiLocationMarker, HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
 import { useEffect } from "react";
+import useMapData from "../map/New/hooks/useMapData";
+import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 const searchOptions = {
   // input: 'Gorakhpur Uttar Pardesh',
@@ -46,6 +60,28 @@ Geocode.setRegion("in");
 
 function AddressInModal({ setUserAddressData, type = "ADD", editData }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { position, getCurrentLocation } = useMapData({
+    type: "ELSE",
+  });
+  const [steps, setStep] = useState(type == "EDIT" ? 3 : 1);
+  const { placePredictions, getPlacePredictions, isPlacePredictionsLoading } =
+    usePlacesService({
+      apiKey: "",
+      debounce: 0,
+      options: {
+        componentRestrictions: { country: "in" },
+      },
+    });
+  const [selectedAddress, setSelectedAddress] = useState();
+  const [auto, setAuto] = useBoolean();
+
+  useEffect(() => {
+    // return () => {
+    isOpen && setStep(1);
+    type == "EDIT" && setStep(3);
+    // };
+  }, [isOpen, type]);
+
   return (
     <>
       {type === "ADD" ? (
@@ -71,12 +107,135 @@ function AddressInModal({ setUserAddressData, type = "ADD", editData }) {
           <ModalCloseButton zIndex={9999} top="2%" />
           <ModalBody bg="none" p={0}>
             <Box h={"90vh"}>
-              <GetCurrentLocation
-                onClose={onClose}
-                setUserAddressData={setUserAddressData}
-                type={type}
-                editData={editData}
-              />
+              {steps === 1 ? (
+                <Box px={6}>
+                  <Box textAlign={"center"}>
+                    <Image
+                      margin={"auto"}
+                      src="https://cdn3d.iconscout.com/3d/premium/thumb/location-not-found-5581208-4669828.png"
+                      height={40}
+                    />
+                    <Text mb={4} fontWeight={"700"} fontSize={20}>
+                      Welcome to SuperG
+                    </Text>
+                    <Text mb={6} px={10}>
+                      Please provide your delivery location to see products at
+                      nearby store
+                    </Text>
+                  </Box>
+                  <Box gap={10}>
+                    <Box mb={6}>
+                      <Button
+                        colorScheme="green"
+                        w={"100%"}
+                        py={6}
+                        fontWeight={"700"}
+                        onClick={() => {
+                          setAuto.on();
+                          setStep(3);
+                        }}
+                      >
+                        Use Current Location
+                      </Button>
+                    </Box>
+                    <Box mb={6}>
+                      <Button
+                        variant={"outline"}
+                        color={"green"}
+                        borderColor={"green"}
+                        w={"100%"}
+                        py={6}
+                        fontWeight={"700"}
+                        onClick={() => setStep(2)}
+                      >
+                        Set Your Location Manaully
+                      </Button>
+                    </Box>
+                  </Box>
+                </Box>
+              ) : steps === 2 ? (
+                <>
+                  <Box px={6} mt={2}>
+                    <InputGroup>
+                      <InputLeftElement
+                        pointerEvents="none"
+                        children={<BsSearch color="gray.300" />}
+                      />
+                      <Input
+                        placeholder="Search your address"
+                        fontSize={12}
+                        bg={"#efefef"}
+                        onChange={(evt) => {
+                          getPlacePredictions({ input: evt.target.value });
+                        }}
+                        loading={isPlacePredictionsLoading}
+                      />
+                    </InputGroup>
+                    <Box
+                      h={{ base: "100%", lg: "36vh" }}
+                      overflow={"scroll"}
+                      mt={2}
+                    >
+                      {isPlacePredictionsLoading ? (
+                        <>
+                          <Flex
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                            h={"40vh"}
+                          >
+                            <Spinner />
+                          </Flex>
+                        </>
+                      ) : (
+                        placePredictions.map((addressList, i) => {
+                          const {
+                            structured_formatting: address,
+                            description,
+                          } = addressList;
+                          return (
+                            <Flex
+                              mt={2}
+                              gap={4}
+                              px={4}
+                              py={2}
+                              alignItems={"center"}
+                              borderRadius={10}
+                              cursor={"pointer"}
+                              _hover={{
+                                bg: "#efefef",
+                              }}
+                              onClick={() => {
+                                setSelectedAddress(description);
+                                // console.log("description ----->", description);
+                                setStep(3);
+                              }}
+                            >
+                              <Box color="themeColor.1000">
+                                <HiLocationMarker size={20} />
+                              </Box>
+                              <Box>
+                                <Text fontWeight={"700"} fontSize={16}>
+                                  {address.main_text}
+                                </Text>
+                                <Text>{address.secondary_text}</Text>
+                              </Box>
+                            </Flex>
+                          );
+                        })
+                      )}
+                    </Box>
+                  </Box>
+                </>
+              ) : (
+                <GetCurrentLocation
+                  onClose={onClose}
+                  setUserAddressData={setUserAddressData}
+                  type={type}
+                  editData={editData}
+                  position={auto}
+                  description={selectedAddress}
+                />
+              )}
             </Box>
           </ModalBody>
         </ModalContent>

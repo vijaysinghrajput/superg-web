@@ -24,7 +24,7 @@
 
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/style.css?version=4" rel="stylesheet" />
 
     <link href="/vendor/sidebar/demo.css" rel="stylesheet" />
     <style>
@@ -124,9 +124,7 @@
       );
       fbq("init", "757059169339995");
       fbq("track", "PageView");
-      fbq('track', 'ViewContent');
-
-
+      fbq("track", "ViewContent");
     </script>
     <noscript
       ><img
@@ -135,34 +133,32 @@
         style="display: none"
         src="https://www.facebook.com/tr?id=757059169339995&ev=PageView&noscript=1"
     /></noscript>
-    
-    
 
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "852885668724754",
+          cookie: true,
+          xfbml: true,
+          version: "v10.0",
+        });
 
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '852885668724754',
-      cookie     : true,
-      xfbml      : true,
-      version    : 'v10.0'
-    });
-      
-    FB.AppEvents.logPageView();   
-      
-  };
+        FB.AppEvents.logPageView();
+      };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-    
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+    </script>
 
-    
     <!-- End Meta Pixel Code -->
   </body>
 </html>

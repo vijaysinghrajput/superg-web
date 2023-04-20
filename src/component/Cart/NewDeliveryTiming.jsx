@@ -18,21 +18,21 @@ import { GiCheckMark } from "react-icons/gi";
 // 07 PM - 09 PM (before 6 pm)
 
 const TIMINGS = [
-  {
-    id: 1,
-    name: "slot 1",
-    starts: 11,
-    end: 13,
-    title: "11AM - 01PM",
-    desc: "Sunrise Delivery",
-    delay: 1,
-  },
+  // {
+  //   id: 1,
+  //   name: "slot 1",
+  //   starts: 11,
+  //   end: 13,
+  //   title: "11AM - 01PM",
+  //   desc: "Sunrise Delivery",
+  //   delay: 1,
+  // },
   {
     id: 2,
     name: "slot 2",
-    starts: 15,
-    end: 17,
-    title: "03PM - 05PM",
+    starts: 14,
+    end: 16,
+    title: "02PM - 04PM",
     desc: "Afternoon Delivery",
     delay: 1,
   },

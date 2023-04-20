@@ -46,14 +46,17 @@ export default function AddFullAddress({
 
   const checkValid = () => {
     return new Promise((resolve, reject) => {
-      const { fullName, mobile, houseNo, addressFromUser } = dataToSaveAddress;
+      const { fullName, mobile, aMobile, houseNo, addressFromUser, landmark } =
+        dataToSaveAddress;
 
       // console.log(fullName, mobile, houseNo, addressFromUser);
 
       if (!fullName) reject("fname");
       else if (!mobile) reject("mobile");
+      else if (!aMobile) reject("aMobile");
       else if (!houseNo) reject("houseNo");
       else if (!addressFromUser) reject("addressFromUser");
+      else if (!landmark) reject("landmark");
       else resolve("good");
     });
   };
@@ -76,6 +79,8 @@ export default function AddFullAddress({
           addressFromUser,
           user_city,
           user_full_address,
+          aMobile,
+          landmark,
           state,
           lat,
           lng,
@@ -94,6 +99,8 @@ export default function AddFullAddress({
             user_name: fullName,
             user_mobile: mobile,
             user_house_no: houseNo,
+            alternative_phone: aMobile,
+            landmark: landmark,
             user_street: user_full_address,
             base_address: addressFromUser,
             user_city: user_city,
@@ -163,6 +170,7 @@ export default function AddFullAddress({
                 <FormLabel fontSize={12}>Full Name</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
+                  autoComplete="off"
                   value={saveInfo.fullName}
                   type="text"
                   onChange={(e) =>
@@ -183,6 +191,7 @@ export default function AddFullAddress({
                 <FormLabel fontSize={12}>Mobile Number</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
+                  autoComplete="off"
                   value={saveInfo.mobile}
                   type="tel"
                   onChange={(e) =>
@@ -200,10 +209,33 @@ export default function AddFullAddress({
                   </Text>
                 ) : null}
               </FormControl>
+              <FormControl mt={1} id="aMobile">
+                <FormLabel fontSize={12}>Alternative Mobile Number</FormLabel>
+                <Input
+                  onFocus={() => setErrorFeald("")}
+                  autoComplete="off"
+                  value={saveInfo.aMobile}
+                  type="tel"
+                  onChange={(e) =>
+                    setInfo((rest) => {
+                      return { ...rest, aMobile: e.target.value };
+                    })
+                  }
+                  maxLength={10}
+                  isInvalid={errorFeald === "aMobile" ? true : false}
+                  errorBorderColor="crimson"
+                />
+                {errorFeald === "aMobile" ? (
+                  <Text color={"crimson"} fontSize={10} ml={2} mt={1}>
+                    Phone number is reqired*
+                  </Text>
+                ) : null}
+              </FormControl>
               <FormControl mt={1} id="houseNo">
                 <FormLabel fontSize={12}>House Number</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
+                  autoComplete="off"
                   value={saveInfo.houseNo}
                   type="text"
                   onChange={(e) =>
@@ -224,6 +256,7 @@ export default function AddFullAddress({
                 <FormLabel fontSize={12}>Complete Address</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
+                  autoComplete="off"
                   value={saveInfo.addressFromUser}
                   type="text"
                   onChange={(e) =>
@@ -235,6 +268,27 @@ export default function AddFullAddress({
                   errorBorderColor="crimson"
                 />
                 {errorFeald === "addressFromUser" ? (
+                  <Text color={"crimson"} fontSize={10} ml={2} mt={1}>
+                    Full address is reqired*
+                  </Text>
+                ) : null}
+              </FormControl>
+              <FormControl mt={1} id="landmark">
+                <FormLabel fontSize={12}>Landmark</FormLabel>
+                <Input
+                  onFocus={() => setErrorFeald("")}
+                  autoComplete="off"
+                  value={saveInfo.landmark}
+                  type="text"
+                  onChange={(e) =>
+                    setInfo((rest) => {
+                      return { ...rest, landmark: e.target.value };
+                    })
+                  }
+                  isInvalid={errorFeald === "landmark" ? true : false}
+                  errorBorderColor="crimson"
+                />
+                {errorFeald === "landmark" ? (
                   <Text color={"crimson"} fontSize={10} ml={2} mt={1}>
                     Full address is reqired*
                   </Text>
