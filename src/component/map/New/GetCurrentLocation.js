@@ -1,10 +1,18 @@
-import { Box, Button, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { AddressAutocomplete } from "./AddressAutocomplete";
 import MapOverview from "./MapOverview";
 import { HiLocationMarker } from "react-icons/hi";
 import useMapData from "./hooks/useMapData";
 import AddFullAddress from "./AddFullAddress";
 import { MdGpsFixed } from "react-icons/md";
+import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useEffect } from "react";
 
 export const GetCurrentLocation = ({
@@ -110,12 +118,27 @@ export const GetCurrentLocation = ({
                 </Button>
               </Box>
               <HStack alignItems={"center"}>
-                <Box>
-                  <HiLocationMarker size={28} />
-                </Box>
-                <Text fontSize={20} fontWeight="800">
-                  {address.user_full_address}
-                </Text>
+                {coords.lat == null ? (
+                  <>
+                    <Flex alignItems={"center"} gap={2}>
+                      <BsFillExclamationCircleFill size={38} color="#b80f0f" />
+                      <Text fontWeight={"600"} fontSize={12}>
+                        Please allow your current location, from your phone
+                        settings or go through manually / कृपया अपनी करंट लोकेशन
+                        को अलाउ करे या मैनुयली लोकेशन डाले
+                      </Text>
+                    </Flex>
+                  </>
+                ) : (
+                  <>
+                    <Box>
+                      <HiLocationMarker size={28} />
+                    </Box>
+                    <Text fontSize={20} fontWeight="800">
+                      {address.user_full_address}
+                    </Text>
+                  </>
+                )}
               </HStack>
               <Text ml={10}>{address.user_city}</Text>
             </Box>
@@ -127,6 +150,7 @@ export const GetCurrentLocation = ({
                 fontSize={14}
                 fontWeight="400"
                 onClick={onOpenFull}
+                disabled={coords.lat == null ? true : false}
               >
                 Enter Complete Address
               </Button>

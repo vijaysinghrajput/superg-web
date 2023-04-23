@@ -119,8 +119,8 @@ function AddressInModal({ setUserAddressData, type = "ADD", editData }) {
                       Welcome to SuperG
                     </Text>
                     <Text mb={6} px={10}>
-                      Please provide your delivery location to see products at
-                      nearby store
+                      Please provide your delivery location / कृपया अपनी डिलीवरी
+                      की लोकेशन का फॉर्म भरे
                     </Text>
                   </Box>
                   <Box gap={10}>
@@ -533,7 +533,8 @@ class Address extends Component {
                       <div class="col-md-12 form-group">
                         <label class="form-label">
                           {" "}
-                          <label class="text-danger">*</label> Full Name (Required)
+                          <label class="text-danger">*</label> Full Name
+                          (Required)
                         </label>
                         <input
                           onChange={this.onChange}
@@ -547,7 +548,8 @@ class Address extends Component {
                       <div class="col-md-12 form-group">
                         <label class="form-label">
                           {" "}
-                          <label class="text-danger">*</label> Mobile Number (Required)
+                          <label class="text-danger">*</label> Mobile Number
+                          (Required)
                         </label>
                         <input
                           onChange={this.onChange}

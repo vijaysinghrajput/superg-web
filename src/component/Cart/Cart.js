@@ -38,7 +38,6 @@ const Cart = (props) => {
     cartItems,
     products,
     removeFromCart,
-    genRanHex,
     totalAmount,
     cartDetails,
     removeCart,
@@ -80,7 +79,7 @@ const Cart = (props) => {
         order_id,
 
         handler: (res) => {
-          // console.log("hellow world responce ---->", res);
+          console.log("hellow world responce ---->", res);
           placeOrerByStatus({
             razorpay_payment_id: res.razorpay_payment_id,
             razorpay_order_id: res.razorpay_order_id,
@@ -99,7 +98,7 @@ const Cart = (props) => {
         prefill: {
           name: "Navneet Pal",
           email: "youremail@example.com",
-          contact: "9999999999",
+          contact: "+918318770766",
         },
         notes: {
           address: "Razorpay Corporate Office",
@@ -212,6 +211,11 @@ const Cart = (props) => {
       });
   };
 
+  const setNavigateFunc = (val) => {
+    !val && setPayment("COD");
+    setNavigate(val);
+  };
+
   const checkIfAllItemsAvilable = () => {
     const soldOutItems = products.filter((data) => {
       return cartItems.find((o) => o.id == data.id && o.status != data.status);
@@ -219,7 +223,7 @@ const Cart = (props) => {
 
     if (soldOutItems.length) {
       onOpen();
-    } else setNavigate(true);
+    } else setNavigateFunc(true);
   };
 
   const removeSoldOutItems = () => {
@@ -243,10 +247,6 @@ const Cart = (props) => {
     return a + Number(price);
   }, 0);
 
-  useEffect(() => {
-    // console.log("from cart component ---->", selectedDeliveryTiming);
-  }, [selectedDeliveryTiming]);
-
   return (
     <>
       <section className="pb-4 osahan-main-body">
@@ -255,7 +255,7 @@ const Cart = (props) => {
             <div className="col-lg-8 pb-3">
               {navigate ? (
                 <Checkout
-                  setNavigate={setNavigate}
+                  setNavigate={setNavigateFunc}
                   checkOutData={checkOutData}
                 />
               ) : (

@@ -35,7 +35,7 @@ export const PaymentOption = ({ setPayment, setNavigate, selectedAddress }) => {
                 <li
                   className="nav-item"
                   role="presentation"
-                  onClick={() => setPayment("POD")}
+                  onClick={() => setPayment("COD")}
                 >
                   <a
                     className="nav-link text-dark active show"
