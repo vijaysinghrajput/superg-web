@@ -53,10 +53,7 @@ export default function AddFullAddress({
 
       if (!fullName) reject("fname");
       else if (!mobile) reject("mobile");
-      else if (!aMobile) reject("aMobile");
-      else if (!houseNo) reject("houseNo");
       else if (!addressFromUser) reject("addressFromUser");
-      else if (!landmark) reject("landmark");
       else resolve("good");
     });
   };
@@ -167,12 +164,12 @@ export default function AddFullAddress({
             <AddressType setInfo={setInfo} />
             <Box my={2}>
               <FormControl mt={1} id="email">
-                <FormLabel fontSize={12}>Full Name</FormLabel>
+                <FormLabel fontSize={12}>Full Name (Required)</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
                   autoComplete="off"
                   value={saveInfo.fullName}
-                  type="text"
+                  type="name"
                   onChange={(e) =>
                     setInfo((rest) => {
                       return { ...rest, fullName: e.target.value };
@@ -188,7 +185,7 @@ export default function AddFullAddress({
                 ) : null}
               </FormControl>
               <FormControl mt={1} id="mobile">
-                <FormLabel fontSize={12}>Mobile Number</FormLabel>
+                <FormLabel fontSize={12}>Mobile Number (Required)</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
                   autoComplete="off"
@@ -210,7 +207,7 @@ export default function AddFullAddress({
                 ) : null}
               </FormControl>
               <FormControl mt={1} id="aMobile">
-                <FormLabel fontSize={12}>Alternative Mobile Number</FormLabel>
+                <FormLabel fontSize={12}>Alternative Mobile Number (Optional)</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
                   autoComplete="off"
@@ -225,14 +222,10 @@ export default function AddFullAddress({
                   isInvalid={errorFeald === "aMobile" ? true : false}
                   errorBorderColor="crimson"
                 />
-                {errorFeald === "aMobile" ? (
-                  <Text color={"crimson"} fontSize={10} ml={2} mt={1}>
-                    Phone number is reqired*
-                  </Text>
-                ) : null}
+             
               </FormControl>
               <FormControl mt={1} id="houseNo">
-                <FormLabel fontSize={12}>House Number</FormLabel>
+                <FormLabel fontSize={12}>House Number (Optional)</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
                   autoComplete="off"
@@ -246,14 +239,10 @@ export default function AddFullAddress({
                   isInvalid={errorFeald === "houseNo" ? true : false}
                   errorBorderColor="crimson"
                 />
-                {errorFeald === "houseNo" ? (
-                  <Text color={"crimson"} fontSize={10} ml={2} mt={1}>
-                    House number is reqired*
-                  </Text>
-                ) : null}
+              
               </FormControl>
               <FormControl mt={1} id="completeaddress">
-                <FormLabel fontSize={12}>Complete Address</FormLabel>
+                <FormLabel fontSize={12}>Complete Address (Required)</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
                   autoComplete="off"
@@ -274,7 +263,7 @@ export default function AddFullAddress({
                 ) : null}
               </FormControl>
               <FormControl mt={1} id="landmark">
-                <FormLabel fontSize={12}>Landmark</FormLabel>
+                <FormLabel fontSize={12}>Landmark (Optional)</FormLabel>
                 <Input
                   onFocus={() => setErrorFeald("")}
                   autoComplete="off"
@@ -288,11 +277,7 @@ export default function AddFullAddress({
                   isInvalid={errorFeald === "landmark" ? true : false}
                   errorBorderColor="crimson"
                 />
-                {errorFeald === "landmark" ? (
-                  <Text color={"crimson"} fontSize={10} ml={2} mt={1}>
-                    Full address is reqired*
-                  </Text>
-                ) : null}
+             
               </FormControl>
             </Box>
             <Box
@@ -353,7 +338,7 @@ function RadioCard(props) {
 }
 
 function AddressType({ setInfo }) {
-  const options = ["Home", "Work", "Office"];
+  const options = ["Home","Friend", "Work", "Office"];
 
   const { getRootProps, getRadioProps, value } = useRadioGroup({
     name: "addressType",

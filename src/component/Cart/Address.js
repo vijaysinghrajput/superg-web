@@ -533,22 +533,21 @@ class Address extends Component {
                       <div class="col-md-12 form-group">
                         <label class="form-label">
                           {" "}
-                          <label class="text-danger">*</label> Full Name
+                          <label class="text-danger">*</label> Full Name (Required)
                         </label>
                         <input
                           onChange={this.onChange}
                           placeholder="First & Last Name"
                           id="user_name"
                           value={this.state.user_name}
-                          type="text"
+                          type="name"
                           class="form-control"
                         />
                       </div>
                       <div class="col-md-12 form-group">
                         <label class="form-label">
                           {" "}
-                          <label class="text-danger">*</label> Mobile Number (10
-                          Digit)
+                          <label class="text-danger">*</label> Mobile Number (Required)
                         </label>
                         <input
                           onChange={this.onChange}
