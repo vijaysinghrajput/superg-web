@@ -66,11 +66,13 @@ function AddressInModal({ setUserAddressData, type = "ADD", editData }) {
   const [steps, setStep] = useState(type == "EDIT" ? 3 : 1);
   const { placePredictions, getPlacePredictions, isPlacePredictionsLoading } =
     usePlacesService({
-      apiKey: "",
+      apiKey: "AIzaSyDDirDSiLgvG8Gl8crjbvrGRXlCPOTYRzE",
       debounce: 0,
+      defaultValue:"Gorakhpur Uttar Pardesh",
       options: {
         componentRestrictions: { country: "in" },
       },
+    
     });
   const [selectedAddress, setSelectedAddress] = useState();
   const [auto, setAuto] = useBoolean();
@@ -162,7 +164,7 @@ function AddressInModal({ setUserAddressData, type = "ADD", editData }) {
                         children={<BsSearch color="gray.300" />}
                       />
                       <Input
-                        placeholder="Search your address"
+                        placeholder="Example : Asuran , Gorakhnath , Golghar"
                         fontSize={12}
                         bg={"#efefef"}
                         onChange={(evt) => {
