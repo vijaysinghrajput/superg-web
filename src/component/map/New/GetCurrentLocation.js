@@ -118,7 +118,7 @@ export const GetCurrentLocation = ({
                 </Button>
               </Box>
               <HStack alignItems={"center"}>
-                {coords.lat == null ? (
+                {coords.lat == 26.759727908091698 ? (
                   <>
                     <Flex alignItems={"center"} gap={2}>
                       <BsFillExclamationCircleFill size={38} color="#b80f0f" />
@@ -150,7 +150,7 @@ export const GetCurrentLocation = ({
                 fontSize={14}
                 fontWeight="400"
                 onClick={onOpenFull}
-                disabled={coords.lat == null ? true : false}
+                disabled={coords.lat == 26.759727908091698 ? true : false}
               >
                 Enter Complete Address
               </Button>

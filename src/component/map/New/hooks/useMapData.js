@@ -16,8 +16,8 @@ Geocode.setRegion("in");
 
 const useMapData = ({ type }) => {
   const [position, setPosition] = useState({
-    lat: null,
-    lng: null,
+    lat: 26.759727908091698,
+    lng: 83.38181664498008,
   });
   const [mapLoaded, setMapLoaded] = useState(false);
   const [zoom, setZoom] = useState(14);
