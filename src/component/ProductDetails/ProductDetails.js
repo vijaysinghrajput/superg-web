@@ -68,27 +68,32 @@ const ProductDetails = () => {
         product_name={product?.product_name+" "+product?.product_size +" "+ product?.product_unit}
       />
 
-<div itemscope itemtype="http://schema.org/Product">
-  <meta itemprop="brand" content=""/>
-  <meta itemprop="name" content={product?.product_name}/>
-  <meta itemprop="description" content={product?.product_name}/>
-  <meta itemprop="productID" content={product?.id}/>
-  <meta itemprop="url" content={"https://superg.in/" + (product?.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + product?.id}/>
-  <meta itemprop="image" content={URL + "/images/product-images/" + product?.product_image}/>
-  <div itemprop="value" itemscope itemtype="http://schema.org/PropertyValue">
-    <span itemprop="propertyID" content={product?.parent_id}></span>
-    <meta itemprop="value" content={product?.parent_id}></meta>
-  </div>
-  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-    <link itemprop="availability" href="http://schema.org/InStock"/>{product?.status==1?"in stock":"out of stock"}
-    <link itemprop="itemCondition" href="http://schema.org/NewCondition"/>New
-    <meta itemprop="price" content={Math.round(
+
+
+
+<div>
+    <div itemtype="https://schema.org/Product" itemscope>
+      <meta itemprop="mpn" content={product?.id} />
+      <meta itemprop="name" content={product?.product_name} />
+      <link itemprop="image" href={URL + "/images/product-images/" + product?.product_image} />
+      <meta itemprop="description" content={product?.product_name} />
+      <div itemprop="offers" itemtype="https://schema.org/Offer" itemscope>
+        <link itemprop="url" href={"https://superg.in/" + (product?.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + product?.id} />
+        <meta itemprop="availability" content={"https://schema.org/"+product?.status==1?"InStock":"outOfStock"} />
+        <meta itemprop="priceCurrency" content="INR" />
+        <meta itemprop="itemCondition" content="https://schema.org/NewCondition" />
+        <meta itemprop="price" content={Math.round(
           product?.price -
             (product?.price * product?.discount) / 100
-        )}/>
-    <meta itemprop="priceCurrency" content="INR"/>
+        )} />
+      </div>
+
+      <meta itemprop="sku" content={product?.brand_id} />
+      <div itemprop="brand" itemtype="https://schema.org/Brand" itemscope>
+        <meta itemprop="name" content="SuperG.in" />
+      </div>
+    </div>
   </div>
-</div>
 
       <section className="pb-4 osahan-main-body">
         <div className="container">

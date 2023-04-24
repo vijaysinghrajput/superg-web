@@ -32,6 +32,15 @@ const Search = (props) => {
 
     return (
         <>
+<div itemscope itemtype="https://schema.org/WebSite">
+  <meta itemprop="url" content="https://superg.in/"/>
+  <form itemprop="potentialAction" itemscope itemtype="https://schema.org/SearchAction">
+    <meta itemprop="target" content="https://superg.in/search"/>
+    <input itemprop="query-input" type="text" onChange={e => setSearchTerm(e.target.value)} name="search_term_string" required/>
+    <input type="submit"/>
+  </form>
+</div>
+
             <section className="pt-5 osahan-main">
                 <div className="container">
                     <div class="input-group mt-3 rounded shadow-sm overflow-hidden bg-white">
