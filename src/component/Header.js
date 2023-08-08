@@ -7,7 +7,6 @@ import {
   useMediaQuery,
   Select,
   Text,
-  Button,
   Box,
 } from "@chakra-ui/react";
 import { MdOutlineShoppingCart, MdArrowForwardIos } from "react-icons/md";
@@ -15,8 +14,7 @@ import { BiCategory, BiSearchAlt2 } from "react-icons/bi";
 // import { BsWhatsapp } from 'react-icons/bs';
 import { FcSearch } from "react-icons/fc";
 import { AiOutlineLogin } from "react-icons/ai";
-import { BsWhatsapp, BsFillTelephoneFill, BsArrowLeft } from "react-icons/bs";
-import { FaLongArrowAltLeft } from "react-icons/fa";
+import { BsWhatsapp, BsFillTelephoneFill } from "react-icons/bs";
 import { constants } from "../URL";
 import Drawer from "./comman/Drawer";
 import { useMemo } from "react";
@@ -131,6 +129,7 @@ const Header = ({}) => {
             pathname !== "/saveMyAddress" &&
             pathname !== "/accountApp" &&
             pathname !== "/orders" &&
+            pathname !== "/checkout" &&
             pathname !== "/orderDetails" &&
             pathname !== "/search" &&
             // && pathname !== "/category"
@@ -159,6 +158,7 @@ const Header = ({}) => {
           {pathname !== "/cart" &&
             pathname !== "/login" &&
             pathname !== "/verification" &&
+            pathname !== "/checkout" &&
             pathname !== "/location" &&
             pathname !== "/saveMyAddress" && (
               <div class="osahan-menu-fotter fixed-bottom bg-white text-center border-top">

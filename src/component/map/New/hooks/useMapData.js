@@ -162,6 +162,7 @@ const useMapData = ({ type }) => {
     setUserInfo,
     userInfo,
     setAddress,
+    setZoom,
   };
 };
 

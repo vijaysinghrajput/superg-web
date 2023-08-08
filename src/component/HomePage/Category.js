@@ -14,7 +14,7 @@ const Category = (props) => {
   const location = useLocation();
   const [SubCategories, SetSubCategories] = useState([]);
   const [loca, setLcoa] = useState();
-  // console.log("dat ===>", data);
+  console.log("dat ===>", data);
   useEffect(() => {
     SetSubCategories(data.subcategories);
   }, [data.subcategories]);

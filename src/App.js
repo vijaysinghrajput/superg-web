@@ -15,6 +15,7 @@ import ProductDetailsPage from "./page/ProductDetailsPage";
 import CategoryPage from "./page/CategoryPage";
 import AccountPageApp from "./page/AccountPageApp";
 import NotFoundPage from "./page/NotFoundPage";
+import CheckoutPage from "./page/CheckoutPage";
 
 import URL from "./URL";
 import SearchPage from "./page/SearchPage";
@@ -33,9 +34,10 @@ import Testing from "./page/Testing";
 import { useContext } from "react";
 import ContextData from "./context/MainContext";
 import OrderDetailsPage from "./page/OrderDetailsPage";
+import ProductsByCategoryPage from "./page/ProductByCategoryPage";
 
 const App = () => {
-  const { subcategories, products, keywords, seo_area } =
+  const { subcategories, products, keywords, seo_area, categories } =
     useContext(ContextData);
 
   if (subcategories.length) {
@@ -64,6 +66,21 @@ const App = () => {
               />
             );
           })}
+          {categories.map((item, i) => {
+            return (
+              <Route
+                key={i}
+                path={
+                  "/" +
+                  (item.name + " delivery in gorakhpur")
+                    .replace(/\s/g, "-")
+                    .toLowerCase() +
+                  "/:subcatID/:subcatName"
+                }
+                element={<ProductsByCategoryPage />}
+              />
+            );
+          })}
           {products.map((item, i) => {
             return (
               <Route
@@ -88,6 +105,7 @@ const App = () => {
           <Route path="/testing" element={<Testing />} />
           <Route path="/notification" element={<AccountPage />} />
           <Route path="/offers" element={<AccountPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/orders" element={<AccountPage />} />
           <Route path="/address" element={<AccountPage />} />
           <Route path="/condition" element={<AccountPage />} />

@@ -25,6 +25,7 @@ import { getOrderIdForRazorpay } from "./useOnlinePayment";
 import Cookies from "universal-cookie";
 import Base64 from "../../helper/EncodeDecode";
 import { useNavigate } from "react-router-dom";
+import AddressNewV2 from "./v2/Address/Address";
 
 const cookies = new Cookies();
 
@@ -43,6 +44,7 @@ const Cart = (props) => {
     removeCart,
     setCartDetails,
   } = useContext(MainContext);
+  const data = useContext(MainContext);
   const [selectedAddress, setAddress] = useState();
   const [selectedDeliveryTiming, setDeliveryTiming] = useState();
   const [selectedPaymentOption, setPayment] = useState("COD");
@@ -57,6 +59,7 @@ const Cart = (props) => {
 
   useEffect(() => {
     reloadData();
+    console.log("ok data --->", data);
   }, []);
 
   const checkOutData = {
@@ -213,13 +216,21 @@ const Cart = (props) => {
 
   const setNavigateFunc = (val) => {
     !val && setPayment("COD");
-    setNavigate(val);
+    setCartDetails({
+      ...checkOutData,
+    });
+    // setNavigate(val);
+    navigator("/checkout");
   };
 
   const checkIfAllItemsAvilable = () => {
     const soldOutItems = products.filter((data) => {
       return cartItems.find((o) => o.id == data.id && o.status != data.status);
     });
+
+    // if (soldOutItems.length) {
+    //   onOpen();
+    // } else navigator("/checkout");
 
     if (soldOutItems.length) {
       onOpen();
@@ -264,7 +275,7 @@ const Cart = (props) => {
                   {auth.isUserLogin &&
                     Number(condition[0]?.minimum_order) <= GetTotal && (
                       <>
-                        <Address setAddress={setAddress} />
+                        <AddressNewV2 setAddress={setAddress} />
                         <NewDeliveryTiming
                           setDeliveryTiming={setDeliveryTiming}
                         />

@@ -6,7 +6,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCall } from "react-icons/io5";
 import {
   Modal,
@@ -59,6 +59,10 @@ export const OrderDetails = ({ data }) => {
   const [canceledResion, setResion] = useState("");
   const [Order_status, setOrderStatus] = useState(status_order);
 
+  useEffect(() => {
+    console.log("orders ----->", data);
+  }, []);
+
   const cancelMyOrder = async (order_number) => {
     setIsLoading(true);
     const data = await cancelOrder(
@@ -86,13 +90,6 @@ export const OrderDetails = ({ data }) => {
         <Flex justifyContent={"space-between"}>
           <Box mb={2}>
             <Text fontWeight={"700"}>#{data.order_number}</Text>
-            <Text fontWeight={"600"}>
-              {new Date(Number(data.order_time)).toLocaleDateString() ==
-              new Date().toLocaleDateString()
-                ? "Today"
-                : new Date(Number(data.order_time)).toDateString()}
-              , {new Date(Number(data.order_time)).toLocaleTimeString()}
-            </Text>
           </Box>
           <Box>
             {Order_status === "Cancel" ? (
@@ -110,6 +107,49 @@ export const OrderDetails = ({ data }) => {
             )}
           </Box>
         </Flex>
+        <Box mb={3}>
+          <Text fontWeight={"500"} color="#686868">
+            Order Details
+          </Text>
+          <Box>
+            <Flex alignItems={"center"} gap={2}>
+              <Text color="#000" fontWeight={"600"} fontSize={12}>
+                Order Placed
+              </Text>
+              <Text fontSize={12}>
+                {new Date(Number(data.order_time)).toLocaleDateString() ==
+                new Date().toLocaleDateString()
+                  ? "Today"
+                  : new Date(Number(data.order_time)).toDateString()}
+                , {new Date(Number(data.order_time)).toLocaleTimeString()}
+              </Text>
+            </Flex>
+            {Order_status == "On the way" ||
+            Order_status == "Preparing for Dispatch" ||
+            Order_status == "Order Placed" ? (
+              <Flex alignItems={"center"} gap={2}>
+                <Text color="#000" fontWeight={"600"} fontSize={12}>
+                  Delivery Date & Slot
+                </Text>
+                <Text fontSize={12}>
+                  {new Date(Number(data.delivery_date)).toLocaleDateString() ==
+                  new Date().toLocaleDateString()
+                    ? "Today"
+                    : new Date(Number(data.delivery_date)).toDateString()}
+                  , {`(${data.delivery_slot})`}
+                </Text>
+              </Flex>
+            ) : null}
+            {Order_status == "Cancel" ? (
+              <Flex alignItems={"center"} gap={2}>
+                <Text color="#000" fontWeight={"600"} fontSize={12}>
+                  Canceled Date
+                </Text>
+                <Text fontSize={12}>{data.Cancle_date}</Text>
+              </Flex>
+            ) : null}
+          </Box>
+        </Box>
         <Box>
           <Text fontWeight={"500"} color="#686868">
             Delivery to
@@ -126,11 +166,11 @@ export const OrderDetails = ({ data }) => {
         </Box>
         <Box mt={3}>
           <Text fontWeight={"500"} color="#686868">
-            Payment Method
+            Payment Method & Status
           </Text>
           <Box>
             <Text color="#000" fontWeight={"600"} fontSize={12}>
-              Cash on delivery
+              {data.payment_method}, {data.payment_status}
             </Text>
           </Box>
         </Box>

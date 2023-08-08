@@ -32,8 +32,10 @@ export const GetCurrentLocation = ({
     getCurrentLocation,
     address,
     handleSelect,
+    setZoom,
     gettingCoords,
     // setUserInfo,
+
     setAddress,
     setPosition,
   } = useMapData({ type });
@@ -45,6 +47,7 @@ export const GetCurrentLocation = ({
 
   useEffect(() => {
     if (type === "EDIT") {
+      setZoom(18);
       setAddress({
         user_city: editData.city,
         user_full_address: editData.address,

@@ -6,14 +6,15 @@ import Base64 from "../../helper/EncodeDecode";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
-import { Switch } from "@chakra-ui/react";
+import { Box, Switch } from "@chakra-ui/react";
 import { AiOutlineFieldTime } from "react-icons/ai";
+import PaymentDetails from "../Cart/PaymentDetails";
 
 const cookies = new Cookies();
 
-const Checkout = ({ setNavigate, checkOutData }) => {
+const Checkout = () => {
   const data = useContext(MainContext);
-  const { setCartDetails, cartItems, cartDetails } = data;
+  const { setCartDetails, cartItems, cartDetails, checkOutData } = data;
   const [coupon, setCoupon] = useState(cartDetails?.coupon);
   const [couponApplied, setCouponApplied] = useState(
     cartDetails?.couponApplied == undefined ? false : cartDetails?.couponApplied
@@ -27,7 +28,7 @@ const Checkout = ({ setNavigate, checkOutData }) => {
   const UserIDs = cookies.get("userID");
   const UserID = Base64.atob(UserIDs);
   const { selectedAddress, selectedDeliveryTiming, selectedPaymentOption } =
-    checkOutData;
+    cartDetails;
 
   const GetTotal = cartItems.reduce(function (a, b) {
     const price = b.price - b.price * (b.discount / 100);
@@ -35,9 +36,10 @@ const Checkout = ({ setNavigate, checkOutData }) => {
   }, 0);
 
   useEffect(() => {
-    setCartDetails({
-      ...checkOutData,
-    });
+    // setCartDetails({
+    //   ...checkOutData,
+    // });
+    console.log("ok data --->", data);
   }, []);
 
   const getDate = (date) => {
@@ -139,13 +141,18 @@ const Checkout = ({ setNavigate, checkOutData }) => {
 
   return (
     <>
-      <div class="bg-white rounded overflow-hidden">
-        <div class="p-3">
+      <Box
+        w={{ base: "94%", md: "100%" }}
+        margin={"auto"}
+        pt={{ base: 20, md: 6 }}
+      >
+        <div class="bg-white rounded overflow-hidden">
+          {/* <div class="p-3">
           <div class="d-flex align-items-center">
             <span class="small">
               <a
                 href="#"
-                onClick={() => setNavigate(false)}
+                // onClick={() => setNavigate(false)}
                 class="font-weight-bold text-decoration-none text-success"
                 data-toggle="modal"
                 data-target="#exampleModal"
@@ -157,91 +164,96 @@ const Checkout = ({ setNavigate, checkOutData }) => {
         </div>
         <div class="address p-3 bg-light">
           <h6 class="m-0 text-dark d-flex align-items-center">Address </h6>
-        </div>
-        <div class="p-3">
-          <div class="d-flex align-items-center">
-            <p class="mb-2 font-weight-bold">{selectedAddress.address_type}</p>
-            <p class="mb-2 badge badge-danger ml-auto">Default</p>
-          </div>
-          <p class="small text-muted m-0">{selectedAddress.name}</p>
-          <p class="small text-muted m-0">
-            H.No. {selectedAddress.user_house_no},{" "}
-            {selectedAddress.base_address}, {selectedAddress.city}
-          </p>
-          {/* <p class="small text-muted m-0">Zip: {selectedAddress.zipcode}</p> */}
-          <p class="small text-muted m-0">Phone: {selectedAddress.phone}</p>
-        </div>
-        <div class="address p-3 bg-light">
-          <h6 class="m-0 text-dark">Payment Method</h6>
-        </div>
-        <div class="p-3">
-          <div class="d-flex align-items-center">
-            <i class="icofont-credit-card"></i>
-            <span class="ml-3">{selectedPaymentOption}</span>
-          </div>
-        </div>
-        <div class="address p-3 bg-light">
-          <h6 class="m-0 text-dark">Delivery Slot</h6>
-        </div>
-        <div class="p-3">
-          <div class="d-flex align-items-center">
-            <AiOutlineFieldTime />
-            <span class="ml-3">
-              {selectedDeliveryTiming.day.toLocaleDateString()},{" "}
-              {selectedDeliveryTiming.timingSlot}
-            </span>
-          </div>
-        </div>
-        <div class="address p-3 bg-light">
-          <h6 class="text-dark m-0">Promo Code</h6>
-        </div>
-        <div>
-          <div class="accordion" id="accordionExample">
-            <div class="d-flex align-items-center" id="headingThree">
-              <a
-                class="p-3 d-flex align-items-center text-decoration-none text-success w-100"
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapseThree"
-                aria-expanded="false"
-                aria-controls="collapseThree"
-              >
-                <i class="icofont-badge mr-3"></i> Add Promo Code
-                <i class="icofont-rounded-down ml-auto"></i>
-              </a>
+        </div> */}
+          <div class="p-3">
+            <div class="d-flex align-items-center">
+              <p class="mb-2 font-weight-bold">
+                {selectedAddress?.address_type}
+              </p>
+              <p class="mb-2 badge badge-danger ml-auto">Default</p>
             </div>
-            <div
-              id="collapseThree"
-              class="collapse p-3 border-top"
-              aria-labelledby="headingThree"
-              data-parent="#accordionExample"
-            >
-              <div class="clearfix">
-                <div class="input-group-sm mb-2 input-group">
-                  <input
-                    onChange={(d) => setCoupon(d.target.value)}
-                    placeholder="Enter promo code"
-                    type="text"
-                    class="form-control"
-                  />
-                  <div class="input-group-append">
-                    <button
-                      id="button-addon2"
-                      type="button"
-                      onClick={isCouponValid}
-                      class="btn btn-success"
-                    >
-                      <i class="icofont-percent"></i>
-                      APPLY
-                    </button>
+            <p class="small text-muted m-0">{selectedAddress?.name}</p>
+            <p class="small text-muted m-0">
+              H.No. {selectedAddress?.user_house_no},{selectedAddress?.address}
+              {selectedAddress?.base_address}, {selectedAddress?.city}
+            </p>
+            {/* <p class="small text-muted m-0">Zip: {selectedAddress?.zipcode}</p> */}
+            <p class="small text-muted m-0">Phone: {selectedAddress?.phone}</p>
+          </div>
+          <div class="address p-3 bg-light">
+            <h6 class="m-0 text-dark">Payment Method</h6>
+          </div>
+          <div class="p-3">
+            <div class="d-flex align-items-center">
+              <i class="icofont-credit-card"></i>
+              <span class="ml-3">{selectedPaymentOption}</span>
+            </div>
+          </div>
+          <div class="address p-3 bg-light">
+            <h6 class="m-0 text-dark">Delivery Slot</h6>
+          </div>
+          <div class="p-3">
+            <div class="d-flex align-items-center">
+              <AiOutlineFieldTime />
+              <span class="ml-3">
+                {selectedDeliveryTiming?.day.toLocaleDateString()},{" "}
+                {selectedDeliveryTiming?.timingSlot}
+              </span>
+            </div>
+          </div>
+          <div class="address p-3 bg-light">
+            <h6 class="text-dark m-0">Promo Code</h6>
+          </div>
+          <div>
+            <div class="accordion" id="accordionExample">
+              <div class="d-flex align-items-center" id="headingThree">
+                <a
+                  class="p-3 d-flex align-items-center text-decoration-none text-success w-100"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#collapseThree"
+                  aria-expanded="false"
+                  aria-controls="collapseThree"
+                >
+                  <i class="icofont-badge mr-3"></i> Add Promo Code
+                  <i class="icofont-rounded-down ml-auto"></i>
+                </a>
+              </div>
+              <div
+                id="collapseThree"
+                class="collapse p-3 border-top"
+                aria-labelledby="headingThree"
+                data-parent="#accordionExample"
+              >
+                <div class="clearfix">
+                  <div class="input-group-sm mb-2 input-group">
+                    <input
+                      onChange={(d) => setCoupon(d.target.value)}
+                      placeholder="Enter promo code"
+                      type="text"
+                      class="form-control"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        id="button-addon2"
+                        type="button"
+                        onClick={isCouponValid}
+                        class="btn btn-success"
+                      >
+                        <i class="icofont-percent"></i>
+                        APPLY
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <ToastContainer />
+        <Box pb={{ base: 16, md: 0 }} pt={{ base: 6, md: 0 }}>
+          <PaymentDetails />
+        </Box>
+      </Box>
     </>
   );
 };

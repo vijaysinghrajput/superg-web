@@ -24,14 +24,6 @@ export default function LocationComponent() {
   const [isNotSmallerScreen] = useMediaQuery("(min-width:1024px)");
   const { getCurrentLocation } = useMapData({ type: "ADD" });
 
-  const setCurrentLocation = (position) => {
-    // setUserInformation({
-    //   latitude: position.coords.latitude,
-    //   longitude: position.coords.longitude,
-    // });
-    // closeLocationModal();
-  };
-
   return (
     <>
       <Box>
