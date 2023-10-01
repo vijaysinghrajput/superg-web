@@ -57,29 +57,7 @@ const CartItems = (props) => {
                 );
               })}
               <div>
-                {Number(condition[0]?.minimum_order) > GetTotal ? (
-                  <div className="p-3">
-                    <div className="rounded shadow bg-dark d-flex align-items-center p-3 text-white">
-                      <div className="more w-100">
-                        <h6 className="text-center">
-                          Minimum order must be more than ₹
-                          {condition[0].minimum_order} 😢
-                        </h6>
-                      </div>
-                    </div>
-                    <div className="rounded shadow bg-success mt-2 d-flex align-items-center p-3 text-white">
-                      <div className="more w-100">
-                        <h6
-                          className="text-center"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => navigation("/category")}
-                        >
-                          Shop more...
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                ) : auth.isUserLogin ? (
+                {auth.isUserLogin ? (
                   <a
                     href="#"
                     className="text-decoration-none btn btn-block p-3"

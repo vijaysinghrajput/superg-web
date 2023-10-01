@@ -26,6 +26,7 @@ import Cookies from "universal-cookie";
 import Base64 from "../../helper/EncodeDecode";
 import { useNavigate } from "react-router-dom";
 import AddressNewV2 from "./v2/Address/Address";
+import CartSlot from "./NewDeliveryTiming2";
 
 const cookies = new Cookies();
 
@@ -45,7 +46,9 @@ const Cart = (props) => {
     setCartDetails,
   } = useContext(MainContext);
   const data = useContext(MainContext);
+  const [deliveryNotAvilable, setDeliveryNotAvilable] = useState(false);
   const [selectedAddress, setAddress] = useState();
+  const [minimumOrderValue, setMinimumOrderValue] = useState();
   const [selectedDeliveryTiming, setDeliveryTiming] = useState();
   const [selectedPaymentOption, setPayment] = useState("COD");
   const [orderSuccessFull, setOrderSuccessFull] = useState(false);
@@ -59,7 +62,7 @@ const Cart = (props) => {
 
   useEffect(() => {
     reloadData();
-    console.log("ok data --->", data);
+    console.log("ok data --->", selectedAddress);
   }, []);
 
   const checkOutData = {
@@ -68,6 +71,8 @@ const Cart = (props) => {
     selectedPaymentOption,
     cartItems,
   };
+
+  console.log("atul papa --->", checkOutData);
 
   const handlePayment = useCallback(
     (order_id, orderID) => {
@@ -271,21 +276,29 @@ const Cart = (props) => {
                 />
               ) : (
                 <div className="accordion" id="accordionExample">
-                  <CartItems />
-                  {auth.isUserLogin &&
-                    Number(condition[0]?.minimum_order) <= GetTotal && (
-                      <>
-                        <AddressNewV2 setAddress={setAddress} />
-                        <NewDeliveryTiming
+                  <CartItems minOrderValue={minimumOrderValue} />
+                  {auth.isUserLogin && (
+                    <>
+                      <AddressNewV2 setAddress={setAddress} />
+                      {/* <NewDeliveryTiming
                           setDeliveryTiming={setDeliveryTiming}
-                        />
-                        <PaymentOption
-                          selectedAddress={selectedAddress}
-                          setNavigate={checkIfAllItemsAvilable}
-                          setPayment={setPayment}
-                        />
-                      </>
-                    )}
+                        /> */}
+                      <CartSlot
+                        address={selectedAddress}
+                        setMinimumOrderValue={setMinimumOrderValue}
+                        setDeliveryTiming={setDeliveryTiming}
+                        setDeliveryNotAvilable={setDeliveryNotAvilable}
+                      />
+                      <PaymentOption
+                        selectedAddress={selectedAddress}
+                        setNavigate={checkIfAllItemsAvilable}
+                        setPayment={setPayment}
+                        carTotal={GetTotal}
+                        minimumOrderValue={minimumOrderValue}
+                        deliveryNotAvilable={deliveryNotAvilable}
+                      />
+                    </>
+                  )}
                 </div>
               )}
             </div>

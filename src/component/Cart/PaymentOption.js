@@ -1,7 +1,18 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const PaymentOption = ({ setPayment, setNavigate, selectedAddress }) => {
+export const PaymentOption = ({
+  setPayment,
+  setNavigate,
+  selectedAddress,
+  minimumOrderValue,
+  carTotal,
+  deliveryNotAvilable,
+}) => {
+  const navigation = useNavigate();
+  console.log("het there---->------>", minimumOrderValue, carTotal);
+
   return (
     <>
       <div className="card border-0 osahan-accor rounded overflow-hidden mt-3">
@@ -74,16 +85,45 @@ export const PaymentOption = ({ setPayment, setNavigate, selectedAddress }) => {
                 </li>
               </ul>
             </div>
-            <Button
-              disabled={selectedAddress !== undefined ? false : true}
-              onClick={() => setNavigate(true)}
-              className="btn btn-success btn-lg btn-block mt-3 w-100"
-              type="button"
-            >
-              {selectedAddress !== undefined
-                ? "Continue"
-                : "Select or add new address"}
-            </Button>
+            {deliveryNotAvilable ? (
+              <>
+                <Box>
+                  <Text>Delivery not avilable in your area</Text>
+                </Box>
+              </>
+            ) : Number(minimumOrderValue) > carTotal ? (
+              <div className="p-3">
+                <div className="rounded shadow bg-dark d-flex align-items-center p-3 text-white">
+                  <div className="more w-100">
+                    <h6 className="text-center">
+                      Minimum order must be more than ₹{minimumOrderValue} 😢
+                    </h6>
+                  </div>
+                </div>
+                <div className="rounded shadow bg-success mt-2 d-flex align-items-center p-3 text-white">
+                  <div className="more w-100">
+                    <h6
+                      className="text-center"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => navigation("/category")}
+                    >
+                      Shop more...
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Button
+                disabled={selectedAddress !== undefined ? false : true}
+                onClick={() => setNavigate(true)}
+                className="btn btn-success btn-lg btn-block mt-3 w-100"
+                type="button"
+              >
+                {selectedAddress !== undefined
+                  ? "Continue"
+                  : "Select or add new address"}
+              </Button>
+            )}
           </div>
         </div>
       </div>
