@@ -45,7 +45,6 @@ const Cart = (props) => {
     removeCart,
     setCartDetails,
   } = useContext(MainContext);
-  const data = useContext(MainContext);
   const [deliveryNotAvilable, setDeliveryNotAvilable] = useState(false);
   const [selectedAddress, setAddress] = useState();
   const [minimumOrderValue, setMinimumOrderValue] = useState();

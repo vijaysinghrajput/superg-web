@@ -87,8 +87,10 @@ export const PaymentOption = ({
             </div>
             {deliveryNotAvilable ? (
               <>
-                <Box>
-                  <Text>Delivery not avilable in your area</Text>
+                <Box mt={4}>
+                  <Text textAlign={"center"} fontWeight={"600"}>
+                    Delivery not avilable in your area
+                  </Text>
                 </Box>
               </>
             ) : Number(minimumOrderValue) > carTotal ? (

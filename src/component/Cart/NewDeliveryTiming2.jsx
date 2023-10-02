@@ -47,8 +47,7 @@ export default function CartSlot({
 
   useEffect(() => {
     console.log("daya --->", slotsResponse);
-    slotsResponse &&
-      setMinimumOrderValue(slotsResponse?.miniumAmountForFreeDelivery);
+    slotsResponse && setMinimumOrderValue(slotsResponse?.minimumOrder);
 
     slotsResponse &&
       !slotsResponse?.slotsData.length &&
