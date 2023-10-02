@@ -9,10 +9,16 @@ import { RiArrowGoBackFill } from "react-icons/ri";
 import { Box, Switch } from "@chakra-ui/react";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import PaymentDetails from "../Cart/PaymentDetails";
+import { fetchSlots } from "../Cart/NewDeliveryTiming2";
+import { useLocation } from "react-router-dom";
 
 const cookies = new Cookies();
 
 const Checkout = () => {
+  const { state } = useLocation();
+
+  console.log("criminal ceckout final -------->", state);
+
   const data = useContext(MainContext);
   const { setCartDetails, cartItems, cartDetails, checkOutData } = data;
   const [coupon, setCoupon] = useState(cartDetails?.coupon);
@@ -251,7 +257,12 @@ const Checkout = () => {
           </div>
         </div>
         <Box pb={{ base: 16, md: 0 }} pt={{ base: 6, md: 0 }}>
-          <PaymentDetails />
+          <PaymentDetails
+            minimumAmountForFreeDelivery={Number(
+              state.minimumAmountForFreeDelivery
+            )}
+            deliveryCharge={Number(state.deliveryCharge)}
+          />
         </Box>
       </Box>
     </>

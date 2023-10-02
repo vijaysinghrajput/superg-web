@@ -27,7 +27,16 @@ import {
 
 const cookies = new Cookies();
 
-export const PaymentDetails = () => {
+export const PaymentDetails = ({
+  deliveryCharge = 0,
+  minimumAmountForFreeDelivery,
+}) => {
+  console.log(
+    "criminal -------->",
+    deliveryCharge,
+    minimumAmountForFreeDelivery
+  );
+
   const data = useContext(MainContext);
   const {
     cartItems,
@@ -40,7 +49,7 @@ export const PaymentDetails = () => {
     removeCart,
   } = data;
   const [total, setTotal] = useState(0);
-  const [deliveryCharge, setDeliveryCharge] = useState(0);
+  // const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [isDeliveryChargeApplied, setIsDeliveryChargeApplied] = useState(false);
   const CARRY_BAG_CHARGE_MINIMUM_QTY = Number(
     condition[0]?.carry_bag_charge_minimum_qty
@@ -79,11 +88,11 @@ export const PaymentDetails = () => {
   useEffect(() => {
     setTotal(GetTotal);
     setTotalDiscount(GetDiscount);
-    if (GetTotal < parseInt(condition[0]?.shipping)) {
-      setDeliveryCharge(condition[0].charges);
+    if (GetTotal < parseInt(minimumAmountForFreeDelivery)) {
+      // setDeliveryCharge(condition[0].charges);
       setIsDeliveryChargeApplied(true);
     } else {
-      setDeliveryCharge(0);
+      // setDeliveryCharge(0);
       setIsDeliveryChargeApplied(false);
     }
   }, [condition, data]);
@@ -98,7 +107,7 @@ export const PaymentDetails = () => {
             cartDetails?.discountPriceByCoupon
         )
       : setGrandTotal(Number(total) + Number(deliveryCharge));
-    if (GetTotal < parseInt(condition[0]?.shipping)) {
+    if (GetTotal < parseInt(minimumAmountForFreeDelivery)) {
       setCartDetails({
         deliveryCharge: Number(deliveryCharge),
         isDeliveryChargeApplied,
@@ -302,7 +311,7 @@ export const PaymentDetails = () => {
               </span>
             </p>
             {/* <p className="mb-1">Store Charges <span className="float-right text-dark">$62.8</span></p> */}
-            {Math.round(total) < condition[0]?.shipping && (
+            {Math.round(total) < Number(minimumAmountForFreeDelivery) && (
               <>
                 {" "}
                 <p className="mb-3">
@@ -313,7 +322,8 @@ export const PaymentDetails = () => {
                 </p>
                 <div class="alert alert-danger text-center p-1" role="alert">
                   <small>
-                    Shop more for ₹{Math.round(condition[0]?.shipping - total)}{" "}
+                    Shop more for ₹
+                    {Math.round(Number(minimumAmountForFreeDelivery) - total)}{" "}
                     to get free delivery.
                   </small>
                 </div>{" "}

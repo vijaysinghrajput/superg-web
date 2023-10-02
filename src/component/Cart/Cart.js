@@ -45,6 +45,9 @@ const Cart = (props) => {
     removeCart,
     setCartDetails,
   } = useContext(MainContext);
+  const [minimumAmountForFreeDelivery, setMinimumAmountForFreeDelivery] =
+    useState(0);
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [deliveryNotAvilable, setDeliveryNotAvilable] = useState(false);
   const [selectedAddress, setAddress] = useState();
   const [minimumOrderValue, setMinimumOrderValue] = useState();
@@ -71,7 +74,7 @@ const Cart = (props) => {
     cartItems,
   };
 
-  console.log("atul papa --->", checkOutData);
+  console.log("atul papa --->", minimumAmountForFreeDelivery, deliveryCharge);
 
   const handlePayment = useCallback(
     (order_id, orderID) => {
@@ -224,7 +227,12 @@ const Cart = (props) => {
       ...checkOutData,
     });
     // setNavigate(val);
-    navigator("/checkout");
+    navigator("/checkout", {
+      state: {
+        deliveryCharge: deliveryCharge,
+        minimumAmountForFreeDelivery: minimumAmountForFreeDelivery,
+      },
+    });
   };
 
   const checkIfAllItemsAvilable = () => {
@@ -272,6 +280,10 @@ const Cart = (props) => {
                 <Checkout
                   setNavigate={setNavigateFunc}
                   checkOutData={checkOutData}
+                  deliveryCharge={Number(deliveryCharge)}
+                  minimumAmountForFreeDelivery={Number(
+                    minimumAmountForFreeDelivery
+                  )}
                 />
               ) : (
                 <div className="accordion" id="accordionExample">
@@ -287,6 +299,10 @@ const Cart = (props) => {
                         setMinimumOrderValue={setMinimumOrderValue}
                         setDeliveryTiming={setDeliveryTiming}
                         setDeliveryNotAvilable={setDeliveryNotAvilable}
+                        setMinimumAmountForFreeDelivery={
+                          setMinimumAmountForFreeDelivery
+                        }
+                        setDeliveryCharge={setDeliveryCharge}
                       />
                       <PaymentOption
                         selectedAddress={selectedAddress}
@@ -304,7 +320,13 @@ const Cart = (props) => {
             {isNotSmallerScreen ? (
               <div className="col-lg-4">
                 <div className="sticky_sidebar">
-                  <PaymentDetails setCarryBagMain={setCarryBag} />
+                  <PaymentDetails
+                    deliveryCharge={Number(deliveryCharge)}
+                    minimumAmountForFreeDelivery={Number(
+                      minimumAmountForFreeDelivery
+                    )}
+                    setCarryBagMain={setCarryBag}
+                  />
                   {navigate && (
                     <Button
                       isLoading={orderSuccessFull}
@@ -320,7 +342,13 @@ const Cart = (props) => {
               navigate && (
                 <div className="col-lg-4 mb-5">
                   <div className="sticky_sidebar">
-                    <PaymentDetails setCarryBagMain={setCarryBag} />
+                    <PaymentDetails
+                      deliveryCharge={Number(deliveryCharge)}
+                      minimumAmountForFreeDelivery={Number(
+                        minimumAmountForFreeDelivery
+                      )}
+                      setCarryBagMain={setCarryBag}
+                    />
                     {navigate && (
                       <div
                         style={{

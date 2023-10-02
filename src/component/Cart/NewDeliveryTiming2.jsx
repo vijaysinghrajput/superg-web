@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
-const fetchSlots = async ({ STORE_CODE = "", lat, lng }) => {
+export const fetchSlots = async ({ STORE_CODE = "", lat, lng }) => {
   const body = { STORE_CODE, lat, lng };
   const data = await fetch(URL + "/APP-API/App/fetchSlots", {
     method: "post",
@@ -29,6 +29,8 @@ export default function CartSlot({
   setMinimumOrderValue,
   setDeliveryTiming,
   setDeliveryNotAvilable,
+  setMinimumAmountForFreeDelivery,
+  setDeliveryCharge,
 }) {
   const [selectedSlot, setSelected] = useState({
     id: null,
@@ -47,7 +49,13 @@ export default function CartSlot({
 
   useEffect(() => {
     console.log("daya --->", slotsResponse);
-    slotsResponse && setMinimumOrderValue(slotsResponse?.minimumOrder);
+    if (slotsResponse) {
+      setMinimumOrderValue(slotsResponse?.minimumOrder);
+      setMinimumAmountForFreeDelivery(
+        slotsResponse?.miniumAmountForFreeDelivery
+      );
+      setDeliveryCharge(slotsResponse?.deliveryCharge);
+    }
 
     slotsResponse &&
       !slotsResponse?.slotsData.length &&
