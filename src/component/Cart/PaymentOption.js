@@ -10,9 +10,9 @@ export const PaymentOption = ({
   carTotal,
   deliveryNotAvilable,
   selectedDeliveryTiming,
+  deliveryNotAvilableReason,
 }) => {
   const navigation = useNavigate();
-  console.log("het there---->------>", selectedDeliveryTiming.timingSlot);
 
   return (
     <>
@@ -38,59 +38,61 @@ export const PaymentOption = ({
           data-parent="#accordionExample"
         >
           <div className="card-body px-3 pb-3 pt-1 border-top">
-            <div className="schedule">
-              <ul
-                className="nav nav-tabs justify-content-center nav-fill"
-                id="myTab"
-                role="tablist"
-              >
-                <li
-                  className="nav-item"
-                  role="presentation"
-                  onClick={() => setPayment("COD")}
+            {!deliveryNotAvilable ? (
+              <div className="schedule">
+                <ul
+                  className="nav nav-tabs justify-content-center nav-fill"
+                  id="myTab"
+                  role="tablist"
                 >
-                  <a
-                    className="nav-link text-dark active show"
-                    id="cash-tab"
-                    data-toggle="tab"
-                    href="#cash"
-                    role="tab"
-                    aria-controls="cash"
-                    aria-selected="false"
+                  <li
+                    className="nav-item"
+                    role="presentation"
+                    onClick={() => setPayment("COD")}
                   >
-                    <p className="mb-0 font-weight-bold">
-                      <i className="icofont-rupee mr-2" />
-                      Pay on Delivery
-                    </p>
-                  </a>
-                </li>
-                <li
-                  className="nav-item"
-                  role="presentation"
-                  onClick={() => setPayment("ONLINE")}
-                >
-                  <a
-                    className="nav-link text-dark"
-                    id="online-tab"
-                    data-toggle="tab"
-                    href="#online"
-                    role="tab"
-                    aria-controls="online"
-                    aria-selected="false"
+                    <a
+                      className="nav-link text-dark active show"
+                      id="cash-tab"
+                      data-toggle="tab"
+                      href="#cash"
+                      role="tab"
+                      aria-controls="cash"
+                      aria-selected="false"
+                    >
+                      <p className="mb-0 font-weight-bold">
+                        <i className="icofont-rupee mr-2" />
+                        Pay on Delivery
+                      </p>
+                    </a>
+                  </li>
+                  <li
+                    className="nav-item"
+                    role="presentation"
+                    onClick={() => setPayment("ONLINE")}
                   >
-                    <p className="mb-0 font-weight-bold">
-                      <i className="icofont-globe mr-2" />
-                      Online Payment
-                    </p>
-                  </a>
-                </li>
-              </ul>
-            </div>
+                    <a
+                      className="nav-link text-dark"
+                      id="online-tab"
+                      data-toggle="tab"
+                      href="#online"
+                      role="tab"
+                      aria-controls="online"
+                      aria-selected="false"
+                    >
+                      <p className="mb-0 font-weight-bold">
+                        <i className="icofont-globe mr-2" />
+                        Online Payment
+                      </p>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            ) : null}
             {deliveryNotAvilable ? (
               <>
                 <Box mt={4}>
                   <Text textAlign={"center"} fontWeight={"600"}>
-                    Delivery not avilable in your area
+                    {deliveryNotAvilableReason}
                   </Text>
                 </Box>
               </>

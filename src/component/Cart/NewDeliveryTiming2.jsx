@@ -10,8 +10,8 @@ import {
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
-export const fetchSlots = async ({ STORE_CODE = "", lat, lng }) => {
-  const body = { STORE_CODE, lat, lng };
+export const fetchSlots = async ({ STORE_CODE = "", lat, lng, address_id }) => {
+  const body = { STORE_CODE, lat, lng, address_id };
   const data = await fetch(URL + "/APP-API/App/fetchSlots", {
     method: "post",
     header: {
@@ -32,6 +32,7 @@ export default function CartSlot({
   setMinimumAmountForFreeDelivery,
   setDeliveryCharge,
 }) {
+  // console.log("sdjfksdfkhsakdhfkshdkfh ---->", address);
   const [selectedSlot, setSelected] = useState({
     id: null,
     title: null,
@@ -40,7 +41,11 @@ export default function CartSlot({
   const { data, isError, isLoading, isFetching } = useQuery({
     queryKey: ["slots", address],
     queryFn: (e) =>
-      fetchSlots({ lat: address.latitude, lng: address.longitude }),
+      fetchSlots({
+        lat: address.latitude,
+        lng: address.longitude,
+        address_id: address.address_id,
+      }),
     enabled: address !== undefined && address !== null,
     refetchInterval: 5 * 60 * 1000,
   });
@@ -59,7 +64,16 @@ export default function CartSlot({
 
     slotsResponse &&
       !slotsResponse?.slotsData.length &&
-      setDeliveryNotAvilable(true);
+      setDeliveryNotAvilable({
+        status: true,
+        reason: slotsResponse?.deliveryNotAvilablereason,
+      });
+    slotsResponse &&
+      !slotsResponse?.deliveryNotAvilable &&
+      setDeliveryNotAvilable({
+        status: true,
+        reason: slotsResponse?.deliveryNotAvilablereason,
+      });
   }, [slotsResponse]);
 
   useEffect(() => {

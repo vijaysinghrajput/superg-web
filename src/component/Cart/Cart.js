@@ -47,7 +47,10 @@ const Cart = (props) => {
   const [minimumAmountForFreeDelivery, setMinimumAmountForFreeDelivery] =
     useState(0);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
-  const [deliveryNotAvilable, setDeliveryNotAvilable] = useState(false);
+  const [deliveryNotAvilable, setDeliveryNotAvilable] = useState({
+    status: false,
+    reason: "",
+  });
   const [selectedAddress, setAddress] = useState();
   const [minimumOrderValue, setMinimumOrderValue] = useState();
   const [selectedDeliveryTiming, setDeliveryTiming] = useState();
@@ -318,7 +321,8 @@ const Cart = (props) => {
                         setPayment={setPayment}
                         carTotal={GetTotal}
                         minimumOrderValue={minimumOrderValue}
-                        deliveryNotAvilable={deliveryNotAvilable}
+                        deliveryNotAvilable={deliveryNotAvilable.status}
+                        deliveryNotAvilableReason={deliveryNotAvilable.reason}
                         selectedDeliveryTiming={selectedDeliveryTiming}
                       />
                     </>
