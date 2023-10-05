@@ -30,13 +30,8 @@ const cookies = new Cookies();
 export const PaymentDetails = ({
   deliveryCharge = 0,
   minimumAmountForFreeDelivery,
+  setDeliveryCharge,
 }) => {
-  console.log(
-    "criminal -------->",
-    deliveryCharge,
-    minimumAmountForFreeDelivery
-  );
-
   const data = useContext(MainContext);
   const {
     cartItems,
@@ -67,7 +62,7 @@ export const PaymentDetails = ({
   const navigator = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  //console.log("hey nvaett", youHaveToTakeCarryBag, CARRY_BAG_CHARGE_MINIMUM_QTY);
+  console.log("hey nvaett", setDeliveryCharge);
 
   // useEffect(() => {
   //     setCarryBagMain(wantCarryBag);
@@ -342,7 +337,7 @@ export const PaymentDetails = ({
                 </span>
               </h6>
             )}
-            {youHaveToTakeCarryBag ? (
+            {/*  {youHaveToTakeCarryBag ? (
               <>
                 <h6 className="mb-0 text-dark mt-3" style={{ fontSize: 14 }}>
                   Carry Bag{" "}
@@ -362,7 +357,7 @@ export const PaymentDetails = ({
               </>
             ) : (
               <h6 className="mb-0 text-dark mt-3" style={{ fontSize: 14 }}>
-                Carry Bag{" "}
+                Carry Bag
                 <Switch
                   size="md"
                   ml={2}
@@ -373,17 +368,18 @@ export const PaymentDetails = ({
                   + ₹{condition[0]?.carry_bag_charge}
                 </span>
               </h6>
-            )}
+            )} */}
           </div>
           <div className="p-3 border-top">
             <h5 className="mb-0">
               TO PAY{" "}
               <span className="float-right text-danger">
                 ₹{" "}
-                {wantCarryBag
+                {/* {wantCarryBag
                   ? Math.round(grandTotal) +
                     Number(condition[0]?.carry_bag_charge)
-                  : Math.round(grandTotal)}
+                  : Math.round(grandTotal)} */}
+                {Math.round(grandTotal)}
               </span>
             </h5>
           </div>

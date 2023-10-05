@@ -9,9 +9,10 @@ export const PaymentOption = ({
   minimumOrderValue,
   carTotal,
   deliveryNotAvilable,
+  selectedDeliveryTiming,
 }) => {
   const navigation = useNavigate();
-  console.log("het there---->------>", minimumOrderValue, carTotal);
+  console.log("het there---->------>", selectedDeliveryTiming.timingSlot);
 
   return (
     <>
@@ -116,14 +117,16 @@ export const PaymentOption = ({
               </div>
             ) : (
               <Button
-                disabled={selectedAddress !== undefined ? false : true}
+                disabled={
+                  selectedDeliveryTiming?.timingSlot !== null ? false : true
+                }
                 onClick={() => setNavigate(true)}
                 className="btn btn-success btn-lg btn-block mt-3 w-100"
                 type="button"
               >
-                {selectedAddress !== undefined
+                {selectedDeliveryTiming?.timingSlot !== null
                   ? "Continue"
-                  : "Select or add new address"}
+                  : "Select or Add New Address / Slot"}
               </Button>
             )}
           </div>

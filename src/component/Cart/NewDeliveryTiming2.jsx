@@ -177,7 +177,7 @@ export default function CartSlot({
                     <Text fontWeight={"500"} mt={3} fontSize={12}>
                       {slot.title}
                     </Text>
-                    <HStack mt={2} flexWrap={"wrap"}>
+                    <Flex mt={2} flexWrap={"wrap"} gap={1}>
                       {slot.slots.map((times, i) => {
                         const disabled = times.exceded && {
                           borderColor: "blackAlpha.400",
@@ -247,7 +247,7 @@ export default function CartSlot({
                 >
                   <Text>8AM - 9AM</Text>
                 </Flex> */}
-                    </HStack>
+                    </Flex>
                   </Box>
                 );
               })

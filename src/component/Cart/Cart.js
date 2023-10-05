@@ -18,7 +18,6 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@chakra-ui/react";
-import NewDeliveryTiming from "./NewDeliveryTiming";
 import { useCallback } from "react";
 import useRazorpay from "react-razorpay";
 import { getOrderIdForRazorpay } from "./useOnlinePayment";
@@ -62,10 +61,16 @@ const Cart = (props) => {
   const navigator = useNavigate();
   const toast = useToast();
 
+  const GetTotal = cartItems.reduce(function (a, b) {
+    const price = Math.round(
+      (b.price - b.price * (b.discount / 100)) * b.itemQuant
+    );
+    return a + Number(price);
+  }, 0);
+
   useEffect(() => {
     reloadData();
-    console.log("ok data --->", selectedAddress);
-  }, []);
+  }, [GetTotal, cartDetails]);
 
   const checkOutData = {
     selectedAddress,
@@ -226,10 +231,20 @@ const Cart = (props) => {
     setCartDetails({
       ...checkOutData,
     });
+    let del = deliveryCharge;
     // setNavigate(val);
+    console.log(
+      "ok data asdkjfkjsafhsdfhasdkfhaslkhdfaklshdfkjhsdjkfhklashfkashf --->",
+      GetTotal,
+      parseInt(minimumAmountForFreeDelivery),
+      del
+    );
+    if (GetTotal > parseInt(minimumAmountForFreeDelivery)) {
+      del = 0;
+    }
     navigator("/checkout", {
       state: {
-        deliveryCharge: deliveryCharge,
+        deliveryCharge: del,
         minimumAmountForFreeDelivery: minimumAmountForFreeDelivery,
       },
     });
@@ -262,13 +277,6 @@ const Cart = (props) => {
     });
     onClose();
   };
-
-  const GetTotal = cartItems.reduce(function (a, b) {
-    const price = Math.round(
-      (b.price - b.price * (b.discount / 100)) * b.itemQuant
-    );
-    return a + Number(price);
-  }, 0);
 
   return (
     <>
@@ -311,6 +319,7 @@ const Cart = (props) => {
                         carTotal={GetTotal}
                         minimumOrderValue={minimumOrderValue}
                         deliveryNotAvilable={deliveryNotAvilable}
+                        selectedDeliveryTiming={selectedDeliveryTiming}
                       />
                     </>
                   )}
@@ -326,6 +335,7 @@ const Cart = (props) => {
                       minimumAmountForFreeDelivery
                     )}
                     setCarryBagMain={setCarryBag}
+                    setDeliveryCharge={setDeliveryCharge}
                   />
                   {navigate && (
                     <Button
@@ -348,6 +358,7 @@ const Cart = (props) => {
                         minimumAmountForFreeDelivery
                       )}
                       setCarryBagMain={setCarryBag}
+                      setDeliveryCharge={setDeliveryCharge}
                     />
                     {navigate && (
                       <div

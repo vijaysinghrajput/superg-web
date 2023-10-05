@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Flex,
+  HStack,
   Image,
   Input,
   InputGroup,
@@ -326,6 +327,7 @@ const AddressNewV2 = ({ setAddress }) => {
 export function AddressMainComponent({ setAddress }) {
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] = useState(null);
   const [UserAddressData, setUserAddressData] = useState([]);
+  const [isLoading, setLoading] = useBoolean();
 
   useEffect(() => {
     !UserAddressData.length && fetchAllAddress();
@@ -335,6 +337,7 @@ export function AddressMainComponent({ setAddress }) {
   const UserID = UserIDs && Base64.atob(UserIDs);
 
   const fetchAllAddress = () => {
+    setLoading.on();
     fetch(URL + "/APP-API/App/getAllAddress", {
       method: "post",
       header: {
@@ -348,7 +351,10 @@ export function AddressMainComponent({ setAddress }) {
         responseJson.address.length && setUserAddressData(responseJson.address);
         setAddress(responseJson.address[0]);
       })
-      .catch((error) => {});
+      .catch((error) => {})
+      .finally(() => {
+        setLoading.off();
+      });
   };
 
   return (
@@ -359,7 +365,16 @@ export function AddressMainComponent({ setAddress }) {
             <AddressInModal setUserAddressData={setUserAddressData} />
           </div>
           <>
-            {UserAddressData.length ? (
+            {isLoading ? (
+              <>
+                <HStack alignItems={"center"}>
+                  <Text fontWeight={"600"} fontSize={12}>
+                    Fetching
+                  </Text>
+                  <Spinner size={"xs"} />
+                </HStack>
+              </>
+            ) : UserAddressData.length ? (
               <>
                 {UserAddressData.map((item, i) => {
                   return (
