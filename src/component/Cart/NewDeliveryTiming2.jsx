@@ -74,6 +74,12 @@ export default function CartSlot({
         status: true,
         reason: slotsResponse?.deliveryNotAvilablereason,
       });
+    slotsResponse &&
+      slotsResponse?.deliveryNotAvilable &&
+      setDeliveryNotAvilable({
+        status: false,
+        reason: "",
+      });
   }, [slotsResponse]);
 
   useEffect(() => {

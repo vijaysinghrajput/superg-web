@@ -384,6 +384,7 @@ export function AddressMainComponent({ setAddress }) {
                       style={{ position: "relative" }}
                     >
                       {/* <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" /> */}
+                      {item.distance_km}
                       <label
                         class="custom-control-label w-100"
                         for="customRadioInline1"

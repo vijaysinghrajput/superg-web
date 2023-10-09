@@ -72,7 +72,13 @@ const Cart = (props) => {
   }, 0);
 
   useEffect(() => {
-    reloadData();
+    const timer = setTimeout(() => {
+      reloadData();
+    }, 8000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [GetTotal, cartDetails]);
 
   const checkOutData = {
