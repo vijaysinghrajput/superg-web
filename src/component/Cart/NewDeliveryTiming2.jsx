@@ -153,6 +153,9 @@ export default function CartSlot({
           aria-labelledby="headingthree"
           data-parent="#accordionExample"
         >
+          <Text textAlign={"center"}>
+            You are {slotsResponse?.distance} KM away from our store
+          </Text>
           <Box
             p={4}
             bg={"#fff"}
