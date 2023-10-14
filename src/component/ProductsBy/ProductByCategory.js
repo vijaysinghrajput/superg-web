@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import ContextData from "../../context/MainContext";
 import { Filter } from "../comman/Fillter";
 import OshanContainer from "../comman/OshanContainer";
-import { BasicVegitableFruit } from "../ProductsCards/BasicVegitableFruit";
+import BasicVegitableFruit from "../ProductsCards/BasicVegitableFruit";
 import Seo from "../Seo";
 import { Box, Flex, Grid, GridItem, Image, SimpleGrid } from "@chakra-ui/react";
 

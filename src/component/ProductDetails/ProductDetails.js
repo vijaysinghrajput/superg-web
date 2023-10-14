@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import MainContext from "../../context/MainContext";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-import { BasicVegitableFruit } from "../ProductsCards/BasicVegitableFruit";
+import BasicVegitableFruit from "../ProductsCards/BasicVegitableFruit";
 import Seo from "../Seo";
 import { Box, HStack, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import { FcApproval } from "react-icons/fc";
@@ -56,44 +56,78 @@ const ProductDetails = () => {
           " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"
         }
         image={URL + "/images/product-images/" + product?.product_image}
-        web_url={"https://superg.in/" + (product?.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + product?.id}
-        availability={product?.status==1?"in stock":"out of stock"}
+        web_url={
+          "https://superg.in/" +
+          (product?.product_name + " delivery in gorakhpur")
+            .replace(/\s/g, "-")
+            .toLowerCase() +
+          "/" +
+          product?.id
+        }
+        availability={product?.status == 1 ? "in stock" : "out of stock"}
         amount={Math.round(
-          product?.price -
-            (product?.price * product?.discount) / 100
+          product?.price - (product?.price * product?.discount) / 100
         )}
         retailer_item_id={product?.id}
         item_group_id={product?.parent_id}
         category_id={product?.category_id}
-        product_name={product?.product_name+" "+product?.product_size +" "+ product?.product_unit}
+        product_name={
+          product?.product_name +
+          " " +
+          product?.product_size +
+          " " +
+          product?.product_unit
+        }
       />
 
+      <div>
+        <div itemtype="https://schema.org/Product" itemscope>
+          <meta itemprop="mpn" content={product?.id} />
+          <meta itemprop="name" content={product?.product_name} />
+          <link
+            itemprop="image"
+            href={URL + "/images/product-images/" + product?.product_image}
+          />
+          <meta itemprop="description" content={product?.product_name} />
+          <div itemprop="offers" itemtype="https://schema.org/Offer" itemscope>
+            <link
+              itemprop="url"
+              href={
+                "https://superg.in/" +
+                (product?.product_name + " delivery in gorakhpur")
+                  .replace(/\s/g, "-")
+                  .toLowerCase() +
+                "/" +
+                product?.id
+              }
+            />
+            <meta
+              itemprop="availability"
+              content={
+                "https://schema.org/" + product?.status == 1
+                  ? "InStock"
+                  : "outOfStock"
+              }
+            />
+            <meta itemprop="priceCurrency" content="INR" />
+            <meta
+              itemprop="itemCondition"
+              content="https://schema.org/NewCondition"
+            />
+            <meta
+              itemprop="price"
+              content={Math.round(
+                product?.price - (product?.price * product?.discount) / 100
+              )}
+            />
+          </div>
 
-
-
-<div>
-    <div itemtype="https://schema.org/Product" itemscope>
-      <meta itemprop="mpn" content={product?.id} />
-      <meta itemprop="name" content={product?.product_name} />
-      <link itemprop="image" href={URL + "/images/product-images/" + product?.product_image} />
-      <meta itemprop="description" content={product?.product_name} />
-      <div itemprop="offers" itemtype="https://schema.org/Offer" itemscope>
-        <link itemprop="url" href={"https://superg.in/" + (product?.product_name + " delivery in gorakhpur").replace(/\s/g, "-").toLowerCase() + "/" + product?.id} />
-        <meta itemprop="availability" content={"https://schema.org/"+product?.status==1?"InStock":"outOfStock"} />
-        <meta itemprop="priceCurrency" content="INR" />
-        <meta itemprop="itemCondition" content="https://schema.org/NewCondition" />
-        <meta itemprop="price" content={Math.round(
-          product?.price -
-            (product?.price * product?.discount) / 100
-        )} />
+          <meta itemprop="sku" content={product?.brand_id} />
+          <div itemprop="brand" itemtype="https://schema.org/Brand" itemscope>
+            <meta itemprop="name" content="SuperG.in" />
+          </div>
+        </div>
       </div>
-
-      <meta itemprop="sku" content={product?.brand_id} />
-      <div itemprop="brand" itemtype="https://schema.org/Brand" itemscope>
-        <meta itemprop="name" content="SuperG.in" />
-      </div>
-    </div>
-  </div>
 
       <section className="pb-4 osahan-main-body">
         <div className="container">

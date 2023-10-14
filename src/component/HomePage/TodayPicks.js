@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import ContextData from "../../context/MainContext";
 import { ProductLoading } from "../Loaders/SkeletonLoader";
-import { BasicVegitableFruit } from "../ProductsCards/BasicVegitableFruit";
+import BasicVegitableFruit from "../ProductsCards/BasicVegitableFruit";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect } from "react";
 import {

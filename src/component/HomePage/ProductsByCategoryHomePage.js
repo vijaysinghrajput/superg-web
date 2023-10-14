@@ -8,7 +8,7 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import { Link, useLocation } from "react-router-dom";
 import { CategoryLoading } from "../Loaders/SkeletonLoader";
 import ContextData from "../../context/MainContext";
-import { BasicVegitableFruit } from "../ProductsCards/BasicVegitableFruit";
+import BasicVegitableFruit from "../ProductsCards/BasicVegitableFruit";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { SliderProductCard } from "../ProductsCards/SliderProductCard";
 import Promo from "./Promo";

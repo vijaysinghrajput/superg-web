@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import contextData from "../../context/MainContext";
 import URL from "../../URL";
-import { Box, Text, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, Text, useMediaQuery } from "@chakra-ui/react";
 // import OwlCarousel from 'react-owl-carousel';
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { Link, useLocation } from "react-router-dom";
 import { CategoryLoading } from "../Loaders/SkeletonLoader";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Category = (props) => {
   const data = useContext(contextData);
@@ -50,9 +49,10 @@ const Category = (props) => {
                   <div class="col-6 col-md-2 mb-0 p-1" key={i}>
                     <Box
                       className="list-card h-100 rounded overflow-hidden position-relative shadow-sm"
-                      bg="#ffb681"
+                      // bg="#ffb681"
+                      bg="#fff"
                     >
-                      <Box p={3}>
+                      <Box p={3} height={"inherit"}>
                         <Link
                           state={location.pathname}
                           to={
@@ -65,32 +65,41 @@ const Category = (props) => {
                             "/" +
                             item.name
                           }
+                          style={{ display: "block", height: "inherit" }}
                         >
-                          <Text
-                            textAlign={"left"}
-                            fontSize={24}
-                            fontWeight={"700"}
-                            color="#fff"
+                          <Flex
+                            direction={"column"}
+                            height={"inherit"}
+                            justifyContent={"space-evenly"}
                           >
-                            {item.name}
-                          </Text>
+                            <Text
+                              textAlign={"center"}
+                              fontSize={20}
+                              fontWeight={"700"}
+                              color="#000"
+                            >
+                              {item.name}
+                            </Text>
 
-                          <LazyLoadImage 
-              src={URL + "/images/category_images/" + item.image}
-    PlaceholderSrc="/img/logo-500.png"
-    effect="blur"
-    class="img-fluid item-img w-100"
-                            alt={
-                              item.name +
-                              " in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"
-                            }
-                            title={
-                              item.name +
-                              " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"
-                            }
-                            style={{ height: 110, objectFit: "contain" }}
-/>
-
+                            <LazyLoadImage
+                              src={
+                                URL + "/images/category_images/" + item.image
+                              }
+                              PlaceholderSrc="/img/logo-500-min.png"
+                              effect="blur"
+                              class="img-fluid item-img w-100"
+                              height={140}
+                              alt={
+                                item.name +
+                                " in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"
+                              }
+                              title={
+                                item.name +
+                                " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"
+                              }
+                              style={{ height: 110, objectFit: "contain" }}
+                            />
+                          </Flex>
 
                           {/* <img
                             src={URL + "/images/category_images/" + item.image}

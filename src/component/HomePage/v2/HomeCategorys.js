@@ -32,7 +32,7 @@ const HomeCategorys = (props) => {
                 return (
                   <div class="col-4 col-md-2 mb-0 p-1" key={i}>
                     <Box
-                      bg="#cdeeff"
+                      bg="#fff"
                       className="list-card h-100 rounded overflow-hidden position-relative shadow-sm"
                     >
                       <Flex

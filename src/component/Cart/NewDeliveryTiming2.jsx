@@ -154,8 +154,9 @@ export default function CartSlot({
           data-parent="#accordionExample"
         >
           <Text textAlign={"center"}>
-            {slotsResponse?.distance>0?" You are "+slotsResponse.distance+" KM away from our store":null}
-          
+            {slotsResponse?.distance > 0
+              ? " You are " + slotsResponse.distance + " KM away from our store"
+              : null}
           </Text>
           <Box
             p={4}
