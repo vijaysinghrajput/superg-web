@@ -6436,6 +6436,14 @@
   dependencies:
     "flat-cache" "^3.0.4"
 
+"file-loader@^6.2.0":
+  "integrity" "sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw=="
+  "resolved" "https://registry.npmjs.org/file-loader/-/file-loader-6.2.0.tgz"
+  "version" "6.2.0"
+  dependencies:
+    "loader-utils" "^2.0.0"
+    "schema-utils" "^3.0.0"
+
 "file-loader@6.1.1":
   "integrity" "sha512-Klt8C4BjWSXYQAfhpYYkG4qHNTna4toMHEbWrI5IuVoxbU6uiDKeKAP99R8mmbJi3lvewn/jQBOgU4+NS3tDQw=="
   "resolved" "https://registry.npmjs.org/file-loader/-/file-loader-6.1.1.tgz"
@@ -8747,6 +8755,11 @@
   "version" "4.2.0"
   dependencies:
     "lodash._reinterpolate" "^3.0.0"
+
+"lodash.throttle@^4.1.1":
+  "integrity" "sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ=="
+  "resolved" "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
+  "version" "4.1.1"
 
 "lodash.truncate@^4.4.2":
   "integrity" "sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM="
@@ -11072,6 +11085,14 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   "version" "18.2.0"
 
+"react-lazy-load-image-component@^1.6.0":
+  "integrity" "sha512-8KFkDTgjh+0+PVbH+cx0AgxLGbdTsxWMnxXzU5HEUztqewk9ufQAu8cstjZhyvtMIPsdMcPZfA0WAa7HtjQbBQ=="
+  "resolved" "https://registry.npmjs.org/react-lazy-load-image-component/-/react-lazy-load-image-component-1.6.0.tgz"
+  "version" "1.6.0"
+  dependencies:
+    "lodash.debounce" "^4.0.8"
+    "lodash.throttle" "^4.1.1"
+
 "react-loading-skeleton@^3.0.1":
   "integrity" "sha512-j1U1CWWs68nBPOg7tkQqnlFcAMFF6oEK6MgqAo15f8A5p7mjH6xyKn2gHbkcimpwfO0VQXqxAswnSYVr8lWzjw=="
   "resolved" "https://registry.npmjs.org/react-loading-skeleton/-/react-loading-skeleton-3.1.0.tgz"
@@ -11790,9 +11811,9 @@
     "ajv-keywords" "^3.5.2"
 
 "schema-utils@^3.0.0":
-  "integrity" "sha512-Y5PQxS4ITlC+EahLuXaY86TXfR7Dc5lw294alXOq86JAHCihAIZfqv8nNCWvaEJvaC51uN9hbLGeV0cFBdH+Fw=="
-  "resolved" "https://registry.npmjs.org/schema-utils/-/schema-utils-3.1.1.tgz"
-  "version" "3.1.1"
+  "integrity" "sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg=="
+  "resolved" "https://registry.npmjs.org/schema-utils/-/schema-utils-3.3.0.tgz"
+  "version" "3.3.0"
   dependencies:
     "@types/json-schema" "^7.0.8"
     "ajv" "^6.12.5"

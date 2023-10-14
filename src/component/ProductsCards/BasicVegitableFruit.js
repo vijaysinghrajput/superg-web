@@ -5,8 +5,11 @@ import URL from "../../URL";
 import ContextData from "../../context/MainContext";
 import { MdDelete } from "react-icons/md";
 import { BsFillBellFill, BsPlusLg } from "react-icons/bs";
-import { Box, Button, Image, Text } from "@chakra-ui/react";
-import { Img } from "react-image";
+import { Box, Button,  Text } from "@chakra-ui/react";
+// import { Img } from "react-image";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 export const BasicVegitableFruit = ({ data, key, mdSize = 2 }) => {
   const mainData = useContext(ContextData);
@@ -71,7 +74,25 @@ export const BasicVegitableFruit = ({ data, key, mdSize = 2 }) => {
                 }
               >
                 <Box position={"relative"} p={1}>
-                  <Image
+
+                <LazyLoadImage 
+                src={URL + "/images/product-images/" + data.product_image}
+    // width={250} height={250}
+    PlaceholderSrc="/img/logo-500.png"
+    effect="blur"
+    class="img-fluid item-img w-100 mb-3"
+    alt={
+      data.product_name +
+      " delivery in Gorakhpur | SuperG.in is an online vegetable, fruit, cake ,chicken, and grocery delivery website and app in Gorakhpur , Which deliver you home at very low prices. Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"
+    }
+    title={
+      data.product_name +
+      " delivery in Gorakhpur | Vegetables & Fruits delivery in Gorakhpur, Grocery delivery in Gorakhpur, Chicken & Fish delivery in Gorakhpur"
+    }
+    style={data.status == "0" ? { filter: "blur(0px)" } : {}}
+/>
+
+                  {/* <Image
                     src={URL + "/images/product-images/" + data.product_image}
                     class="img-fluid item-img w-100 mb-3"
                     alt={
@@ -87,7 +108,7 @@ export const BasicVegitableFruit = ({ data, key, mdSize = 2 }) => {
                       currentTarget.onerror = null; // prevents looping
                       currentTarget.src = "/img/logo-500.png";
                     }}
-                  />
+                  /> */}
                   {data.status == "0" && (
                     <Box
                       position={"absolute"}
